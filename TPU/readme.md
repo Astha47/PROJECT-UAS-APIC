@@ -1,1 +1,1 @@
-Tensor Processing Unit Using Systolic Array
+Tensor Processing Unit (TPU) using Systolic Arrays
