@@ -2,3 +2,7 @@ https://jesse-r-s-hines.github.io/RISC-V-Graphical-Datapath-Simulator/
 
 RV64I Code
 https://github.com/MuhammadMajiid/RV64IMAC?tab=readme-ov-file
+
+RV64I Instruction Set
+https://msyksphinz-self.github.io/riscv-isadoc/html/rv64i.html
+
