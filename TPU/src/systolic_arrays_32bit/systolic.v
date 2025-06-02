@@ -1,31 +1,38 @@
 // Module: systolic array for matrix multiplication (32x32) 
 // Author: Ahmed Abdelazeem
 // Email: a.abdelazeem201@gmail.com
-// Thanks to Ahmed Abdelazeen for the design! Much appreciated!
 //
 // Description:
-// This module implements a 32x32 systolic array for matrix multiplication with input for 64-bit
+// This module implements a 32x32 systolic array for matrix multiplication.
 // The array performs matrix multiplications using weights and data buffers. 
 // The weight and data queues are shifted as needed, and multiplication results are stored in 
 // a matrix that can be accessed through the `mul_outcome` output.
 
 module systolic #(
     parameter ARRAY_SIZE = 32,             // Size of the array (32x32)
-    parameter SRAM_DATA_WIDTH = 64,        // Data width for SRAM input
+    parameter SRAM_DATA_WIDTH = 32,        // Data width for SRAM input
     parameter DATA_WIDTH = 8               // Data width for elements in the matrix
 )(
     input wire clk,                             // Clock signal
     input wire rst_n,                           // Synchronous reset (active low)
     input wire alu_start,                       // Enable signal to start computation
     input wire  [8:0] cycle_num,                 // Current cycle number
-    input wire  [SRAM_DATA_WIDTH-1:0] sram_rdata_w0, // SRAM input for weight queue (64-bit)
+    input wire  [SRAM_DATA_WIDTH-1:0] sram_rdata_w0, // SRAM input for weight queue (32-bit)
     input wire  [SRAM_DATA_WIDTH-1:0] sram_rdata_w1, 
     input wire  [SRAM_DATA_WIDTH-1:0] sram_rdata_w2, 
-    input wire  [SRAM_DATA_WIDTH-1:0] sram_rdata_w3,  
-    input wire  [SRAM_DATA_WIDTH-1:0] sram_rdata_d0, // SRAM input for data queue (64-bit)
+    input wire  [SRAM_DATA_WIDTH-1:0] sram_rdata_w3, 
+    input wire  [SRAM_DATA_WIDTH-1:0] sram_rdata_w4, 
+    input wire  [SRAM_DATA_WIDTH-1:0] sram_rdata_w5, 
+    input wire  [SRAM_DATA_WIDTH-1:0] sram_rdata_w6, 
+    input wire  [SRAM_DATA_WIDTH-1:0] sram_rdata_w7, 
+    input wire  [SRAM_DATA_WIDTH-1:0] sram_rdata_d0, // SRAM input for data queue (32-bit)
     input wire  [SRAM_DATA_WIDTH-1:0] sram_rdata_d1, 
     input wire  [SRAM_DATA_WIDTH-1:0] sram_rdata_d2, 
     input wire  [SRAM_DATA_WIDTH-1:0] sram_rdata_d3, 
+    input wire  [SRAM_DATA_WIDTH-1:0] sram_rdata_d4, 
+    input wire  [SRAM_DATA_WIDTH-1:0] sram_rdata_d5, 
+    input wire  [SRAM_DATA_WIDTH-1:0] sram_rdata_d6, 
+    input wire  [SRAM_DATA_WIDTH-1:0] sram_rdata_d7, 
     input wire  [5:0] matrix_index,              // Index for selecting output matrix
     output reg signed [(ARRAY_SIZE*(DATA_WIDTH+DATA_WIDTH+5))-1:0] mul_outcome // Output of the multiplication result
 );
@@ -57,22 +64,30 @@ always @(posedge clk) begin
     end
     else if (alu_start) begin
         // Shift weight queue
-        for (i = 0; i < 8; i = i + 1) begin
-            weight_queue[0][i] <= sram_rdata_w0[63-8*i-:8];
-            weight_queue[0][i+8] <= sram_rdata_w1[63-8*i-:8];
-            weight_queue[0][i+16] <= sram_rdata_w2[63-8*i-:8];
-            weight_queue[0][i+24] <= sram_rdata_w3[63-8*i-:8];
+        for (i = 0; i < 4; i = i + 1) begin
+            weight_queue[0][i] <= sram_rdata_w0[31-8*i-:8];
+            weight_queue[0][i+4] <= sram_rdata_w1[31-8*i-:8];
+            weight_queue[0][i+8] <= sram_rdata_w2[31-8*i-:8];
+            weight_queue[0][i+12] <= sram_rdata_w3[31-8*i-:8];
+            weight_queue[0][i+16] <= sram_rdata_w4[31-8*i-:8];
+            weight_queue[0][i+20] <= sram_rdata_w5[31-8*i-:8];
+            weight_queue[0][i+24] <= sram_rdata_w6[31-8*i-:8];
+            weight_queue[0][i+28] <= sram_rdata_w7[31-8*i-:8];
         end
         for (i = 1; i < ARRAY_SIZE; i = i + 1)
             for (j = 0; j < ARRAY_SIZE; j = j + 1)
                 weight_queue[i][j] <= weight_queue[i-1][j];
                 
         // Shift data queue
-        for (i = 0; i < 8; i = i + 1) begin
-            data_queue[i][0] <= sram_rdata_d0[63-8*i-:8];
-            data_queue[i+8][0] <= sram_rdata_d1[63-8*i-:8];
-            data_queue[i+16][0] <= sram_rdata_d2[63-8*i-:8];
-            data_queue[i+24][0] <= sram_rdata_d3[63-8*i-:8];
+        for (i = 0; i < 4; i = i + 1) begin
+            data_queue[i][0] <= sram_rdata_d0[31-8*i-:8];
+            data_queue[i+4][0] <= sram_rdata_d1[31-8*i-:8];
+            data_queue[i+8][0] <= sram_rdata_d2[31-8*i-:8];
+            data_queue[i+12][0] <= sram_rdata_d3[31-8*i-:8];
+            data_queue[i+16][0] <= sram_rdata_d4[31-8*i-:8];
+            data_queue[i+20][0] <= sram_rdata_d5[31-8*i-:8];
+            data_queue[i+24][0] <= sram_rdata_d6[31-8*i-:8];
+            data_queue[i+28][0] <= sram_rdata_d7[31-8*i-:8];
         end
         for (i = 0; i < ARRAY_SIZE; i = i + 1)
             for (j = 1; j < ARRAY_SIZE; j = j + 1)
