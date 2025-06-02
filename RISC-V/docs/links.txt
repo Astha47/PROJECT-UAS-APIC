@@ -6,3 +6,6 @@ https://github.com/MuhammadMajiid/RV64IMAC?tab=readme-ov-file
 RV64I Instruction Set
 https://msyksphinz-self.github.io/riscv-isadoc/html/rv64i.html
 
+PICO-RV32
+https://github.com/YosysHQ/picorv32.git
+

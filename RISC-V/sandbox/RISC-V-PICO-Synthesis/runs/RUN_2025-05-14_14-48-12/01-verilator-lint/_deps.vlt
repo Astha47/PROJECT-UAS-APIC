@@ -1,0 +1,5 @@
+`verilator_config
+lint_off -rule DECLFILENAME
+lint_off -rule EOFNEWLINE
+lint_off -rule UNDRIVEN -file "/home/astha/eda/designs/uas/PROJECT-UAS-APIC/RISC-V/sandbox/RISC-V-PICO-Synthesis/runs/RUN_2025-05-14_14-48-12/tmp/695ade410c244c18b461170742c7517e.bb.v"
+lint_off -rule UNUSEDSIGNAL -file "/home/astha/eda/designs/uas/PROJECT-UAS-APIC/RISC-V/sandbox/RISC-V-PICO-Synthesis/runs/RUN_2025-05-14_14-48-12/tmp/695ade410c244c18b461170742c7517e.bb.v"
