@@ -1,0 +1,1693 @@
+#! /c/Source/iverilog-install/bin/vvp
+:ivl_version "12.0 (devel)" "(s20150603-1539-g2693dd32b)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision - 12;
+:vpi_module "D:\iverilog\lib\ivl\system.vpi";
+:vpi_module "D:\iverilog\lib\ivl\vhdl_sys.vpi";
+:vpi_module "D:\iverilog\lib\ivl\vhdl_textio.vpi";
+:vpi_module "D:\iverilog\lib\ivl\v2005_math.vpi";
+:vpi_module "D:\iverilog\lib\ivl\va_math.vpi";
+S_0000025ff0b9f330 .scope module, "tb_addr_sel" "tb_addr_sel" 2 3;
+ .timescale -9 -12;
+P_0000025ff0c4ee50 .param/l "ADDR_SERIAL_NUM_WIDTH" 1 2 6, +C4<00000000000000000000000000000111>;
+P_0000025ff0c4ee88 .param/l "CLK_PERIOD" 1 2 75, +C4<00000000000000000000000000001010>;
+P_0000025ff0c4eec0 .param/l "SRAM_ADDR_WIDTH" 1 2 7, +C4<00000000000000000000000000001010>;
+v0000025ff0cf17d0_0 .var "addr_serial_num_tb", 6 0;
+v0000025ff0cf10f0_0 .var "clk", 0 0;
+v0000025ff0cf1690_0 .var/i "i_asn", 31 0;
+v0000025ff0cf1870_0 .net "sram_raddr_d0_dut", 9 0, v0000025ff0ce9650_0;  1 drivers
+v0000025ff0cf1910_0 .net "sram_raddr_d10_dut", 9 0, v0000025ff0ce9a10_0;  1 drivers
+v0000025ff0cefe30_0 .net "sram_raddr_d11_dut", 9 0, v0000025ff0ce9b50_0;  1 drivers
+v0000025ff0cf0290_0 .net "sram_raddr_d12_dut", 9 0, v0000025ff0ce9c90_0;  1 drivers
+v0000025ff0cf1ff0_0 .net "sram_raddr_d13_dut", 9 0, v0000025ff0ce9d30_0;  1 drivers
+v0000025ff0cf2090_0 .net "sram_raddr_d14_dut", 9 0, v0000025ff0cec170_0;  1 drivers
+v0000025ff0cf1730_0 .net "sram_raddr_d15_dut", 9 0, v0000025ff0cebf90_0;  1 drivers
+v0000025ff0ceff70_0 .net "sram_raddr_d16_dut", 9 0, v0000025ff0cebef0_0;  1 drivers
+v0000025ff0cf1230_0 .net "sram_raddr_d17_dut", 9 0, v0000025ff0cecd50_0;  1 drivers
+v0000025ff0cf19b0_0 .net "sram_raddr_d18_dut", 9 0, v0000025ff0cec5d0_0;  1 drivers
+v0000025ff0cf0ab0_0 .net "sram_raddr_d19_dut", 9 0, v0000025ff0cebc70_0;  1 drivers
+v0000025ff0cf05b0_0 .net "sram_raddr_d1_dut", 9 0, v0000025ff0ce96f0_0;  1 drivers
+v0000025ff0cf0b50_0 .net "sram_raddr_d20_dut", 9 0, v0000025ff0cec530_0;  1 drivers
+v0000025ff0cf0010_0 .net "sram_raddr_d21_dut", 9 0, v0000025ff0ceb950_0;  1 drivers
+v0000025ff0cf1a50_0 .net "sram_raddr_d22_dut", 9 0, v0000025ff0ceb9f0_0;  1 drivers
+v0000025ff0cf0650_0 .net "sram_raddr_d23_dut", 9 0, v0000025ff0cec210_0;  1 drivers
+v0000025ff0cf21d0_0 .net "sram_raddr_d24_dut", 9 0, v0000025ff0cec7b0_0;  1 drivers
+v0000025ff0cf0c90_0 .net "sram_raddr_d25_dut", 9 0, v0000025ff0cec710_0;  1 drivers
+v0000025ff0cf2130_0 .net "sram_raddr_d26_dut", 9 0, v0000025ff0cec850_0;  1 drivers
+v0000025ff0cf1b90_0 .net "sram_raddr_d27_dut", 9 0, v0000025ff0cec8f0_0;  1 drivers
+v0000025ff0cf1af0_0 .net "sram_raddr_d28_dut", 9 0, v0000025ff0ceba90_0;  1 drivers
+v0000025ff0cf06f0_0 .net "sram_raddr_d29_dut", 9 0, v0000025ff0cecb70_0;  1 drivers
+v0000025ff0cf00b0_0 .net "sram_raddr_d2_dut", 9 0, v0000025ff0cec670_0;  1 drivers
+v0000025ff0cf1c30_0 .net "sram_raddr_d30_dut", 9 0, v0000025ff0cec3f0_0;  1 drivers
+v0000025ff0cf1cd0_0 .net "sram_raddr_d31_dut", 9 0, v0000025ff0cebbd0_0;  1 drivers
+v0000025ff0cf1d70_0 .net "sram_raddr_d3_dut", 9 0, v0000025ff0cebb30_0;  1 drivers
+v0000025ff0cf1e10_0 .net "sram_raddr_d4_dut", 9 0, v0000025ff0cec350_0;  1 drivers
+v0000025ff0cf2310_0 .net "sram_raddr_d5_dut", 9 0, v0000025ff0cebd10_0;  1 drivers
+v0000025ff0cf1eb0_0 .net "sram_raddr_d6_dut", 9 0, v0000025ff0cec0d0_0;  1 drivers
+v0000025ff0cf0dd0_0 .net "sram_raddr_d7_dut", 9 0, v0000025ff0cec030_0;  1 drivers
+v0000025ff0cf1f50_0 .net "sram_raddr_d8_dut", 9 0, v0000025ff0cec2b0_0;  1 drivers
+v0000025ff0cf0150_0 .net "sram_raddr_d9_dut", 9 0, v0000025ff0cebe50_0;  1 drivers
+v0000025ff0cf0f10_0 .net "sram_raddr_w0_dut", 9 0, v0000025ff0cec990_0;  1 drivers
+v0000025ff0cf0330_0 .net "sram_raddr_w10_dut", 9 0, v0000025ff0cecad0_0;  1 drivers
+v0000025ff0cf03d0_0 .net "sram_raddr_w11_dut", 9 0, v0000025ff0cecc10_0;  1 drivers
+v0000025ff0cf0790_0 .net "sram_raddr_w12_dut", 9 0, v0000025ff0ceccb0_0;  1 drivers
+v0000025ff0cf0470_0 .net "sram_raddr_w13_dut", 9 0, v0000025ff0cecdf0_0;  1 drivers
+v0000025ff0cf0830_0 .net "sram_raddr_w14_dut", 9 0, v0000025ff0cebdb0_0;  1 drivers
+v0000025ff0cf3850_0 .net "sram_raddr_w15_dut", 9 0, v0000025ff0ceb770_0;  1 drivers
+v0000025ff0cf4250_0 .net "sram_raddr_w16_dut", 9 0, v0000025ff0ceb810_0;  1 drivers
+v0000025ff0cf3e90_0 .net "sram_raddr_w17_dut", 9 0, v0000025ff0ceb8b0_0;  1 drivers
+v0000025ff0cf42f0_0 .net "sram_raddr_w18_dut", 9 0, v0000025ff0cf23b0_0;  1 drivers
+v0000025ff0cf3f30_0 .net "sram_raddr_w19_dut", 9 0, v0000025ff0cf0fb0_0;  1 drivers
+v0000025ff0cf29f0_0 .net "sram_raddr_w1_dut", 9 0, v0000025ff0ceca30_0;  1 drivers
+v0000025ff0cf4890_0 .net "sram_raddr_w20_dut", 9 0, v0000025ff0cefed0_0;  1 drivers
+v0000025ff0cf2b30_0 .net "sram_raddr_w21_dut", 9 0, v0000025ff0cf0d30_0;  1 drivers
+v0000025ff0cf3b70_0 .net "sram_raddr_w22_dut", 9 0, v0000025ff0cf1370_0;  1 drivers
+v0000025ff0cf2950_0 .net "sram_raddr_w23_dut", 9 0, v0000025ff0cf1050_0;  1 drivers
+v0000025ff0cf3a30_0 .net "sram_raddr_w24_dut", 9 0, v0000025ff0cf12d0_0;  1 drivers
+v0000025ff0cf2f90_0 .net "sram_raddr_w25_dut", 9 0, v0000025ff0cf1410_0;  1 drivers
+v0000025ff0cf35d0_0 .net "sram_raddr_w26_dut", 9 0, v0000025ff0cf01f0_0;  1 drivers
+v0000025ff0cf3530_0 .net "sram_raddr_w27_dut", 9 0, v0000025ff0cf2450_0;  1 drivers
+v0000025ff0cf38f0_0 .net "sram_raddr_w28_dut", 9 0, v0000025ff0cf0970_0;  1 drivers
+v0000025ff0cf3210_0 .net "sram_raddr_w29_dut", 9 0, v0000025ff0cf0e70_0;  1 drivers
+v0000025ff0cf3710_0 .net "sram_raddr_w2_dut", 9 0, v0000025ff0cf0bf0_0;  1 drivers
+v0000025ff0cf3490_0 .net "sram_raddr_w30_dut", 9 0, v0000025ff0cf15f0_0;  1 drivers
+v0000025ff0cf32b0_0 .net "sram_raddr_w31_dut", 9 0, v0000025ff0cf14b0_0;  1 drivers
+v0000025ff0cf4b10_0 .net "sram_raddr_w3_dut", 9 0, v0000025ff0cf2270_0;  1 drivers
+v0000025ff0cf3fd0_0 .net "sram_raddr_w4_dut", 9 0, v0000025ff0cf24f0_0;  1 drivers
+v0000025ff0cf2ef0_0 .net "sram_raddr_w5_dut", 9 0, v0000025ff0cf1190_0;  1 drivers
+v0000025ff0cf4070_0 .net "sram_raddr_w6_dut", 9 0, v0000025ff0cf1550_0;  1 drivers
+v0000025ff0cf2770_0 .net "sram_raddr_w7_dut", 9 0, v0000025ff0cf08d0_0;  1 drivers
+v0000025ff0cf2a90_0 .net "sram_raddr_w8_dut", 9 0, v0000025ff0cf0510_0;  1 drivers
+v0000025ff0cf3ad0_0 .net "sram_raddr_w9_dut", 9 0, v0000025ff0cf0a10_0;  1 drivers
+S_0000025ff0be54f0 .scope task, "display_detailed_ports_task" "display_detailed_ports_task" 2 124, 2 124 0, S_0000025ff0b9f330;
+ .timescale -9 -12;
+TD_tb_addr_sel.display_detailed_ports_task ;
+    %vpi_call 2 126 "$display", "[%0t ns] ASN=%3d: w[0]=%3h, d[0]=%3h | w[1]=%3h, d[1]=%3h | w[15]=%3h, d[15]=%3h | w[31]=%3h, d[31]=%3h", $time, v0000025ff0cf17d0_0, v0000025ff0cf0f10_0, v0000025ff0cf1870_0, v0000025ff0cf29f0_0, v0000025ff0cf05b0_0, v0000025ff0cf3850_0, v0000025ff0cf1730_0, v0000025ff0cf32b0_0, v0000025ff0cf1cd0_0 {0 0 0};
+    %end;
+S_0000025ff0c7af30 .scope module, "dut" "addr_sel" 2 35, 3 12 0, S_0000025ff0b9f330;
+ .timescale 0 0;
+    .port_info 0 /INPUT 1 "clk";
+    .port_info 1 /INPUT 7 "addr_serial_num";
+    .port_info 2 /OUTPUT 10 "sram_raddr_w0";
+    .port_info 3 /OUTPUT 10 "sram_raddr_w1";
+    .port_info 4 /OUTPUT 10 "sram_raddr_w2";
+    .port_info 5 /OUTPUT 10 "sram_raddr_w3";
+    .port_info 6 /OUTPUT 10 "sram_raddr_w4";
+    .port_info 7 /OUTPUT 10 "sram_raddr_w5";
+    .port_info 8 /OUTPUT 10 "sram_raddr_w6";
+    .port_info 9 /OUTPUT 10 "sram_raddr_w7";
+    .port_info 10 /OUTPUT 10 "sram_raddr_w8";
+    .port_info 11 /OUTPUT 10 "sram_raddr_w9";
+    .port_info 12 /OUTPUT 10 "sram_raddr_w10";
+    .port_info 13 /OUTPUT 10 "sram_raddr_w11";
+    .port_info 14 /OUTPUT 10 "sram_raddr_w12";
+    .port_info 15 /OUTPUT 10 "sram_raddr_w13";
+    .port_info 16 /OUTPUT 10 "sram_raddr_w14";
+    .port_info 17 /OUTPUT 10 "sram_raddr_w15";
+    .port_info 18 /OUTPUT 10 "sram_raddr_w16";
+    .port_info 19 /OUTPUT 10 "sram_raddr_w17";
+    .port_info 20 /OUTPUT 10 "sram_raddr_w18";
+    .port_info 21 /OUTPUT 10 "sram_raddr_w19";
+    .port_info 22 /OUTPUT 10 "sram_raddr_w20";
+    .port_info 23 /OUTPUT 10 "sram_raddr_w21";
+    .port_info 24 /OUTPUT 10 "sram_raddr_w22";
+    .port_info 25 /OUTPUT 10 "sram_raddr_w23";
+    .port_info 26 /OUTPUT 10 "sram_raddr_w24";
+    .port_info 27 /OUTPUT 10 "sram_raddr_w25";
+    .port_info 28 /OUTPUT 10 "sram_raddr_w26";
+    .port_info 29 /OUTPUT 10 "sram_raddr_w27";
+    .port_info 30 /OUTPUT 10 "sram_raddr_w28";
+    .port_info 31 /OUTPUT 10 "sram_raddr_w29";
+    .port_info 32 /OUTPUT 10 "sram_raddr_w30";
+    .port_info 33 /OUTPUT 10 "sram_raddr_w31";
+    .port_info 34 /OUTPUT 10 "sram_raddr_d0";
+    .port_info 35 /OUTPUT 10 "sram_raddr_d1";
+    .port_info 36 /OUTPUT 10 "sram_raddr_d2";
+    .port_info 37 /OUTPUT 10 "sram_raddr_d3";
+    .port_info 38 /OUTPUT 10 "sram_raddr_d4";
+    .port_info 39 /OUTPUT 10 "sram_raddr_d5";
+    .port_info 40 /OUTPUT 10 "sram_raddr_d6";
+    .port_info 41 /OUTPUT 10 "sram_raddr_d7";
+    .port_info 42 /OUTPUT 10 "sram_raddr_d8";
+    .port_info 43 /OUTPUT 10 "sram_raddr_d9";
+    .port_info 44 /OUTPUT 10 "sram_raddr_d10";
+    .port_info 45 /OUTPUT 10 "sram_raddr_d11";
+    .port_info 46 /OUTPUT 10 "sram_raddr_d12";
+    .port_info 47 /OUTPUT 10 "sram_raddr_d13";
+    .port_info 48 /OUTPUT 10 "sram_raddr_d14";
+    .port_info 49 /OUTPUT 10 "sram_raddr_d15";
+    .port_info 50 /OUTPUT 10 "sram_raddr_d16";
+    .port_info 51 /OUTPUT 10 "sram_raddr_d17";
+    .port_info 52 /OUTPUT 10 "sram_raddr_d18";
+    .port_info 53 /OUTPUT 10 "sram_raddr_d19";
+    .port_info 54 /OUTPUT 10 "sram_raddr_d20";
+    .port_info 55 /OUTPUT 10 "sram_raddr_d21";
+    .port_info 56 /OUTPUT 10 "sram_raddr_d22";
+    .port_info 57 /OUTPUT 10 "sram_raddr_d23";
+    .port_info 58 /OUTPUT 10 "sram_raddr_d24";
+    .port_info 59 /OUTPUT 10 "sram_raddr_d25";
+    .port_info 60 /OUTPUT 10 "sram_raddr_d26";
+    .port_info 61 /OUTPUT 10 "sram_raddr_d27";
+    .port_info 62 /OUTPUT 10 "sram_raddr_d28";
+    .port_info 63 /OUTPUT 10 "sram_raddr_d29";
+    .port_info 64 /OUTPUT 10 "sram_raddr_d30";
+    .port_info 65 /OUTPUT 10 "sram_raddr_d31";
+P_0000025ff0c4ef00 .param/l "INACTIVE_SRAM_ADDR" 1 3 85, C4<0001111111>;
+P_0000025ff0c4ef38 .param/l "MAX_ADDR_SERIAL_NUM" 1 3 81, +C4<00000000000000000000000001111110>;
+P_0000025ff0c4ef70 .param/l "QUEUE_ACTIVE_DURATION" 1 3 84, +C4<00000000000000000000000000111111>;
+v0000025ff0ce9470_0 .net "addr_serial_num", 6 0, v0000025ff0cf17d0_0;  1 drivers
+v0000025ff0ce95b0_0 .net "clk", 0 0, v0000025ff0cf10f0_0;  1 drivers
+v0000025ff0ce9650_0 .var "sram_raddr_d0", 9 0;
+v0000025ff0ce96f0_0 .var "sram_raddr_d1", 9 0;
+v0000025ff0ce9a10_0 .var "sram_raddr_d10", 9 0;
+v0000025ff0ce9b50_0 .var "sram_raddr_d11", 9 0;
+v0000025ff0ce9c90_0 .var "sram_raddr_d12", 9 0;
+v0000025ff0ce9d30_0 .var "sram_raddr_d13", 9 0;
+v0000025ff0cec170_0 .var "sram_raddr_d14", 9 0;
+v0000025ff0cebf90_0 .var "sram_raddr_d15", 9 0;
+v0000025ff0cebef0_0 .var "sram_raddr_d16", 9 0;
+v0000025ff0cecd50_0 .var "sram_raddr_d17", 9 0;
+v0000025ff0cec5d0_0 .var "sram_raddr_d18", 9 0;
+v0000025ff0cebc70_0 .var "sram_raddr_d19", 9 0;
+v0000025ff0cec670_0 .var "sram_raddr_d2", 9 0;
+v0000025ff0cec530_0 .var "sram_raddr_d20", 9 0;
+v0000025ff0ceb950_0 .var "sram_raddr_d21", 9 0;
+v0000025ff0ceb9f0_0 .var "sram_raddr_d22", 9 0;
+v0000025ff0cec210_0 .var "sram_raddr_d23", 9 0;
+v0000025ff0cec7b0_0 .var "sram_raddr_d24", 9 0;
+v0000025ff0cec710_0 .var "sram_raddr_d25", 9 0;
+v0000025ff0cec850_0 .var "sram_raddr_d26", 9 0;
+v0000025ff0cec8f0_0 .var "sram_raddr_d27", 9 0;
+v0000025ff0ceba90_0 .var "sram_raddr_d28", 9 0;
+v0000025ff0cecb70_0 .var "sram_raddr_d29", 9 0;
+v0000025ff0cebb30_0 .var "sram_raddr_d3", 9 0;
+v0000025ff0cec3f0_0 .var "sram_raddr_d30", 9 0;
+v0000025ff0cebbd0_0 .var "sram_raddr_d31", 9 0;
+v0000025ff0cec350_0 .var "sram_raddr_d4", 9 0;
+v0000025ff0cebd10_0 .var "sram_raddr_d5", 9 0;
+v0000025ff0cec0d0_0 .var "sram_raddr_d6", 9 0;
+v0000025ff0cec030_0 .var "sram_raddr_d7", 9 0;
+v0000025ff0cec2b0_0 .var "sram_raddr_d8", 9 0;
+v0000025ff0cebe50_0 .var "sram_raddr_d9", 9 0;
+v0000025ff0cec490 .array "sram_raddr_d_nx", 31 0;
+v0000025ff0cec490_0 .net v0000025ff0cec490 0, 9 0, L_0000025ff0cf3990; 1 drivers
+v0000025ff0cec490_1 .net v0000025ff0cec490 1, 9 0, L_0000025ff0cf37b0; 1 drivers
+v0000025ff0cec490_2 .net v0000025ff0cec490 2, 9 0, L_0000025ff0cf4390; 1 drivers
+v0000025ff0cec490_3 .net v0000025ff0cec490 3, 9 0, L_0000025ff0cf3170; 1 drivers
+v0000025ff0cec490_4 .net v0000025ff0cec490 4, 9 0, L_0000025ff0cf5330; 1 drivers
+v0000025ff0cec490_5 .net v0000025ff0cec490 5, 9 0, L_0000025ff0cf51f0; 1 drivers
+v0000025ff0cec490_6 .net v0000025ff0cec490 6, 9 0, L_0000025ff0ceed50; 1 drivers
+v0000025ff0cec490_7 .net v0000025ff0cec490 7, 9 0, L_0000025ff0cef2f0; 1 drivers
+v0000025ff0cec490_8 .net v0000025ff0cec490 8, 9 0, L_0000025ff0cef4d0; 1 drivers
+v0000025ff0cec490_9 .net v0000025ff0cec490 9, 9 0, L_0000025ff0ced9f0; 1 drivers
+v0000025ff0cec490_10 .net v0000025ff0cec490 10, 9 0, L_0000025ff0ced770; 1 drivers
+v0000025ff0cec490_11 .net v0000025ff0cec490 11, 9 0, L_0000025ff0ced6d0; 1 drivers
+v0000025ff0cec490_12 .net v0000025ff0cec490 12, 9 0, L_0000025ff0cee170; 1 drivers
+v0000025ff0cec490_13 .net v0000025ff0cec490 13, 9 0, L_0000025ff0cef930; 1 drivers
+v0000025ff0cec490_14 .net v0000025ff0cec490 14, 9 0, L_0000025ff0d55500; 1 drivers
+v0000025ff0cec490_15 .net v0000025ff0cec490 15, 9 0, L_0000025ff0d55f00; 1 drivers
+v0000025ff0cec490_16 .net v0000025ff0cec490 16, 9 0, L_0000025ff0d55820; 1 drivers
+v0000025ff0cec490_17 .net v0000025ff0cec490 17, 9 0, L_0000025ff0d555a0; 1 drivers
+v0000025ff0cec490_18 .net v0000025ff0cec490 18, 9 0, L_0000025ff0d54a60; 1 drivers
+v0000025ff0cec490_19 .net v0000025ff0cec490 19, 9 0, L_0000025ff0d53b60; 1 drivers
+v0000025ff0cec490_20 .net v0000025ff0cec490 20, 9 0, L_0000025ff0d54c40; 1 drivers
+v0000025ff0cec490_21 .net v0000025ff0cec490 21, 9 0, L_0000025ff0d53d40; 1 drivers
+v0000025ff0cec490_22 .net v0000025ff0cec490 22, 9 0, L_0000025ff0d576c0; 1 drivers
+v0000025ff0cec490_23 .net v0000025ff0cec490 23, 9 0, L_0000025ff0d56cc0; 1 drivers
+v0000025ff0cec490_24 .net v0000025ff0cec490 24, 9 0, L_0000025ff0d57580; 1 drivers
+v0000025ff0cec490_25 .net v0000025ff0cec490 25, 9 0, L_0000025ff0d56b80; 1 drivers
+v0000025ff0cec490_26 .net v0000025ff0cec490 26, 9 0, L_0000025ff0d56f40; 1 drivers
+v0000025ff0cec490_27 .net v0000025ff0cec490 27, 9 0, L_0000025ff0d58520; 1 drivers
+v0000025ff0cec490_28 .net v0000025ff0cec490 28, 9 0, L_0000025ff0d567c0; 1 drivers
+v0000025ff0cec490_29 .net v0000025ff0cec490 29, 9 0, L_0000025ff0d564a0; 1 drivers
+v0000025ff0cec490_30 .net v0000025ff0cec490 30, 9 0, L_0000025ff0d59f60; 1 drivers
+v0000025ff0cec490_31 .net v0000025ff0cec490 31, 9 0, L_0000025ff0d59100; 1 drivers
+v0000025ff0cec990_0 .var "sram_raddr_w0", 9 0;
+v0000025ff0ceca30_0 .var "sram_raddr_w1", 9 0;
+v0000025ff0cecad0_0 .var "sram_raddr_w10", 9 0;
+v0000025ff0cecc10_0 .var "sram_raddr_w11", 9 0;
+v0000025ff0ceccb0_0 .var "sram_raddr_w12", 9 0;
+v0000025ff0cecdf0_0 .var "sram_raddr_w13", 9 0;
+v0000025ff0cebdb0_0 .var "sram_raddr_w14", 9 0;
+v0000025ff0ceb770_0 .var "sram_raddr_w15", 9 0;
+v0000025ff0ceb810_0 .var "sram_raddr_w16", 9 0;
+v0000025ff0ceb8b0_0 .var "sram_raddr_w17", 9 0;
+v0000025ff0cf23b0_0 .var "sram_raddr_w18", 9 0;
+v0000025ff0cf0fb0_0 .var "sram_raddr_w19", 9 0;
+v0000025ff0cf0bf0_0 .var "sram_raddr_w2", 9 0;
+v0000025ff0cefed0_0 .var "sram_raddr_w20", 9 0;
+v0000025ff0cf0d30_0 .var "sram_raddr_w21", 9 0;
+v0000025ff0cf1370_0 .var "sram_raddr_w22", 9 0;
+v0000025ff0cf1050_0 .var "sram_raddr_w23", 9 0;
+v0000025ff0cf12d0_0 .var "sram_raddr_w24", 9 0;
+v0000025ff0cf1410_0 .var "sram_raddr_w25", 9 0;
+v0000025ff0cf01f0_0 .var "sram_raddr_w26", 9 0;
+v0000025ff0cf2450_0 .var "sram_raddr_w27", 9 0;
+v0000025ff0cf0970_0 .var "sram_raddr_w28", 9 0;
+v0000025ff0cf0e70_0 .var "sram_raddr_w29", 9 0;
+v0000025ff0cf2270_0 .var "sram_raddr_w3", 9 0;
+v0000025ff0cf15f0_0 .var "sram_raddr_w30", 9 0;
+v0000025ff0cf14b0_0 .var "sram_raddr_w31", 9 0;
+v0000025ff0cf24f0_0 .var "sram_raddr_w4", 9 0;
+v0000025ff0cf1190_0 .var "sram_raddr_w5", 9 0;
+v0000025ff0cf1550_0 .var "sram_raddr_w6", 9 0;
+v0000025ff0cf08d0_0 .var "sram_raddr_w7", 9 0;
+v0000025ff0cf0510_0 .var "sram_raddr_w8", 9 0;
+v0000025ff0cf0a10_0 .var "sram_raddr_w9", 9 0;
+v0000025ff0cefd90 .array "sram_raddr_w_nx", 31 0;
+v0000025ff0cefd90_0 .net v0000025ff0cefd90 0, 9 0, L_0000025ff0cf3c10; 1 drivers
+v0000025ff0cefd90_1 .net v0000025ff0cefd90 1, 9 0, L_0000025ff0cf4610; 1 drivers
+v0000025ff0cefd90_2 .net v0000025ff0cefd90 2, 9 0, L_0000025ff0cf26d0; 1 drivers
+v0000025ff0cefd90_3 .net v0000025ff0cefd90 3, 9 0, L_0000025ff0cf4cf0; 1 drivers
+v0000025ff0cefd90_4 .net v0000025ff0cefd90 4, 9 0, L_0000025ff0cf5010; 1 drivers
+v0000025ff0cefd90_5 .net v0000025ff0cefd90 5, 9 0, L_0000025ff0cf5150; 1 drivers
+v0000025ff0cefd90_6 .net v0000025ff0cefd90 6, 9 0, L_0000025ff0cedbd0; 1 drivers
+v0000025ff0cefd90_7 .net v0000025ff0cefd90 7, 9 0, L_0000025ff0cefa70; 1 drivers
+v0000025ff0cefd90_8 .net v0000025ff0cefd90 8, 9 0, L_0000025ff0ceea30; 1 drivers
+v0000025ff0cefd90_9 .net v0000025ff0cefd90 9, 9 0, L_0000025ff0cedf90; 1 drivers
+v0000025ff0cefd90_10 .net v0000025ff0cefd90 10, 9 0, L_0000025ff0cedef0; 1 drivers
+v0000025ff0cefd90_11 .net v0000025ff0cefd90 11, 9 0, L_0000025ff0cee490; 1 drivers
+v0000025ff0cefd90_12 .net v0000025ff0cefd90 12, 9 0, L_0000025ff0cee530; 1 drivers
+v0000025ff0cefd90_13 .net v0000025ff0cefd90 13, 9 0, L_0000025ff0cee5d0; 1 drivers
+v0000025ff0cefd90_14 .net v0000025ff0cefd90 14, 9 0, L_0000025ff0d54740; 1 drivers
+v0000025ff0cefd90_15 .net v0000025ff0cefd90 15, 9 0, L_0000025ff0d54d80; 1 drivers
+v0000025ff0cefd90_16 .net v0000025ff0cefd90 16, 9 0, L_0000025ff0d55dc0; 1 drivers
+v0000025ff0cefd90_17 .net v0000025ff0cefd90 17, 9 0, L_0000025ff0d54380; 1 drivers
+v0000025ff0cefd90_18 .net v0000025ff0cefd90 18, 9 0, L_0000025ff0d55b40; 1 drivers
+v0000025ff0cefd90_19 .net v0000025ff0cefd90 19, 9 0, L_0000025ff0d549c0; 1 drivers
+v0000025ff0cefd90_20 .net v0000025ff0cefd90 20, 9 0, L_0000025ff0d55aa0; 1 drivers
+v0000025ff0cefd90_21 .net v0000025ff0cefd90 21, 9 0, L_0000025ff0d55e60; 1 drivers
+v0000025ff0cefd90_22 .net v0000025ff0cefd90 22, 9 0, L_0000025ff0d565e0; 1 drivers
+v0000025ff0cefd90_23 .net v0000025ff0cefd90 23, 9 0, L_0000025ff0d56540; 1 drivers
+v0000025ff0cefd90_24 .net v0000025ff0cefd90 24, 9 0, L_0000025ff0d574e0; 1 drivers
+v0000025ff0cefd90_25 .net v0000025ff0cefd90 25, 9 0, L_0000025ff0d56ae0; 1 drivers
+v0000025ff0cefd90_26 .net v0000025ff0cefd90 26, 9 0, L_0000025ff0d56220; 1 drivers
+v0000025ff0cefd90_27 .net v0000025ff0cefd90 27, 9 0, L_0000025ff0d58020; 1 drivers
+v0000025ff0cefd90_28 .net v0000025ff0cefd90 28, 9 0, L_0000025ff0d58480; 1 drivers
+v0000025ff0cefd90_29 .net v0000025ff0cefd90 29, 9 0, L_0000025ff0d56ea0; 1 drivers
+v0000025ff0cefd90_30 .net v0000025ff0cefd90 30, 9 0, L_0000025ff0d5a780; 1 drivers
+v0000025ff0cefd90_31 .net v0000025ff0cefd90 31, 9 0, L_0000025ff0d59060; 1 drivers
+E_0000025ff0c62cc0 .event posedge, v0000025ff0ce95b0_0;
+L_0000025ff0cf6060 .functor BUFT 1, C4<0000000>, C4<0>, C4<0>, C4<0>;
+L_0000025ff0cf2bd0 .arith/sub 7, v0000025ff0cf17d0_0, L_0000025ff0cf6060;
+L_0000025ff0cf6258 .functor BUFT 1, C4<0000001>, C4<0>, C4<0>, C4<0>;
+L_0000025ff0cf4570 .arith/sub 7, v0000025ff0cf17d0_0, L_0000025ff0cf6258;
+L_0000025ff0cf6450 .functor BUFT 1, C4<0000010>, C4<0>, C4<0>, C4<0>;
+L_0000025ff0cf4a70 .arith/sub 7, v0000025ff0cf17d0_0, L_0000025ff0cf6450;
+L_0000025ff0cf6648 .functor BUFT 1, C4<0000011>, C4<0>, C4<0>, C4<0>;
+L_0000025ff0cf4c50 .arith/sub 7, v0000025ff0cf17d0_0, L_0000025ff0cf6648;
+L_0000025ff0cf6840 .functor BUFT 1, C4<0000100>, C4<0>, C4<0>, C4<0>;
+L_0000025ff0cf2e50 .arith/sub 7, v0000025ff0cf17d0_0, L_0000025ff0cf6840;
+L_0000025ff0cf6a38 .functor BUFT 1, C4<0000101>, C4<0>, C4<0>, C4<0>;
+L_0000025ff0cf4d90 .arith/sub 7, v0000025ff0cf17d0_0, L_0000025ff0cf6a38;
+L_0000025ff0cf6c30 .functor BUFT 1, C4<0000110>, C4<0>, C4<0>, C4<0>;
+L_0000025ff0cee990 .arith/sub 7, v0000025ff0cf17d0_0, L_0000025ff0cf6c30;
+L_0000025ff0cf6e28 .functor BUFT 1, C4<0000111>, C4<0>, C4<0>, C4<0>;
+L_0000025ff0ceedf0 .arith/sub 7, v0000025ff0cf17d0_0, L_0000025ff0cf6e28;
+L_0000025ff0cf7020 .functor BUFT 1, C4<0001000>, C4<0>, C4<0>, C4<0>;
+L_0000025ff0ced810 .arith/sub 7, v0000025ff0cf17d0_0, L_0000025ff0cf7020;
+L_0000025ff0cf7218 .functor BUFT 1, C4<0001001>, C4<0>, C4<0>, C4<0>;
+L_0000025ff0ceeb70 .arith/sub 7, v0000025ff0cf17d0_0, L_0000025ff0cf7218;
+L_0000025ff0cf7410 .functor BUFT 1, C4<0001010>, C4<0>, C4<0>, C4<0>;
+L_0000025ff0cee3f0 .arith/sub 7, v0000025ff0cf17d0_0, L_0000025ff0cf7410;
+L_0000025ff0cf7608 .functor BUFT 1, C4<0001011>, C4<0>, C4<0>, C4<0>;
+L_0000025ff0cef110 .arith/sub 7, v0000025ff0cf17d0_0, L_0000025ff0cf7608;
+L_0000025ff0cf7800 .functor BUFT 1, C4<0001100>, C4<0>, C4<0>, C4<0>;
+L_0000025ff0cef7f0 .arith/sub 7, v0000025ff0cf17d0_0, L_0000025ff0cf7800;
+L_0000025ff0cf79f8 .functor BUFT 1, C4<0001101>, C4<0>, C4<0>, C4<0>;
+L_0000025ff0ceddb0 .arith/sub 7, v0000025ff0cf17d0_0, L_0000025ff0cf79f8;
+L_0000025ff0cf7bf0 .functor BUFT 1, C4<0001110>, C4<0>, C4<0>, C4<0>;
+L_0000025ff0d541a0 .arith/sub 7, v0000025ff0cf17d0_0, L_0000025ff0cf7bf0;
+L_0000025ff0cf7de8 .functor BUFT 1, C4<0001111>, C4<0>, C4<0>, C4<0>;
+L_0000025ff0d54060 .arith/sub 7, v0000025ff0cf17d0_0, L_0000025ff0cf7de8;
+L_0000025ff0cf7fe0 .functor BUFT 1, C4<0010000>, C4<0>, C4<0>, C4<0>;
+L_0000025ff0d55460 .arith/sub 7, v0000025ff0cf17d0_0, L_0000025ff0cf7fe0;
+L_0000025ff0cf81d8 .functor BUFT 1, C4<0010001>, C4<0>, C4<0>, C4<0>;
+L_0000025ff0d54100 .arith/sub 7, v0000025ff0cf17d0_0, L_0000025ff0cf81d8;
+L_0000025ff0cf83d0 .functor BUFT 1, C4<0010010>, C4<0>, C4<0>, C4<0>;
+L_0000025ff0d54e20 .arith/sub 7, v0000025ff0cf17d0_0, L_0000025ff0cf83d0;
+L_0000025ff0cf85c8 .functor BUFT 1, C4<0010011>, C4<0>, C4<0>, C4<0>;
+L_0000025ff0d553c0 .arith/sub 7, v0000025ff0cf17d0_0, L_0000025ff0cf85c8;
+L_0000025ff0cf87c0 .functor BUFT 1, C4<0010100>, C4<0>, C4<0>, C4<0>;
+L_0000025ff0d558c0 .arith/sub 7, v0000025ff0cf17d0_0, L_0000025ff0cf87c0;
+L_0000025ff0cf89b8 .functor BUFT 1, C4<0010101>, C4<0>, C4<0>, C4<0>;
+L_0000025ff0d54420 .arith/sub 7, v0000025ff0cf17d0_0, L_0000025ff0cf89b8;
+L_0000025ff0cf8bb0 .functor BUFT 1, C4<0010110>, C4<0>, C4<0>, C4<0>;
+L_0000025ff0d58660 .arith/sub 7, v0000025ff0cf17d0_0, L_0000025ff0cf8bb0;
+L_0000025ff0cf8da8 .functor BUFT 1, C4<0010111>, C4<0>, C4<0>, C4<0>;
+L_0000025ff0d560e0 .arith/sub 7, v0000025ff0cf17d0_0, L_0000025ff0cf8da8;
+L_0000025ff0cf8fa0 .functor BUFT 1, C4<0011000>, C4<0>, C4<0>, C4<0>;
+L_0000025ff0d57260 .arith/sub 7, v0000025ff0cf17d0_0, L_0000025ff0cf8fa0;
+L_0000025ff0cf9198 .functor BUFT 1, C4<0011001>, C4<0>, C4<0>, C4<0>;
+L_0000025ff0d56a40 .arith/sub 7, v0000025ff0cf17d0_0, L_0000025ff0cf9198;
+L_0000025ff0cf9390 .functor BUFT 1, C4<0011010>, C4<0>, C4<0>, C4<0>;
+L_0000025ff0d57080 .arith/sub 7, v0000025ff0cf17d0_0, L_0000025ff0cf9390;
+L_0000025ff0cf9588 .functor BUFT 1, C4<0011011>, C4<0>, C4<0>, C4<0>;
+L_0000025ff0d57d00 .arith/sub 7, v0000025ff0cf17d0_0, L_0000025ff0cf9588;
+L_0000025ff0cf9780 .functor BUFT 1, C4<0011100>, C4<0>, C4<0>, C4<0>;
+L_0000025ff0d582a0 .arith/sub 7, v0000025ff0cf17d0_0, L_0000025ff0cf9780;
+L_0000025ff0cf9978 .functor BUFT 1, C4<0011101>, C4<0>, C4<0>, C4<0>;
+L_0000025ff0d562c0 .arith/sub 7, v0000025ff0cf17d0_0, L_0000025ff0cf9978;
+L_0000025ff0cf9b70 .functor BUFT 1, C4<0011110>, C4<0>, C4<0>, C4<0>;
+L_0000025ff0d594c0 .arith/sub 7, v0000025ff0cf17d0_0, L_0000025ff0cf9b70;
+L_0000025ff0cf9d68 .functor BUFT 1, C4<0011111>, C4<0>, C4<0>, C4<0>;
+L_0000025ff0d59ce0 .arith/sub 7, v0000025ff0cf17d0_0, L_0000025ff0cf9d68;
+S_0000025ff0b62510 .scope generate, "addr_gen_per_port[0]" "addr_gen_per_port[0]" 3 88, 3 88 0, S_0000025ff0c7af30;
+ .timescale 0 0;
+P_0000025ff0c628c0 .param/l "j" 0 3 88, +C4<00>;
+L_0000025ff0c4bbc0 .functor AND 1, L_0000025ff0cf4430, L_0000025ff0cf4930, C4<1>, C4<1>;
+v0000025ff0c6e150_0 .net *"_ivl_10", 0 0, L_0000025ff0cf4930;  1 drivers
+v0000025ff0c6e8d0_0 .net/2u *"_ivl_14", 6 0, L_0000025ff0cf6060;  1 drivers
+L_0000025ff0cf60a8 .functor BUFT 1, C4<0000>, C4<0>, C4<0>, C4<0>;
+v0000025ff0c6eab0_0 .net/2u *"_ivl_16", 3 0, L_0000025ff0cf60a8;  1 drivers
+v0000025ff0c6f690_0 .net *"_ivl_19", 5 0, L_0000025ff0cf3030;  1 drivers
+v0000025ff0c6f410_0 .net *"_ivl_2", 7 0, L_0000025ff0cf3670;  1 drivers
+L_0000025ff0cf60f0 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0c6f230_0 .net/2u *"_ivl_23", 9 0, L_0000025ff0cf60f0;  1 drivers
+L_0000025ff0cf6138 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0c6e970_0 .net/2u *"_ivl_28", 9 0, L_0000025ff0cf6138;  1 drivers
+L_0000025ff0cf5fd0 .functor BUFT 1, C4<0>, C4<0>, C4<0>, C4<0>;
+v0000025ff0c6ef10_0 .net *"_ivl_5", 0 0, L_0000025ff0cf5fd0;  1 drivers
+L_0000025ff0cf6018 .functor BUFT 1, C4<00000000>, C4<0>, C4<0>, C4<0>;
+v0000025ff0c6f730_0 .net/2u *"_ivl_6", 7 0, L_0000025ff0cf6018;  1 drivers
+v0000025ff0c6e790_0 .net *"_ivl_8", 0 0, L_0000025ff0cf4430;  1 drivers
+v0000025ff0c6ec90_0 .net "calculated_sram_addr", 9 0, L_0000025ff0cf49d0;  1 drivers
+v0000025ff0c6efb0_0 .net "current_port_active", 0 0, L_0000025ff0c4bbc0;  1 drivers
+v0000025ff0c6f4b0_0 .net "effective_sram_page_addr", 6 0, L_0000025ff0cf2bd0;  1 drivers
+L_0000025ff0cf5f88 .functor BUFT 1, C4<0111110>, C4<0>, C4<0>, C4<0>;
+v0000025ff0c6fcd0_0 .net "upper_bound_asn_for_port", 6 0, L_0000025ff0cf5f88;  1 drivers
+L_0000025ff0cf3670 .concat [ 7 1 0 0], v0000025ff0cf17d0_0, L_0000025ff0cf5fd0;
+L_0000025ff0cf4430 .cmp/ge 8, L_0000025ff0cf3670, L_0000025ff0cf6018;
+L_0000025ff0cf4930 .cmp/ge 7, L_0000025ff0cf5f88, v0000025ff0cf17d0_0;
+L_0000025ff0cf3030 .part L_0000025ff0cf2bd0, 0, 6;
+L_0000025ff0cf49d0 .concat [ 6 4 0 0], L_0000025ff0cf3030, L_0000025ff0cf60a8;
+L_0000025ff0cf3c10 .functor MUXZ 10, L_0000025ff0cf60f0, L_0000025ff0cf49d0, L_0000025ff0c4bbc0, C4<>;
+L_0000025ff0cf3990 .functor MUXZ 10, L_0000025ff0cf6138, L_0000025ff0cf49d0, L_0000025ff0c4bbc0, C4<>;
+S_0000025ff0b626a0 .scope generate, "addr_gen_per_port[1]" "addr_gen_per_port[1]" 3 88, 3 88 0, S_0000025ff0c7af30;
+ .timescale 0 0;
+P_0000025ff0c62900 .param/l "j" 0 3 88, +C4<01>;
+L_0000025ff0c4bc30 .functor AND 1, L_0000025ff0cf44d0, L_0000025ff0cf30d0, C4<1>, C4<1>;
+v0000025ff0c6ea10_0 .net *"_ivl_10", 0 0, L_0000025ff0cf30d0;  1 drivers
+v0000025ff0c6f7d0_0 .net/2u *"_ivl_14", 6 0, L_0000025ff0cf6258;  1 drivers
+L_0000025ff0cf62a0 .functor BUFT 1, C4<0000>, C4<0>, C4<0>, C4<0>;
+v0000025ff0c6f550_0 .net/2u *"_ivl_16", 3 0, L_0000025ff0cf62a0;  1 drivers
+v0000025ff0c6e830_0 .net *"_ivl_19", 5 0, L_0000025ff0cf3cb0;  1 drivers
+v0000025ff0c6f910_0 .net *"_ivl_2", 7 0, L_0000025ff0cf2630;  1 drivers
+L_0000025ff0cf62e8 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0c6f870_0 .net/2u *"_ivl_23", 9 0, L_0000025ff0cf62e8;  1 drivers
+L_0000025ff0cf6330 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0c6e5b0_0 .net/2u *"_ivl_28", 9 0, L_0000025ff0cf6330;  1 drivers
+L_0000025ff0cf61c8 .functor BUFT 1, C4<0>, C4<0>, C4<0>, C4<0>;
+v0000025ff0c6ed30_0 .net *"_ivl_5", 0 0, L_0000025ff0cf61c8;  1 drivers
+L_0000025ff0cf6210 .functor BUFT 1, C4<00000001>, C4<0>, C4<0>, C4<0>;
+v0000025ff0c6f9b0_0 .net/2u *"_ivl_6", 7 0, L_0000025ff0cf6210;  1 drivers
+v0000025ff0c6fa50_0 .net *"_ivl_8", 0 0, L_0000025ff0cf44d0;  1 drivers
+v0000025ff0c6edd0_0 .net "calculated_sram_addr", 9 0, L_0000025ff0cf2c70;  1 drivers
+v0000025ff0c6e6f0_0 .net "current_port_active", 0 0, L_0000025ff0c4bc30;  1 drivers
+v0000025ff0c6e650_0 .net "effective_sram_page_addr", 6 0, L_0000025ff0cf4570;  1 drivers
+L_0000025ff0cf6180 .functor BUFT 1, C4<0111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0c6faf0_0 .net "upper_bound_asn_for_port", 6 0, L_0000025ff0cf6180;  1 drivers
+L_0000025ff0cf2630 .concat [ 7 1 0 0], v0000025ff0cf17d0_0, L_0000025ff0cf61c8;
+L_0000025ff0cf44d0 .cmp/ge 8, L_0000025ff0cf2630, L_0000025ff0cf6210;
+L_0000025ff0cf30d0 .cmp/ge 7, L_0000025ff0cf6180, v0000025ff0cf17d0_0;
+L_0000025ff0cf3cb0 .part L_0000025ff0cf4570, 0, 6;
+L_0000025ff0cf2c70 .concat [ 6 4 0 0], L_0000025ff0cf3cb0, L_0000025ff0cf62a0;
+L_0000025ff0cf4610 .functor MUXZ 10, L_0000025ff0cf62e8, L_0000025ff0cf2c70, L_0000025ff0c4bc30, C4<>;
+L_0000025ff0cf37b0 .functor MUXZ 10, L_0000025ff0cf6330, L_0000025ff0cf2c70, L_0000025ff0c4bc30, C4<>;
+S_0000025ff0c79e80 .scope generate, "addr_gen_per_port[2]" "addr_gen_per_port[2]" 3 88, 3 88 0, S_0000025ff0c7af30;
+ .timescale 0 0;
+P_0000025ff0c62bc0 .param/l "j" 0 3 88, +C4<010>;
+L_0000025ff0d52380 .functor AND 1, L_0000025ff0cf3df0, L_0000025ff0cf4110, C4<1>, C4<1>;
+v0000025ff0c6e1f0_0 .net *"_ivl_10", 0 0, L_0000025ff0cf4110;  1 drivers
+v0000025ff0c6fc30_0 .net/2u *"_ivl_14", 6 0, L_0000025ff0cf6450;  1 drivers
+L_0000025ff0cf6498 .functor BUFT 1, C4<0000>, C4<0>, C4<0>, C4<0>;
+v0000025ff0c6e330_0 .net/2u *"_ivl_16", 3 0, L_0000025ff0cf6498;  1 drivers
+v0000025ff0c6f050_0 .net *"_ivl_19", 5 0, L_0000025ff0cf2d10;  1 drivers
+v0000025ff0c6fd70_0 .net *"_ivl_2", 7 0, L_0000025ff0cf3d50;  1 drivers
+L_0000025ff0cf64e0 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0c6fe10_0 .net/2u *"_ivl_23", 9 0, L_0000025ff0cf64e0;  1 drivers
+L_0000025ff0cf6528 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0c6feb0_0 .net/2u *"_ivl_28", 9 0, L_0000025ff0cf6528;  1 drivers
+L_0000025ff0cf63c0 .functor BUFT 1, C4<0>, C4<0>, C4<0>, C4<0>;
+v0000025ff0c6fff0_0 .net *"_ivl_5", 0 0, L_0000025ff0cf63c0;  1 drivers
+L_0000025ff0cf6408 .functor BUFT 1, C4<00000010>, C4<0>, C4<0>, C4<0>;
+v0000025ff0c6f0f0_0 .net/2u *"_ivl_6", 7 0, L_0000025ff0cf6408;  1 drivers
+v0000025ff0c6f190_0 .net *"_ivl_8", 0 0, L_0000025ff0cf3df0;  1 drivers
+v0000025ff0c6e3d0_0 .net "calculated_sram_addr", 9 0, L_0000025ff0cf41b0;  1 drivers
+v0000025ff0cd77f0_0 .net "current_port_active", 0 0, L_0000025ff0d52380;  1 drivers
+v0000025ff0cd7570_0 .net "effective_sram_page_addr", 6 0, L_0000025ff0cf4a70;  1 drivers
+L_0000025ff0cf6378 .functor BUFT 1, C4<1000000>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cd6a30_0 .net "upper_bound_asn_for_port", 6 0, L_0000025ff0cf6378;  1 drivers
+L_0000025ff0cf3d50 .concat [ 7 1 0 0], v0000025ff0cf17d0_0, L_0000025ff0cf63c0;
+L_0000025ff0cf3df0 .cmp/ge 8, L_0000025ff0cf3d50, L_0000025ff0cf6408;
+L_0000025ff0cf4110 .cmp/ge 7, L_0000025ff0cf6378, v0000025ff0cf17d0_0;
+L_0000025ff0cf2d10 .part L_0000025ff0cf4a70, 0, 6;
+L_0000025ff0cf41b0 .concat [ 6 4 0 0], L_0000025ff0cf2d10, L_0000025ff0cf6498;
+L_0000025ff0cf26d0 .functor MUXZ 10, L_0000025ff0cf64e0, L_0000025ff0cf41b0, L_0000025ff0d52380, C4<>;
+L_0000025ff0cf4390 .functor MUXZ 10, L_0000025ff0cf6528, L_0000025ff0cf41b0, L_0000025ff0d52380, C4<>;
+S_0000025ff0c7a010 .scope generate, "addr_gen_per_port[3]" "addr_gen_per_port[3]" 3 88, 3 88 0, S_0000025ff0c7af30;
+ .timescale 0 0;
+P_0000025ff0c630c0 .param/l "j" 0 3 88, +C4<011>;
+L_0000025ff0d52540 .functor AND 1, L_0000025ff0cf46b0, L_0000025ff0cf4bb0, C4<1>, C4<1>;
+v0000025ff0cd60d0_0 .net *"_ivl_10", 0 0, L_0000025ff0cf4bb0;  1 drivers
+v0000025ff0cd6f30_0 .net/2u *"_ivl_14", 6 0, L_0000025ff0cf6648;  1 drivers
+L_0000025ff0cf6690 .functor BUFT 1, C4<0000>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cd63f0_0 .net/2u *"_ivl_16", 3 0, L_0000025ff0cf6690;  1 drivers
+v0000025ff0cd76b0_0 .net *"_ivl_19", 5 0, L_0000025ff0cf4750;  1 drivers
+v0000025ff0cd7750_0 .net *"_ivl_2", 7 0, L_0000025ff0cf2db0;  1 drivers
+L_0000025ff0cf66d8 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cd7390_0 .net/2u *"_ivl_23", 9 0, L_0000025ff0cf66d8;  1 drivers
+L_0000025ff0cf6720 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cd7c50_0 .net/2u *"_ivl_28", 9 0, L_0000025ff0cf6720;  1 drivers
+L_0000025ff0cf65b8 .functor BUFT 1, C4<0>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cd6c10_0 .net *"_ivl_5", 0 0, L_0000025ff0cf65b8;  1 drivers
+L_0000025ff0cf6600 .functor BUFT 1, C4<00000011>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cd7bb0_0 .net/2u *"_ivl_6", 7 0, L_0000025ff0cf6600;  1 drivers
+v0000025ff0cd6850_0 .net *"_ivl_8", 0 0, L_0000025ff0cf46b0;  1 drivers
+v0000025ff0cd7070_0 .net "calculated_sram_addr", 9 0, L_0000025ff0cf47f0;  1 drivers
+v0000025ff0cd7cf0_0 .net "current_port_active", 0 0, L_0000025ff0d52540;  1 drivers
+v0000025ff0cd6b70_0 .net "effective_sram_page_addr", 6 0, L_0000025ff0cf4c50;  1 drivers
+L_0000025ff0cf6570 .functor BUFT 1, C4<1000001>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cd5ef0_0 .net "upper_bound_asn_for_port", 6 0, L_0000025ff0cf6570;  1 drivers
+L_0000025ff0cf2db0 .concat [ 7 1 0 0], v0000025ff0cf17d0_0, L_0000025ff0cf65b8;
+L_0000025ff0cf46b0 .cmp/ge 8, L_0000025ff0cf2db0, L_0000025ff0cf6600;
+L_0000025ff0cf4bb0 .cmp/ge 7, L_0000025ff0cf6570, v0000025ff0cf17d0_0;
+L_0000025ff0cf4750 .part L_0000025ff0cf4c50, 0, 6;
+L_0000025ff0cf47f0 .concat [ 6 4 0 0], L_0000025ff0cf4750, L_0000025ff0cf6690;
+L_0000025ff0cf4cf0 .functor MUXZ 10, L_0000025ff0cf66d8, L_0000025ff0cf47f0, L_0000025ff0d52540, C4<>;
+L_0000025ff0cf3170 .functor MUXZ 10, L_0000025ff0cf6720, L_0000025ff0cf47f0, L_0000025ff0d52540, C4<>;
+S_0000025ff0c7a1a0 .scope generate, "addr_gen_per_port[4]" "addr_gen_per_port[4]" 3 88, 3 88 0, S_0000025ff0c7af30;
+ .timescale 0 0;
+P_0000025ff0c62e80 .param/l "j" 0 3 88, +C4<0100>;
+L_0000025ff0d525b0 .functor AND 1, L_0000025ff0cf2810, L_0000025ff0cf28b0, C4<1>, C4<1>;
+v0000025ff0cd68f0_0 .net *"_ivl_10", 0 0, L_0000025ff0cf28b0;  1 drivers
+v0000025ff0cd5f90_0 .net/2u *"_ivl_14", 6 0, L_0000025ff0cf6840;  1 drivers
+L_0000025ff0cf6888 .functor BUFT 1, C4<0000>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cd7430_0 .net/2u *"_ivl_16", 3 0, L_0000025ff0cf6888;  1 drivers
+v0000025ff0cd6d50_0 .net *"_ivl_19", 5 0, L_0000025ff0cf3350;  1 drivers
+v0000025ff0cd6210_0 .net *"_ivl_2", 7 0, L_0000025ff0cf2590;  1 drivers
+L_0000025ff0cf68d0 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cd74d0_0 .net/2u *"_ivl_23", 9 0, L_0000025ff0cf68d0;  1 drivers
+L_0000025ff0cf6918 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cd7610_0 .net/2u *"_ivl_28", 9 0, L_0000025ff0cf6918;  1 drivers
+L_0000025ff0cf67b0 .functor BUFT 1, C4<0>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cd6ad0_0 .net *"_ivl_5", 0 0, L_0000025ff0cf67b0;  1 drivers
+L_0000025ff0cf67f8 .functor BUFT 1, C4<00000100>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cd6170_0 .net/2u *"_ivl_6", 7 0, L_0000025ff0cf67f8;  1 drivers
+v0000025ff0cd62b0_0 .net *"_ivl_8", 0 0, L_0000025ff0cf2810;  1 drivers
+v0000025ff0cd7110_0 .net "calculated_sram_addr", 9 0, L_0000025ff0cf33f0;  1 drivers
+v0000025ff0cd7890_0 .net "current_port_active", 0 0, L_0000025ff0d525b0;  1 drivers
+v0000025ff0cd7930_0 .net "effective_sram_page_addr", 6 0, L_0000025ff0cf2e50;  1 drivers
+L_0000025ff0cf6768 .functor BUFT 1, C4<1000010>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cd6350_0 .net "upper_bound_asn_for_port", 6 0, L_0000025ff0cf6768;  1 drivers
+L_0000025ff0cf2590 .concat [ 7 1 0 0], v0000025ff0cf17d0_0, L_0000025ff0cf67b0;
+L_0000025ff0cf2810 .cmp/ge 8, L_0000025ff0cf2590, L_0000025ff0cf67f8;
+L_0000025ff0cf28b0 .cmp/ge 7, L_0000025ff0cf6768, v0000025ff0cf17d0_0;
+L_0000025ff0cf3350 .part L_0000025ff0cf2e50, 0, 6;
+L_0000025ff0cf33f0 .concat [ 6 4 0 0], L_0000025ff0cf3350, L_0000025ff0cf6888;
+L_0000025ff0cf5010 .functor MUXZ 10, L_0000025ff0cf68d0, L_0000025ff0cf33f0, L_0000025ff0d525b0, C4<>;
+L_0000025ff0cf5330 .functor MUXZ 10, L_0000025ff0cf6918, L_0000025ff0cf33f0, L_0000025ff0d525b0, C4<>;
+S_0000025ff0c7cb00 .scope generate, "addr_gen_per_port[5]" "addr_gen_per_port[5]" 3 88, 3 88 0, S_0000025ff0c7af30;
+ .timescale 0 0;
+P_0000025ff0c62280 .param/l "j" 0 3 88, +C4<0101>;
+L_0000025ff0d520e0 .functor AND 1, L_0000025ff0cf4ed0, L_0000025ff0cf50b0, C4<1>, C4<1>;
+v0000025ff0cd7d90_0 .net *"_ivl_10", 0 0, L_0000025ff0cf50b0;  1 drivers
+v0000025ff0cd79d0_0 .net/2u *"_ivl_14", 6 0, L_0000025ff0cf6a38;  1 drivers
+L_0000025ff0cf6a80 .functor BUFT 1, C4<0000>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cd6710_0 .net/2u *"_ivl_16", 3 0, L_0000025ff0cf6a80;  1 drivers
+v0000025ff0cd6cb0_0 .net *"_ivl_19", 5 0, L_0000025ff0cf4e30;  1 drivers
+v0000025ff0cd7250_0 .net *"_ivl_2", 7 0, L_0000025ff0cf5470;  1 drivers
+L_0000025ff0cf6ac8 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cd6990_0 .net/2u *"_ivl_23", 9 0, L_0000025ff0cf6ac8;  1 drivers
+L_0000025ff0cf6b10 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cd7a70_0 .net/2u *"_ivl_28", 9 0, L_0000025ff0cf6b10;  1 drivers
+L_0000025ff0cf69a8 .functor BUFT 1, C4<0>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cd7b10_0 .net *"_ivl_5", 0 0, L_0000025ff0cf69a8;  1 drivers
+L_0000025ff0cf69f0 .functor BUFT 1, C4<00000101>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cd6030_0 .net/2u *"_ivl_6", 7 0, L_0000025ff0cf69f0;  1 drivers
+v0000025ff0cd6e90_0 .net *"_ivl_8", 0 0, L_0000025ff0cf4ed0;  1 drivers
+v0000025ff0cd6490_0 .net "calculated_sram_addr", 9 0, L_0000025ff0cf4f70;  1 drivers
+v0000025ff0cd6530_0 .net "current_port_active", 0 0, L_0000025ff0d520e0;  1 drivers
+v0000025ff0cd65d0_0 .net "effective_sram_page_addr", 6 0, L_0000025ff0cf4d90;  1 drivers
+L_0000025ff0cf6960 .functor BUFT 1, C4<1000011>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cd6670_0 .net "upper_bound_asn_for_port", 6 0, L_0000025ff0cf6960;  1 drivers
+L_0000025ff0cf5470 .concat [ 7 1 0 0], v0000025ff0cf17d0_0, L_0000025ff0cf69a8;
+L_0000025ff0cf4ed0 .cmp/ge 8, L_0000025ff0cf5470, L_0000025ff0cf69f0;
+L_0000025ff0cf50b0 .cmp/ge 7, L_0000025ff0cf6960, v0000025ff0cf17d0_0;
+L_0000025ff0cf4e30 .part L_0000025ff0cf4d90, 0, 6;
+L_0000025ff0cf4f70 .concat [ 6 4 0 0], L_0000025ff0cf4e30, L_0000025ff0cf6a80;
+L_0000025ff0cf5150 .functor MUXZ 10, L_0000025ff0cf6ac8, L_0000025ff0cf4f70, L_0000025ff0d520e0, C4<>;
+L_0000025ff0cf51f0 .functor MUXZ 10, L_0000025ff0cf6b10, L_0000025ff0cf4f70, L_0000025ff0d520e0, C4<>;
+S_0000025ff0c7cc90 .scope generate, "addr_gen_per_port[6]" "addr_gen_per_port[6]" 3 88, 3 88 0, S_0000025ff0c7af30;
+ .timescale 0 0;
+P_0000025ff0c62480 .param/l "j" 0 3 88, +C4<0110>;
+L_0000025ff0d523f0 .functor AND 1, L_0000025ff0cf53d0, L_0000025ff0cee2b0, C4<1>, C4<1>;
+v0000025ff0cd67b0_0 .net *"_ivl_10", 0 0, L_0000025ff0cee2b0;  1 drivers
+v0000025ff0cd6df0_0 .net/2u *"_ivl_14", 6 0, L_0000025ff0cf6c30;  1 drivers
+L_0000025ff0cf6c78 .functor BUFT 1, C4<0000>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cd6fd0_0 .net/2u *"_ivl_16", 3 0, L_0000025ff0cf6c78;  1 drivers
+v0000025ff0cd71b0_0 .net *"_ivl_19", 5 0, L_0000025ff0cef250;  1 drivers
+v0000025ff0cd72f0_0 .net *"_ivl_2", 7 0, L_0000025ff0cf5290;  1 drivers
+L_0000025ff0cf6cc0 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cdb250_0 .net/2u *"_ivl_23", 9 0, L_0000025ff0cf6cc0;  1 drivers
+L_0000025ff0cf6d08 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cdbbb0_0 .net/2u *"_ivl_28", 9 0, L_0000025ff0cf6d08;  1 drivers
+L_0000025ff0cf6ba0 .functor BUFT 1, C4<0>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cdb750_0 .net *"_ivl_5", 0 0, L_0000025ff0cf6ba0;  1 drivers
+L_0000025ff0cf6be8 .functor BUFT 1, C4<00000110>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cdad50_0 .net/2u *"_ivl_6", 7 0, L_0000025ff0cf6be8;  1 drivers
+v0000025ff0cdbb10_0 .net *"_ivl_8", 0 0, L_0000025ff0cf53d0;  1 drivers
+v0000025ff0cda8f0_0 .net "calculated_sram_addr", 9 0, L_0000025ff0ceec10;  1 drivers
+v0000025ff0cdbc50_0 .net "current_port_active", 0 0, L_0000025ff0d523f0;  1 drivers
+v0000025ff0cdb570_0 .net "effective_sram_page_addr", 6 0, L_0000025ff0cee990;  1 drivers
+L_0000025ff0cf6b58 .functor BUFT 1, C4<1000100>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cdac10_0 .net "upper_bound_asn_for_port", 6 0, L_0000025ff0cf6b58;  1 drivers
+L_0000025ff0cf5290 .concat [ 7 1 0 0], v0000025ff0cf17d0_0, L_0000025ff0cf6ba0;
+L_0000025ff0cf53d0 .cmp/ge 8, L_0000025ff0cf5290, L_0000025ff0cf6be8;
+L_0000025ff0cee2b0 .cmp/ge 7, L_0000025ff0cf6b58, v0000025ff0cf17d0_0;
+L_0000025ff0cef250 .part L_0000025ff0cee990, 0, 6;
+L_0000025ff0ceec10 .concat [ 6 4 0 0], L_0000025ff0cef250, L_0000025ff0cf6c78;
+L_0000025ff0cedbd0 .functor MUXZ 10, L_0000025ff0cf6cc0, L_0000025ff0ceec10, L_0000025ff0d523f0, C4<>;
+L_0000025ff0ceed50 .functor MUXZ 10, L_0000025ff0cf6d08, L_0000025ff0ceec10, L_0000025ff0d523f0, C4<>;
+S_0000025ff0c7ce20 .scope generate, "addr_gen_per_port[7]" "addr_gen_per_port[7]" 3 88, 3 88 0, S_0000025ff0c7af30;
+ .timescale 0 0;
+P_0000025ff0c625c0 .param/l "j" 0 3 88, +C4<0111>;
+L_0000025ff0d52460 .functor AND 1, L_0000025ff0cee710, L_0000025ff0ceecb0, C4<1>, C4<1>;
+v0000025ff0cda990_0 .net *"_ivl_10", 0 0, L_0000025ff0ceecb0;  1 drivers
+v0000025ff0cdb2f0_0 .net/2u *"_ivl_14", 6 0, L_0000025ff0cf6e28;  1 drivers
+L_0000025ff0cf6e70 .functor BUFT 1, C4<0000>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cdbcf0_0 .net/2u *"_ivl_16", 3 0, L_0000025ff0cf6e70;  1 drivers
+v0000025ff0cdbd90_0 .net *"_ivl_19", 5 0, L_0000025ff0cefc50;  1 drivers
+v0000025ff0cdb110_0 .net *"_ivl_2", 7 0, L_0000025ff0cef390;  1 drivers
+L_0000025ff0cf6eb8 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cdb890_0 .net/2u *"_ivl_23", 9 0, L_0000025ff0cf6eb8;  1 drivers
+L_0000025ff0cf6f00 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cdb1b0_0 .net/2u *"_ivl_28", 9 0, L_0000025ff0cf6f00;  1 drivers
+L_0000025ff0cf6d98 .functor BUFT 1, C4<0>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cdadf0_0 .net *"_ivl_5", 0 0, L_0000025ff0cf6d98;  1 drivers
+L_0000025ff0cf6de0 .functor BUFT 1, C4<00000111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cdaad0_0 .net/2u *"_ivl_6", 7 0, L_0000025ff0cf6de0;  1 drivers
+v0000025ff0cdb7f0_0 .net *"_ivl_8", 0 0, L_0000025ff0cee710;  1 drivers
+v0000025ff0cdacb0_0 .net "calculated_sram_addr", 9 0, L_0000025ff0ceead0;  1 drivers
+v0000025ff0cda710_0 .net "current_port_active", 0 0, L_0000025ff0d52460;  1 drivers
+v0000025ff0cdb4d0_0 .net "effective_sram_page_addr", 6 0, L_0000025ff0ceedf0;  1 drivers
+L_0000025ff0cf6d50 .functor BUFT 1, C4<1000101>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cda7b0_0 .net "upper_bound_asn_for_port", 6 0, L_0000025ff0cf6d50;  1 drivers
+L_0000025ff0cef390 .concat [ 7 1 0 0], v0000025ff0cf17d0_0, L_0000025ff0cf6d98;
+L_0000025ff0cee710 .cmp/ge 8, L_0000025ff0cef390, L_0000025ff0cf6de0;
+L_0000025ff0ceecb0 .cmp/ge 7, L_0000025ff0cf6d50, v0000025ff0cf17d0_0;
+L_0000025ff0cefc50 .part L_0000025ff0ceedf0, 0, 6;
+L_0000025ff0ceead0 .concat [ 6 4 0 0], L_0000025ff0cefc50, L_0000025ff0cf6e70;
+L_0000025ff0cefa70 .functor MUXZ 10, L_0000025ff0cf6eb8, L_0000025ff0ceead0, L_0000025ff0d52460, C4<>;
+L_0000025ff0cef2f0 .functor MUXZ 10, L_0000025ff0cf6f00, L_0000025ff0ceead0, L_0000025ff0d52460, C4<>;
+S_0000025ff0c7cfb0 .scope generate, "addr_gen_per_port[8]" "addr_gen_per_port[8]" 3 88, 3 88 0, S_0000025ff0c7af30;
+ .timescale 0 0;
+P_0000025ff0c62980 .param/l "j" 0 3 88, +C4<01000>;
+L_0000025ff0d52150 .functor AND 1, L_0000025ff0cee850, L_0000025ff0cef430, C4<1>, C4<1>;
+v0000025ff0cda850_0 .net *"_ivl_10", 0 0, L_0000025ff0cef430;  1 drivers
+v0000025ff0cdaa30_0 .net/2u *"_ivl_14", 6 0, L_0000025ff0cf7020;  1 drivers
+L_0000025ff0cf7068 .functor BUFT 1, C4<0000>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cdb430_0 .net/2u *"_ivl_16", 3 0, L_0000025ff0cf7068;  1 drivers
+v0000025ff0cdb610_0 .net *"_ivl_19", 5 0, L_0000025ff0cefbb0;  1 drivers
+v0000025ff0cdb6b0_0 .net *"_ivl_2", 7 0, L_0000025ff0ced950;  1 drivers
+L_0000025ff0cf70b0 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cdab70_0 .net/2u *"_ivl_23", 9 0, L_0000025ff0cf70b0;  1 drivers
+L_0000025ff0cf70f8 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cdae90_0 .net/2u *"_ivl_28", 9 0, L_0000025ff0cf70f8;  1 drivers
+L_0000025ff0cf6f90 .functor BUFT 1, C4<0>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cdb930_0 .net *"_ivl_5", 0 0, L_0000025ff0cf6f90;  1 drivers
+L_0000025ff0cf6fd8 .functor BUFT 1, C4<00001000>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cdb9d0_0 .net/2u *"_ivl_6", 7 0, L_0000025ff0cf6fd8;  1 drivers
+v0000025ff0cdba70_0 .net *"_ivl_8", 0 0, L_0000025ff0cee850;  1 drivers
+v0000025ff0cdaf30_0 .net "calculated_sram_addr", 9 0, L_0000025ff0cee8f0;  1 drivers
+v0000025ff0cdafd0_0 .net "current_port_active", 0 0, L_0000025ff0d52150;  1 drivers
+v0000025ff0cdb070_0 .net "effective_sram_page_addr", 6 0, L_0000025ff0ced810;  1 drivers
+L_0000025ff0cf6f48 .functor BUFT 1, C4<1000110>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cdb390_0 .net "upper_bound_asn_for_port", 6 0, L_0000025ff0cf6f48;  1 drivers
+L_0000025ff0ced950 .concat [ 7 1 0 0], v0000025ff0cf17d0_0, L_0000025ff0cf6f90;
+L_0000025ff0cee850 .cmp/ge 8, L_0000025ff0ced950, L_0000025ff0cf6fd8;
+L_0000025ff0cef430 .cmp/ge 7, L_0000025ff0cf6f48, v0000025ff0cf17d0_0;
+L_0000025ff0cefbb0 .part L_0000025ff0ced810, 0, 6;
+L_0000025ff0cee8f0 .concat [ 6 4 0 0], L_0000025ff0cefbb0, L_0000025ff0cf7068;
+L_0000025ff0ceea30 .functor MUXZ 10, L_0000025ff0cf70b0, L_0000025ff0cee8f0, L_0000025ff0d52150, C4<>;
+L_0000025ff0cef4d0 .functor MUXZ 10, L_0000025ff0cf70f8, L_0000025ff0cee8f0, L_0000025ff0d52150, C4<>;
+S_0000025ff0c7d820 .scope generate, "addr_gen_per_port[9]" "addr_gen_per_port[9]" 3 88, 3 88 0, S_0000025ff0c7af30;
+ .timescale 0 0;
+P_0000025ff0c62d80 .param/l "j" 0 3 88, +C4<01001>;
+L_0000025ff0d528c0 .functor AND 1, L_0000025ff0cee7b0, L_0000025ff0cee350, C4<1>, C4<1>;
+v0000025ff0cd9450_0 .net *"_ivl_10", 0 0, L_0000025ff0cee350;  1 drivers
+v0000025ff0cd8730_0 .net/2u *"_ivl_14", 6 0, L_0000025ff0cf7218;  1 drivers
+L_0000025ff0cf7260 .functor BUFT 1, C4<0000>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cda530_0 .net/2u *"_ivl_16", 3 0, L_0000025ff0cf7260;  1 drivers
+v0000025ff0cd9090_0 .net *"_ivl_19", 5 0, L_0000025ff0cef9d0;  1 drivers
+v0000025ff0cd9630_0 .net *"_ivl_2", 7 0, L_0000025ff0cefcf0;  1 drivers
+L_0000025ff0cf72a8 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cd9130_0 .net/2u *"_ivl_23", 9 0, L_0000025ff0cf72a8;  1 drivers
+L_0000025ff0cf72f0 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cd8a50_0 .net/2u *"_ivl_28", 9 0, L_0000025ff0cf72f0;  1 drivers
+L_0000025ff0cf7188 .functor BUFT 1, C4<0>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cd8550_0 .net *"_ivl_5", 0 0, L_0000025ff0cf7188;  1 drivers
+L_0000025ff0cf71d0 .functor BUFT 1, C4<00001001>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cd8190_0 .net/2u *"_ivl_6", 7 0, L_0000025ff0cf71d0;  1 drivers
+v0000025ff0cd94f0_0 .net *"_ivl_8", 0 0, L_0000025ff0cee7b0;  1 drivers
+v0000025ff0cd7fb0_0 .net "calculated_sram_addr", 9 0, L_0000025ff0ceee90;  1 drivers
+v0000025ff0cd9590_0 .net "current_port_active", 0 0, L_0000025ff0d528c0;  1 drivers
+v0000025ff0cd9270_0 .net "effective_sram_page_addr", 6 0, L_0000025ff0ceeb70;  1 drivers
+L_0000025ff0cf7140 .functor BUFT 1, C4<1000111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cd87d0_0 .net "upper_bound_asn_for_port", 6 0, L_0000025ff0cf7140;  1 drivers
+L_0000025ff0cefcf0 .concat [ 7 1 0 0], v0000025ff0cf17d0_0, L_0000025ff0cf7188;
+L_0000025ff0cee7b0 .cmp/ge 8, L_0000025ff0cefcf0, L_0000025ff0cf71d0;
+L_0000025ff0cee350 .cmp/ge 7, L_0000025ff0cf7140, v0000025ff0cf17d0_0;
+L_0000025ff0cef9d0 .part L_0000025ff0ceeb70, 0, 6;
+L_0000025ff0ceee90 .concat [ 6 4 0 0], L_0000025ff0cef9d0, L_0000025ff0cf7260;
+L_0000025ff0cedf90 .functor MUXZ 10, L_0000025ff0cf72a8, L_0000025ff0ceee90, L_0000025ff0d528c0, C4<>;
+L_0000025ff0ced9f0 .functor MUXZ 10, L_0000025ff0cf72f0, L_0000025ff0ceee90, L_0000025ff0d528c0, C4<>;
+S_0000025ff0c7d9b0 .scope generate, "addr_gen_per_port[10]" "addr_gen_per_port[10]" 3 88, 3 88 0, S_0000025ff0c7af30;
+ .timescale 0 0;
+P_0000025ff0c629c0 .param/l "j" 0 3 88, +C4<01010>;
+L_0000025ff0d52cb0 .functor AND 1, L_0000025ff0cef570, L_0000025ff0cee030, C4<1>, C4<1>;
+v0000025ff0cd82d0_0 .net *"_ivl_10", 0 0, L_0000025ff0cee030;  1 drivers
+v0000025ff0cd9ef0_0 .net/2u *"_ivl_14", 6 0, L_0000025ff0cf7410;  1 drivers
+L_0000025ff0cf7458 .functor BUFT 1, C4<0000>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cd9c70_0 .net/2u *"_ivl_16", 3 0, L_0000025ff0cf7458;  1 drivers
+v0000025ff0cd8870_0 .net *"_ivl_19", 5 0, L_0000025ff0ceef30;  1 drivers
+v0000025ff0cd9950_0 .net *"_ivl_2", 7 0, L_0000025ff0cedb30;  1 drivers
+L_0000025ff0cf74a0 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cda5d0_0 .net/2u *"_ivl_23", 9 0, L_0000025ff0cf74a0;  1 drivers
+L_0000025ff0cf74e8 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cd99f0_0 .net/2u *"_ivl_28", 9 0, L_0000025ff0cf74e8;  1 drivers
+L_0000025ff0cf7380 .functor BUFT 1, C4<0>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cd8af0_0 .net *"_ivl_5", 0 0, L_0000025ff0cf7380;  1 drivers
+L_0000025ff0cf73c8 .functor BUFT 1, C4<00001010>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cda170_0 .net/2u *"_ivl_6", 7 0, L_0000025ff0cf73c8;  1 drivers
+v0000025ff0cd9770_0 .net *"_ivl_8", 0 0, L_0000025ff0cef570;  1 drivers
+v0000025ff0cd91d0_0 .net "calculated_sram_addr", 9 0, L_0000025ff0cedc70;  1 drivers
+v0000025ff0cd8050_0 .net "current_port_active", 0 0, L_0000025ff0d52cb0;  1 drivers
+v0000025ff0cd9d10_0 .net "effective_sram_page_addr", 6 0, L_0000025ff0cee3f0;  1 drivers
+L_0000025ff0cf7338 .functor BUFT 1, C4<1001000>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cda210_0 .net "upper_bound_asn_for_port", 6 0, L_0000025ff0cf7338;  1 drivers
+L_0000025ff0cedb30 .concat [ 7 1 0 0], v0000025ff0cf17d0_0, L_0000025ff0cf7380;
+L_0000025ff0cef570 .cmp/ge 8, L_0000025ff0cedb30, L_0000025ff0cf73c8;
+L_0000025ff0cee030 .cmp/ge 7, L_0000025ff0cf7338, v0000025ff0cf17d0_0;
+L_0000025ff0ceef30 .part L_0000025ff0cee3f0, 0, 6;
+L_0000025ff0cedc70 .concat [ 6 4 0 0], L_0000025ff0ceef30, L_0000025ff0cf7458;
+L_0000025ff0cedef0 .functor MUXZ 10, L_0000025ff0cf74a0, L_0000025ff0cedc70, L_0000025ff0d52cb0, C4<>;
+L_0000025ff0ced770 .functor MUXZ 10, L_0000025ff0cf74e8, L_0000025ff0cedc70, L_0000025ff0d52cb0, C4<>;
+S_0000025ff0c7db40 .scope generate, "addr_gen_per_port[11]" "addr_gen_per_port[11]" 3 88, 3 88 0, S_0000025ff0c7af30;
+ .timescale 0 0;
+P_0000025ff0c62a80 .param/l "j" 0 3 88, +C4<01011>;
+L_0000025ff0d52000 .functor AND 1, L_0000025ff0cef070, L_0000025ff0cee0d0, C4<1>, C4<1>;
+v0000025ff0cd8910_0 .net *"_ivl_10", 0 0, L_0000025ff0cee0d0;  1 drivers
+v0000025ff0cd89b0_0 .net/2u *"_ivl_14", 6 0, L_0000025ff0cf7608;  1 drivers
+L_0000025ff0cf7650 .functor BUFT 1, C4<0000>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cd8c30_0 .net/2u *"_ivl_16", 3 0, L_0000025ff0cf7650;  1 drivers
+v0000025ff0cd9310_0 .net *"_ivl_19", 5 0, L_0000025ff0cef1b0;  1 drivers
+v0000025ff0cda490_0 .net *"_ivl_2", 7 0, L_0000025ff0ceefd0;  1 drivers
+L_0000025ff0cf7698 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cd96d0_0 .net/2u *"_ivl_23", 9 0, L_0000025ff0cf7698;  1 drivers
+L_0000025ff0cf76e0 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cda3f0_0 .net/2u *"_ivl_28", 9 0, L_0000025ff0cf76e0;  1 drivers
+L_0000025ff0cf7578 .functor BUFT 1, C4<0>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cd9db0_0 .net *"_ivl_5", 0 0, L_0000025ff0cf7578;  1 drivers
+L_0000025ff0cf75c0 .functor BUFT 1, C4<00001011>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cd93b0_0 .net/2u *"_ivl_6", 7 0, L_0000025ff0cf75c0;  1 drivers
+v0000025ff0cd8370_0 .net *"_ivl_8", 0 0, L_0000025ff0cef070;  1 drivers
+v0000025ff0cd80f0_0 .net "calculated_sram_addr", 9 0, L_0000025ff0ced630;  1 drivers
+v0000025ff0cd98b0_0 .net "current_port_active", 0 0, L_0000025ff0d52000;  1 drivers
+v0000025ff0cd9e50_0 .net "effective_sram_page_addr", 6 0, L_0000025ff0cef110;  1 drivers
+L_0000025ff0cf7530 .functor BUFT 1, C4<1001001>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cd9a90_0 .net "upper_bound_asn_for_port", 6 0, L_0000025ff0cf7530;  1 drivers
+L_0000025ff0ceefd0 .concat [ 7 1 0 0], v0000025ff0cf17d0_0, L_0000025ff0cf7578;
+L_0000025ff0cef070 .cmp/ge 8, L_0000025ff0ceefd0, L_0000025ff0cf75c0;
+L_0000025ff0cee0d0 .cmp/ge 7, L_0000025ff0cf7530, v0000025ff0cf17d0_0;
+L_0000025ff0cef1b0 .part L_0000025ff0cef110, 0, 6;
+L_0000025ff0ced630 .concat [ 6 4 0 0], L_0000025ff0cef1b0, L_0000025ff0cf7650;
+L_0000025ff0cee490 .functor MUXZ 10, L_0000025ff0cf7698, L_0000025ff0ced630, L_0000025ff0d52000, C4<>;
+L_0000025ff0ced6d0 .functor MUXZ 10, L_0000025ff0cf76e0, L_0000025ff0ced630, L_0000025ff0d52000, C4<>;
+S_0000025ff0c7dcd0 .scope generate, "addr_gen_per_port[12]" "addr_gen_per_port[12]" 3 88, 3 88 0, S_0000025ff0c7af30;
+ .timescale 0 0;
+P_0000025ff0c62c80 .param/l "j" 0 3 88, +C4<01100>;
+L_0000025ff0d52bd0 .functor AND 1, L_0000025ff0cede50, L_0000025ff0ceda90, C4<1>, C4<1>;
+v0000025ff0cd9810_0 .net *"_ivl_10", 0 0, L_0000025ff0ceda90;  1 drivers
+v0000025ff0cda670_0 .net/2u *"_ivl_14", 6 0, L_0000025ff0cf7800;  1 drivers
+L_0000025ff0cf7848 .functor BUFT 1, C4<0000>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cd9b30_0 .net/2u *"_ivl_16", 3 0, L_0000025ff0cf7848;  1 drivers
+v0000025ff0cd9bd0_0 .net *"_ivl_19", 5 0, L_0000025ff0cef6b0;  1 drivers
+v0000025ff0cd8b90_0 .net *"_ivl_2", 7 0, L_0000025ff0cef610;  1 drivers
+L_0000025ff0cf7890 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cd8cd0_0 .net/2u *"_ivl_23", 9 0, L_0000025ff0cf7890;  1 drivers
+L_0000025ff0cf78d8 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cd9f90_0 .net/2u *"_ivl_28", 9 0, L_0000025ff0cf78d8;  1 drivers
+L_0000025ff0cf7770 .functor BUFT 1, C4<0>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cd8230_0 .net *"_ivl_5", 0 0, L_0000025ff0cf7770;  1 drivers
+L_0000025ff0cf77b8 .functor BUFT 1, C4<00001100>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cda350_0 .net/2u *"_ivl_6", 7 0, L_0000025ff0cf77b8;  1 drivers
+v0000025ff0cda030_0 .net *"_ivl_8", 0 0, L_0000025ff0cede50;  1 drivers
+v0000025ff0cd8d70_0 .net "calculated_sram_addr", 9 0, L_0000025ff0ced590;  1 drivers
+v0000025ff0cd7f10_0 .net "current_port_active", 0 0, L_0000025ff0d52bd0;  1 drivers
+v0000025ff0cda0d0_0 .net "effective_sram_page_addr", 6 0, L_0000025ff0cef7f0;  1 drivers
+L_0000025ff0cf7728 .functor BUFT 1, C4<1001010>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cda2b0_0 .net "upper_bound_asn_for_port", 6 0, L_0000025ff0cf7728;  1 drivers
+L_0000025ff0cef610 .concat [ 7 1 0 0], v0000025ff0cf17d0_0, L_0000025ff0cf7770;
+L_0000025ff0cede50 .cmp/ge 8, L_0000025ff0cef610, L_0000025ff0cf77b8;
+L_0000025ff0ceda90 .cmp/ge 7, L_0000025ff0cf7728, v0000025ff0cf17d0_0;
+L_0000025ff0cef6b0 .part L_0000025ff0cef7f0, 0, 6;
+L_0000025ff0ced590 .concat [ 6 4 0 0], L_0000025ff0cef6b0, L_0000025ff0cf7848;
+L_0000025ff0cee530 .functor MUXZ 10, L_0000025ff0cf7890, L_0000025ff0ced590, L_0000025ff0d52bd0, C4<>;
+L_0000025ff0cee170 .functor MUXZ 10, L_0000025ff0cf78d8, L_0000025ff0ced590, L_0000025ff0d52bd0, C4<>;
+S_0000025ff0c7de60 .scope generate, "addr_gen_per_port[13]" "addr_gen_per_port[13]" 3 88, 3 88 0, S_0000025ff0c7af30;
+ .timescale 0 0;
+P_0000025ff0c62d00 .param/l "j" 0 3 88, +C4<01101>;
+L_0000025ff0d52c40 .functor AND 1, L_0000025ff0cefb10, L_0000025ff0cef750, C4<1>, C4<1>;
+v0000025ff0cd84b0_0 .net *"_ivl_10", 0 0, L_0000025ff0cef750;  1 drivers
+v0000025ff0cd8410_0 .net/2u *"_ivl_14", 6 0, L_0000025ff0cf79f8;  1 drivers
+L_0000025ff0cf7a40 .functor BUFT 1, C4<0000>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cd85f0_0 .net/2u *"_ivl_16", 3 0, L_0000025ff0cf7a40;  1 drivers
+v0000025ff0cd8690_0 .net *"_ivl_19", 5 0, L_0000025ff0cee670;  1 drivers
+v0000025ff0cd8e10_0 .net *"_ivl_2", 7 0, L_0000025ff0cedd10;  1 drivers
+L_0000025ff0cf7a88 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cd8eb0_0 .net/2u *"_ivl_23", 9 0, L_0000025ff0cf7a88;  1 drivers
+L_0000025ff0cf7ad0 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cd8f50_0 .net/2u *"_ivl_28", 9 0, L_0000025ff0cf7ad0;  1 drivers
+L_0000025ff0cf7968 .functor BUFT 1, C4<0>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cd8ff0_0 .net *"_ivl_5", 0 0, L_0000025ff0cf7968;  1 drivers
+L_0000025ff0cf79b0 .functor BUFT 1, C4<00001101>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cdf510_0 .net/2u *"_ivl_6", 7 0, L_0000025ff0cf79b0;  1 drivers
+v0000025ff0cdfbf0_0 .net *"_ivl_8", 0 0, L_0000025ff0cefb10;  1 drivers
+v0000025ff0cdf470_0 .net "calculated_sram_addr", 9 0, L_0000025ff0cef890;  1 drivers
+v0000025ff0cdf5b0_0 .net "current_port_active", 0 0, L_0000025ff0d52c40;  1 drivers
+v0000025ff0cdfd30_0 .net "effective_sram_page_addr", 6 0, L_0000025ff0ceddb0;  1 drivers
+L_0000025ff0cf7920 .functor BUFT 1, C4<1001011>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce0550_0 .net "upper_bound_asn_for_port", 6 0, L_0000025ff0cf7920;  1 drivers
+L_0000025ff0cedd10 .concat [ 7 1 0 0], v0000025ff0cf17d0_0, L_0000025ff0cf7968;
+L_0000025ff0cefb10 .cmp/ge 8, L_0000025ff0cedd10, L_0000025ff0cf79b0;
+L_0000025ff0cef750 .cmp/ge 7, L_0000025ff0cf7920, v0000025ff0cf17d0_0;
+L_0000025ff0cee670 .part L_0000025ff0ceddb0, 0, 6;
+L_0000025ff0cef890 .concat [ 6 4 0 0], L_0000025ff0cee670, L_0000025ff0cf7a40;
+L_0000025ff0cee5d0 .functor MUXZ 10, L_0000025ff0cf7a88, L_0000025ff0cef890, L_0000025ff0d52c40, C4<>;
+L_0000025ff0cef930 .functor MUXZ 10, L_0000025ff0cf7ad0, L_0000025ff0cef890, L_0000025ff0d52c40, C4<>;
+S_0000025ff0ce2250 .scope generate, "addr_gen_per_port[14]" "addr_gen_per_port[14]" 3 88, 3 88 0, S_0000025ff0c7af30;
+ .timescale 0 0;
+P_0000025ff0c63b80 .param/l "j" 0 3 88, +C4<01110>;
+L_0000025ff0d527e0 .functor AND 1, L_0000025ff0cee210, L_0000025ff0d53840, C4<1>, C4<1>;
+v0000025ff0ce05f0_0 .net *"_ivl_10", 0 0, L_0000025ff0d53840;  1 drivers
+v0000025ff0cdebb0_0 .net/2u *"_ivl_14", 6 0, L_0000025ff0cf7bf0;  1 drivers
+L_0000025ff0cf7c38 .functor BUFT 1, C4<0000>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cde070_0 .net/2u *"_ivl_16", 3 0, L_0000025ff0cf7c38;  1 drivers
+v0000025ff0cdf330_0 .net *"_ivl_19", 5 0, L_0000025ff0d53a20;  1 drivers
+v0000025ff0cdf650_0 .net *"_ivl_2", 7 0, L_0000025ff0ced8b0;  1 drivers
+L_0000025ff0cf7c80 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cdfb50_0 .net/2u *"_ivl_23", 9 0, L_0000025ff0cf7c80;  1 drivers
+L_0000025ff0cf7cc8 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cde750_0 .net/2u *"_ivl_28", 9 0, L_0000025ff0cf7cc8;  1 drivers
+L_0000025ff0cf7b60 .functor BUFT 1, C4<0>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cde890_0 .net *"_ivl_5", 0 0, L_0000025ff0cf7b60;  1 drivers
+L_0000025ff0cf7ba8 .functor BUFT 1, C4<00001110>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cdf6f0_0 .net/2u *"_ivl_6", 7 0, L_0000025ff0cf7ba8;  1 drivers
+v0000025ff0cdf790_0 .net *"_ivl_8", 0 0, L_0000025ff0cee210;  1 drivers
+v0000025ff0cde6b0_0 .net "calculated_sram_addr", 9 0, L_0000025ff0d55140;  1 drivers
+v0000025ff0cdf830_0 .net "current_port_active", 0 0, L_0000025ff0d527e0;  1 drivers
+v0000025ff0cdf010_0 .net "effective_sram_page_addr", 6 0, L_0000025ff0d541a0;  1 drivers
+L_0000025ff0cf7b18 .functor BUFT 1, C4<1001100>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cdfa10_0 .net "upper_bound_asn_for_port", 6 0, L_0000025ff0cf7b18;  1 drivers
+L_0000025ff0ced8b0 .concat [ 7 1 0 0], v0000025ff0cf17d0_0, L_0000025ff0cf7b60;
+L_0000025ff0cee210 .cmp/ge 8, L_0000025ff0ced8b0, L_0000025ff0cf7ba8;
+L_0000025ff0d53840 .cmp/ge 7, L_0000025ff0cf7b18, v0000025ff0cf17d0_0;
+L_0000025ff0d53a20 .part L_0000025ff0d541a0, 0, 6;
+L_0000025ff0d55140 .concat [ 6 4 0 0], L_0000025ff0d53a20, L_0000025ff0cf7c38;
+L_0000025ff0d54740 .functor MUXZ 10, L_0000025ff0cf7c80, L_0000025ff0d55140, L_0000025ff0d527e0, C4<>;
+L_0000025ff0d55500 .functor MUXZ 10, L_0000025ff0cf7cc8, L_0000025ff0d55140, L_0000025ff0d527e0, C4<>;
+S_0000025ff0ce2a20 .scope generate, "addr_gen_per_port[15]" "addr_gen_per_port[15]" 3 88, 3 88 0, S_0000025ff0c7af30;
+ .timescale 0 0;
+P_0000025ff0c63dc0 .param/l "j" 0 3 88, +C4<01111>;
+L_0000025ff0d52e70 .functor AND 1, L_0000025ff0d53de0, L_0000025ff0d54600, C4<1>, C4<1>;
+v0000025ff0cde7f0_0 .net *"_ivl_10", 0 0, L_0000025ff0d54600;  1 drivers
+v0000025ff0cde110_0 .net/2u *"_ivl_14", 6 0, L_0000025ff0cf7de8;  1 drivers
+L_0000025ff0cf7e30 .functor BUFT 1, C4<0000>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cdf0b0_0 .net/2u *"_ivl_16", 3 0, L_0000025ff0cf7e30;  1 drivers
+v0000025ff0cdf970_0 .net *"_ivl_19", 5 0, L_0000025ff0d544c0;  1 drivers
+v0000025ff0cde570_0 .net *"_ivl_2", 7 0, L_0000025ff0d54ec0;  1 drivers
+L_0000025ff0cf7e78 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce04b0_0 .net/2u *"_ivl_23", 9 0, L_0000025ff0cf7e78;  1 drivers
+L_0000025ff0cf7ec0 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cdfdd0_0 .net/2u *"_ivl_28", 9 0, L_0000025ff0cf7ec0;  1 drivers
+L_0000025ff0cf7d58 .functor BUFT 1, C4<0>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cdec50_0 .net *"_ivl_5", 0 0, L_0000025ff0cf7d58;  1 drivers
+L_0000025ff0cf7da0 .functor BUFT 1, C4<00001111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cdf8d0_0 .net/2u *"_ivl_6", 7 0, L_0000025ff0cf7da0;  1 drivers
+v0000025ff0cdf1f0_0 .net *"_ivl_8", 0 0, L_0000025ff0d53de0;  1 drivers
+v0000025ff0cdeed0_0 .net "calculated_sram_addr", 9 0, L_0000025ff0d55280;  1 drivers
+v0000025ff0cdfab0_0 .net "current_port_active", 0 0, L_0000025ff0d52e70;  1 drivers
+v0000025ff0cde930_0 .net "effective_sram_page_addr", 6 0, L_0000025ff0d54060;  1 drivers
+L_0000025ff0cf7d10 .functor BUFT 1, C4<1001101>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cdfc90_0 .net "upper_bound_asn_for_port", 6 0, L_0000025ff0cf7d10;  1 drivers
+L_0000025ff0d54ec0 .concat [ 7 1 0 0], v0000025ff0cf17d0_0, L_0000025ff0cf7d58;
+L_0000025ff0d53de0 .cmp/ge 8, L_0000025ff0d54ec0, L_0000025ff0cf7da0;
+L_0000025ff0d54600 .cmp/ge 7, L_0000025ff0cf7d10, v0000025ff0cf17d0_0;
+L_0000025ff0d544c0 .part L_0000025ff0d54060, 0, 6;
+L_0000025ff0d55280 .concat [ 6 4 0 0], L_0000025ff0d544c0, L_0000025ff0cf7e30;
+L_0000025ff0d54d80 .functor MUXZ 10, L_0000025ff0cf7e78, L_0000025ff0d55280, L_0000025ff0d52e70, C4<>;
+L_0000025ff0d55f00 .functor MUXZ 10, L_0000025ff0cf7ec0, L_0000025ff0d55280, L_0000025ff0d52e70, C4<>;
+S_0000025ff0ce1f30 .scope generate, "addr_gen_per_port[16]" "addr_gen_per_port[16]" 3 88, 3 88 0, S_0000025ff0c7af30;
+ .timescale 0 0;
+P_0000025ff0c63380 .param/l "j" 0 3 88, +C4<010000>;
+L_0000025ff0d52850 .functor AND 1, L_0000025ff0d550a0, L_0000025ff0d53980, C4<1>, C4<1>;
+v0000025ff0cde1b0_0 .net *"_ivl_10", 0 0, L_0000025ff0d53980;  1 drivers
+v0000025ff0cddf30_0 .net/2u *"_ivl_14", 6 0, L_0000025ff0cf7fe0;  1 drivers
+L_0000025ff0cf8028 .functor BUFT 1, C4<0000>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cdecf0_0 .net/2u *"_ivl_16", 3 0, L_0000025ff0cf8028;  1 drivers
+v0000025ff0cdfe70_0 .net *"_ivl_19", 5 0, L_0000025ff0d54240;  1 drivers
+v0000025ff0cde390_0 .net *"_ivl_2", 7 0, L_0000025ff0d53ca0;  1 drivers
+L_0000025ff0cf8070 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cdff10_0 .net/2u *"_ivl_23", 9 0, L_0000025ff0cf8070;  1 drivers
+L_0000025ff0cf80b8 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cdf3d0_0 .net/2u *"_ivl_28", 9 0, L_0000025ff0cf80b8;  1 drivers
+L_0000025ff0cf7f50 .functor BUFT 1, C4<0>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce0690_0 .net *"_ivl_5", 0 0, L_0000025ff0cf7f50;  1 drivers
+L_0000025ff0cf7f98 .functor BUFT 1, C4<00010000>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cdffb0_0 .net/2u *"_ivl_6", 7 0, L_0000025ff0cf7f98;  1 drivers
+v0000025ff0cdee30_0 .net *"_ivl_8", 0 0, L_0000025ff0d550a0;  1 drivers
+v0000025ff0cdef70_0 .net "calculated_sram_addr", 9 0, L_0000025ff0d54560;  1 drivers
+v0000025ff0ce00f0_0 .net "current_port_active", 0 0, L_0000025ff0d52850;  1 drivers
+v0000025ff0cdf150_0 .net "effective_sram_page_addr", 6 0, L_0000025ff0d55460;  1 drivers
+L_0000025ff0cf7f08 .functor BUFT 1, C4<1001110>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cdf290_0 .net "upper_bound_asn_for_port", 6 0, L_0000025ff0cf7f08;  1 drivers
+L_0000025ff0d53ca0 .concat [ 7 1 0 0], v0000025ff0cf17d0_0, L_0000025ff0cf7f50;
+L_0000025ff0d550a0 .cmp/ge 8, L_0000025ff0d53ca0, L_0000025ff0cf7f98;
+L_0000025ff0d53980 .cmp/ge 7, L_0000025ff0cf7f08, v0000025ff0cf17d0_0;
+L_0000025ff0d54240 .part L_0000025ff0d55460, 0, 6;
+L_0000025ff0d54560 .concat [ 6 4 0 0], L_0000025ff0d54240, L_0000025ff0cf8028;
+L_0000025ff0d55dc0 .functor MUXZ 10, L_0000025ff0cf8070, L_0000025ff0d54560, L_0000025ff0d52850, C4<>;
+L_0000025ff0d55820 .functor MUXZ 10, L_0000025ff0cf80b8, L_0000025ff0d54560, L_0000025ff0d52850, C4<>;
+S_0000025ff0ce2570 .scope generate, "addr_gen_per_port[17]" "addr_gen_per_port[17]" 3 88, 3 88 0, S_0000025ff0c7af30;
+ .timescale 0 0;
+P_0000025ff0c63180 .param/l "j" 0 3 88, +C4<010001>;
+L_0000025ff0d52ee0 .functor AND 1, L_0000025ff0d54ce0, L_0000025ff0d542e0, C4<1>, C4<1>;
+v0000025ff0cded90_0 .net *"_ivl_10", 0 0, L_0000025ff0d542e0;  1 drivers
+v0000025ff0cde250_0 .net/2u *"_ivl_14", 6 0, L_0000025ff0cf81d8;  1 drivers
+L_0000025ff0cf8220 .functor BUFT 1, C4<0000>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce0050_0 .net/2u *"_ivl_16", 3 0, L_0000025ff0cf8220;  1 drivers
+v0000025ff0cde9d0_0 .net *"_ivl_19", 5 0, L_0000025ff0d551e0;  1 drivers
+v0000025ff0ce0190_0 .net *"_ivl_2", 7 0, L_0000025ff0d547e0;  1 drivers
+L_0000025ff0cf8268 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce0230_0 .net/2u *"_ivl_23", 9 0, L_0000025ff0cf8268;  1 drivers
+L_0000025ff0cf82b0 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce02d0_0 .net/2u *"_ivl_28", 9 0, L_0000025ff0cf82b0;  1 drivers
+L_0000025ff0cf8148 .functor BUFT 1, C4<0>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cde2f0_0 .net *"_ivl_5", 0 0, L_0000025ff0cf8148;  1 drivers
+L_0000025ff0cf8190 .functor BUFT 1, C4<00010001>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce0370_0 .net/2u *"_ivl_6", 7 0, L_0000025ff0cf8190;  1 drivers
+v0000025ff0ce0410_0 .net *"_ivl_8", 0 0, L_0000025ff0d54ce0;  1 drivers
+v0000025ff0cddfd0_0 .net "calculated_sram_addr", 9 0, L_0000025ff0d54b00;  1 drivers
+v0000025ff0cde430_0 .net "current_port_active", 0 0, L_0000025ff0d52ee0;  1 drivers
+v0000025ff0cde4d0_0 .net "effective_sram_page_addr", 6 0, L_0000025ff0d54100;  1 drivers
+L_0000025ff0cf8100 .functor BUFT 1, C4<1001111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cde610_0 .net "upper_bound_asn_for_port", 6 0, L_0000025ff0cf8100;  1 drivers
+L_0000025ff0d547e0 .concat [ 7 1 0 0], v0000025ff0cf17d0_0, L_0000025ff0cf8148;
+L_0000025ff0d54ce0 .cmp/ge 8, L_0000025ff0d547e0, L_0000025ff0cf8190;
+L_0000025ff0d542e0 .cmp/ge 7, L_0000025ff0cf8100, v0000025ff0cf17d0_0;
+L_0000025ff0d551e0 .part L_0000025ff0d54100, 0, 6;
+L_0000025ff0d54b00 .concat [ 6 4 0 0], L_0000025ff0d551e0, L_0000025ff0cf8220;
+L_0000025ff0d54380 .functor MUXZ 10, L_0000025ff0cf8268, L_0000025ff0d54b00, L_0000025ff0d52ee0, C4<>;
+L_0000025ff0d555a0 .functor MUXZ 10, L_0000025ff0cf82b0, L_0000025ff0d54b00, L_0000025ff0d52ee0, C4<>;
+S_0000025ff0ce2700 .scope generate, "addr_gen_per_port[18]" "addr_gen_per_port[18]" 3 88, 3 88 0, S_0000025ff0c7af30;
+ .timescale 0 0;
+P_0000025ff0c60f40 .param/l "j" 0 3 88, +C4<010010>;
+L_0000025ff0d52930 .functor AND 1, L_0000025ff0d55320, L_0000025ff0d55fa0, C4<1>, C4<1>;
+v0000025ff0cdea70_0 .net *"_ivl_10", 0 0, L_0000025ff0d55fa0;  1 drivers
+v0000025ff0cdeb10_0 .net/2u *"_ivl_14", 6 0, L_0000025ff0cf83d0;  1 drivers
+L_0000025ff0cf8418 .functor BUFT 1, C4<0000>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce1bd0_0 .net/2u *"_ivl_16", 3 0, L_0000025ff0cf8418;  1 drivers
+v0000025ff0ce18b0_0 .net *"_ivl_19", 5 0, L_0000025ff0d54f60;  1 drivers
+v0000025ff0ce14f0_0 .net *"_ivl_2", 7 0, L_0000025ff0d53ac0;  1 drivers
+L_0000025ff0cf8460 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce07d0_0 .net/2u *"_ivl_23", 9 0, L_0000025ff0cf8460;  1 drivers
+L_0000025ff0cf84a8 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce0910_0 .net/2u *"_ivl_28", 9 0, L_0000025ff0cf84a8;  1 drivers
+L_0000025ff0cf8340 .functor BUFT 1, C4<0>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce1310_0 .net *"_ivl_5", 0 0, L_0000025ff0cf8340;  1 drivers
+L_0000025ff0cf8388 .functor BUFT 1, C4<00010010>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce0b90_0 .net/2u *"_ivl_6", 7 0, L_0000025ff0cf8388;  1 drivers
+v0000025ff0ce1d10_0 .net *"_ivl_8", 0 0, L_0000025ff0d55320;  1 drivers
+v0000025ff0ce09b0_0 .net "calculated_sram_addr", 9 0, L_0000025ff0d54880;  1 drivers
+v0000025ff0ce0c30_0 .net "current_port_active", 0 0, L_0000025ff0d52930;  1 drivers
+v0000025ff0ce1450_0 .net "effective_sram_page_addr", 6 0, L_0000025ff0d54e20;  1 drivers
+L_0000025ff0cf82f8 .functor BUFT 1, C4<1010000>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce11d0_0 .net "upper_bound_asn_for_port", 6 0, L_0000025ff0cf82f8;  1 drivers
+L_0000025ff0d53ac0 .concat [ 7 1 0 0], v0000025ff0cf17d0_0, L_0000025ff0cf8340;
+L_0000025ff0d55320 .cmp/ge 8, L_0000025ff0d53ac0, L_0000025ff0cf8388;
+L_0000025ff0d55fa0 .cmp/ge 7, L_0000025ff0cf82f8, v0000025ff0cf17d0_0;
+L_0000025ff0d54f60 .part L_0000025ff0d54e20, 0, 6;
+L_0000025ff0d54880 .concat [ 6 4 0 0], L_0000025ff0d54f60, L_0000025ff0cf8418;
+L_0000025ff0d55b40 .functor MUXZ 10, L_0000025ff0cf8460, L_0000025ff0d54880, L_0000025ff0d52930, C4<>;
+L_0000025ff0d54a60 .functor MUXZ 10, L_0000025ff0cf84a8, L_0000025ff0d54880, L_0000025ff0d52930, C4<>;
+S_0000025ff0ce2bb0 .scope generate, "addr_gen_per_port[19]" "addr_gen_per_port[19]" 3 88, 3 88 0, S_0000025ff0c7af30;
+ .timescale 0 0;
+P_0000025ff0c618c0 .param/l "j" 0 3 88, +C4<010011>;
+L_0000025ff0d521c0 .functor AND 1, L_0000025ff0d55000, L_0000025ff0d55780, C4<1>, C4<1>;
+v0000025ff0ce0870_0 .net *"_ivl_10", 0 0, L_0000025ff0d55780;  1 drivers
+v0000025ff0ce0cd0_0 .net/2u *"_ivl_14", 6 0, L_0000025ff0cf85c8;  1 drivers
+L_0000025ff0cf8610 .functor BUFT 1, C4<0000>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce1b30_0 .net/2u *"_ivl_16", 3 0, L_0000025ff0cf8610;  1 drivers
+v0000025ff0ce1270_0 .net *"_ivl_19", 5 0, L_0000025ff0d55640;  1 drivers
+v0000025ff0ce0d70_0 .net *"_ivl_2", 7 0, L_0000025ff0d54920;  1 drivers
+L_0000025ff0cf8658 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce0f50_0 .net/2u *"_ivl_23", 9 0, L_0000025ff0cf8658;  1 drivers
+L_0000025ff0cf86a0 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce0a50_0 .net/2u *"_ivl_28", 9 0, L_0000025ff0cf86a0;  1 drivers
+L_0000025ff0cf8538 .functor BUFT 1, C4<0>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce0ff0_0 .net *"_ivl_5", 0 0, L_0000025ff0cf8538;  1 drivers
+L_0000025ff0cf8580 .functor BUFT 1, C4<00010011>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce13b0_0 .net/2u *"_ivl_6", 7 0, L_0000025ff0cf8580;  1 drivers
+v0000025ff0ce1770_0 .net *"_ivl_8", 0 0, L_0000025ff0d55000;  1 drivers
+v0000025ff0ce1590_0 .net "calculated_sram_addr", 9 0, L_0000025ff0d54ba0;  1 drivers
+v0000025ff0ce1630_0 .net "current_port_active", 0 0, L_0000025ff0d521c0;  1 drivers
+v0000025ff0ce1950_0 .net "effective_sram_page_addr", 6 0, L_0000025ff0d553c0;  1 drivers
+L_0000025ff0cf84f0 .functor BUFT 1, C4<1010001>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce1db0_0 .net "upper_bound_asn_for_port", 6 0, L_0000025ff0cf84f0;  1 drivers
+L_0000025ff0d54920 .concat [ 7 1 0 0], v0000025ff0cf17d0_0, L_0000025ff0cf8538;
+L_0000025ff0d55000 .cmp/ge 8, L_0000025ff0d54920, L_0000025ff0cf8580;
+L_0000025ff0d55780 .cmp/ge 7, L_0000025ff0cf84f0, v0000025ff0cf17d0_0;
+L_0000025ff0d55640 .part L_0000025ff0d553c0, 0, 6;
+L_0000025ff0d54ba0 .concat [ 6 4 0 0], L_0000025ff0d55640, L_0000025ff0cf8610;
+L_0000025ff0d549c0 .functor MUXZ 10, L_0000025ff0cf8658, L_0000025ff0d54ba0, L_0000025ff0d521c0, C4<>;
+L_0000025ff0d53b60 .functor MUXZ 10, L_0000025ff0cf86a0, L_0000025ff0d54ba0, L_0000025ff0d521c0, C4<>;
+S_0000025ff0ce20c0 .scope generate, "addr_gen_per_port[20]" "addr_gen_per_port[20]" 3 88, 3 88 0, S_0000025ff0c7af30;
+ .timescale 0 0;
+P_0000025ff0c61440 .param/l "j" 0 3 88, +C4<010100>;
+L_0000025ff0d52230 .functor AND 1, L_0000025ff0d55a00, L_0000025ff0d53c00, C4<1>, C4<1>;
+v0000025ff0ce1c70_0 .net *"_ivl_10", 0 0, L_0000025ff0d53c00;  1 drivers
+v0000025ff0ce16d0_0 .net/2u *"_ivl_14", 6 0, L_0000025ff0cf87c0;  1 drivers
+L_0000025ff0cf8808 .functor BUFT 1, C4<0000>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce1810_0 .net/2u *"_ivl_16", 3 0, L_0000025ff0cf8808;  1 drivers
+v0000025ff0ce1090_0 .net *"_ivl_19", 5 0, L_0000025ff0d538e0;  1 drivers
+v0000025ff0ce0730_0 .net *"_ivl_2", 7 0, L_0000025ff0d556e0;  1 drivers
+L_0000025ff0cf8850 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce1130_0 .net/2u *"_ivl_23", 9 0, L_0000025ff0cf8850;  1 drivers
+L_0000025ff0cf8898 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce19f0_0 .net/2u *"_ivl_28", 9 0, L_0000025ff0cf8898;  1 drivers
+L_0000025ff0cf8730 .functor BUFT 1, C4<0>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce1a90_0 .net *"_ivl_5", 0 0, L_0000025ff0cf8730;  1 drivers
+L_0000025ff0cf8778 .functor BUFT 1, C4<00010100>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce0af0_0 .net/2u *"_ivl_6", 7 0, L_0000025ff0cf8778;  1 drivers
+v0000025ff0ce0e10_0 .net *"_ivl_8", 0 0, L_0000025ff0d55a00;  1 drivers
+v0000025ff0ce0eb0_0 .net "calculated_sram_addr", 9 0, L_0000025ff0d55960;  1 drivers
+v0000025ff0ce5390_0 .net "current_port_active", 0 0, L_0000025ff0d52230;  1 drivers
+v0000025ff0ce4d50_0 .net "effective_sram_page_addr", 6 0, L_0000025ff0d558c0;  1 drivers
+L_0000025ff0cf86e8 .functor BUFT 1, C4<1010010>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce4670_0 .net "upper_bound_asn_for_port", 6 0, L_0000025ff0cf86e8;  1 drivers
+L_0000025ff0d556e0 .concat [ 7 1 0 0], v0000025ff0cf17d0_0, L_0000025ff0cf8730;
+L_0000025ff0d55a00 .cmp/ge 8, L_0000025ff0d556e0, L_0000025ff0cf8778;
+L_0000025ff0d53c00 .cmp/ge 7, L_0000025ff0cf86e8, v0000025ff0cf17d0_0;
+L_0000025ff0d538e0 .part L_0000025ff0d558c0, 0, 6;
+L_0000025ff0d55960 .concat [ 6 4 0 0], L_0000025ff0d538e0, L_0000025ff0cf8808;
+L_0000025ff0d55aa0 .functor MUXZ 10, L_0000025ff0cf8850, L_0000025ff0d55960, L_0000025ff0d52230, C4<>;
+L_0000025ff0d54c40 .functor MUXZ 10, L_0000025ff0cf8898, L_0000025ff0d55960, L_0000025ff0d52230, C4<>;
+S_0000025ff0ce23e0 .scope generate, "addr_gen_per_port[21]" "addr_gen_per_port[21]" 3 88, 3 88 0, S_0000025ff0c7af30;
+ .timescale 0 0;
+P_0000025ff0c61680 .param/l "j" 0 3 88, +C4<010101>;
+L_0000025ff0d522a0 .functor AND 1, L_0000025ff0d546a0, L_0000025ff0d55be0, C4<1>, C4<1>;
+v0000025ff0ce3770_0 .net *"_ivl_10", 0 0, L_0000025ff0d55be0;  1 drivers
+v0000025ff0ce3130_0 .net/2u *"_ivl_14", 6 0, L_0000025ff0cf89b8;  1 drivers
+L_0000025ff0cf8a00 .functor BUFT 1, C4<0000>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce4030_0 .net/2u *"_ivl_16", 3 0, L_0000025ff0cf8a00;  1 drivers
+v0000025ff0ce4990_0 .net *"_ivl_19", 5 0, L_0000025ff0d55c80;  1 drivers
+v0000025ff0ce3590_0 .net *"_ivl_2", 7 0, L_0000025ff0d53f20;  1 drivers
+L_0000025ff0cf8a48 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce54d0_0 .net/2u *"_ivl_23", 9 0, L_0000025ff0cf8a48;  1 drivers
+L_0000025ff0cf8a90 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce4df0_0 .net/2u *"_ivl_28", 9 0, L_0000025ff0cf8a90;  1 drivers
+L_0000025ff0cf8928 .functor BUFT 1, C4<0>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce3c70_0 .net *"_ivl_5", 0 0, L_0000025ff0cf8928;  1 drivers
+L_0000025ff0cf8970 .functor BUFT 1, C4<00010101>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce48f0_0 .net/2u *"_ivl_6", 7 0, L_0000025ff0cf8970;  1 drivers
+v0000025ff0ce4210_0 .net *"_ivl_8", 0 0, L_0000025ff0d546a0;  1 drivers
+v0000025ff0ce3ef0_0 .net "calculated_sram_addr", 9 0, L_0000025ff0d55d20;  1 drivers
+v0000025ff0ce4710_0 .net "current_port_active", 0 0, L_0000025ff0d522a0;  1 drivers
+v0000025ff0ce38b0_0 .net "effective_sram_page_addr", 6 0, L_0000025ff0d54420;  1 drivers
+L_0000025ff0cf88e0 .functor BUFT 1, C4<1010011>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce47b0_0 .net "upper_bound_asn_for_port", 6 0, L_0000025ff0cf88e0;  1 drivers
+L_0000025ff0d53f20 .concat [ 7 1 0 0], v0000025ff0cf17d0_0, L_0000025ff0cf8928;
+L_0000025ff0d546a0 .cmp/ge 8, L_0000025ff0d53f20, L_0000025ff0cf8970;
+L_0000025ff0d55be0 .cmp/ge 7, L_0000025ff0cf88e0, v0000025ff0cf17d0_0;
+L_0000025ff0d55c80 .part L_0000025ff0d54420, 0, 6;
+L_0000025ff0d55d20 .concat [ 6 4 0 0], L_0000025ff0d55c80, L_0000025ff0cf8a00;
+L_0000025ff0d55e60 .functor MUXZ 10, L_0000025ff0cf8a48, L_0000025ff0d55d20, L_0000025ff0d522a0, C4<>;
+L_0000025ff0d53d40 .functor MUXZ 10, L_0000025ff0cf8a90, L_0000025ff0d55d20, L_0000025ff0d522a0, C4<>;
+S_0000025ff0ce2890 .scope generate, "addr_gen_per_port[22]" "addr_gen_per_port[22]" 3 88, 3 88 0, S_0000025ff0c7af30;
+ .timescale 0 0;
+P_0000025ff0c611c0 .param/l "j" 0 3 88, +C4<010110>;
+L_0000025ff0d52620 .functor AND 1, L_0000025ff0d53fc0, L_0000025ff0d57620, C4<1>, C4<1>;
+v0000025ff0ce42b0_0 .net *"_ivl_10", 0 0, L_0000025ff0d57620;  1 drivers
+v0000025ff0ce4c10_0 .net/2u *"_ivl_14", 6 0, L_0000025ff0cf8bb0;  1 drivers
+L_0000025ff0cf8bf8 .functor BUFT 1, C4<0000>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce4850_0 .net/2u *"_ivl_16", 3 0, L_0000025ff0cf8bf8;  1 drivers
+v0000025ff0ce4e90_0 .net *"_ivl_19", 5 0, L_0000025ff0d57da0;  1 drivers
+v0000025ff0ce3810_0 .net *"_ivl_2", 7 0, L_0000025ff0d53e80;  1 drivers
+L_0000025ff0cf8c40 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce5250_0 .net/2u *"_ivl_23", 9 0, L_0000025ff0cf8c40;  1 drivers
+L_0000025ff0cf8c88 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce34f0_0 .net/2u *"_ivl_28", 9 0, L_0000025ff0cf8c88;  1 drivers
+L_0000025ff0cf8b20 .functor BUFT 1, C4<0>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce4530_0 .net *"_ivl_5", 0 0, L_0000025ff0cf8b20;  1 drivers
+L_0000025ff0cf8b68 .functor BUFT 1, C4<00010110>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce3310_0 .net/2u *"_ivl_6", 7 0, L_0000025ff0cf8b68;  1 drivers
+v0000025ff0ce4a30_0 .net *"_ivl_8", 0 0, L_0000025ff0d53fc0;  1 drivers
+v0000025ff0ce3950_0 .net "calculated_sram_addr", 9 0, L_0000025ff0d56180;  1 drivers
+v0000025ff0ce3f90_0 .net "current_port_active", 0 0, L_0000025ff0d52620;  1 drivers
+v0000025ff0ce3630_0 .net "effective_sram_page_addr", 6 0, L_0000025ff0d58660;  1 drivers
+L_0000025ff0cf8ad8 .functor BUFT 1, C4<1010100>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce52f0_0 .net "upper_bound_asn_for_port", 6 0, L_0000025ff0cf8ad8;  1 drivers
+L_0000025ff0d53e80 .concat [ 7 1 0 0], v0000025ff0cf17d0_0, L_0000025ff0cf8b20;
+L_0000025ff0d53fc0 .cmp/ge 8, L_0000025ff0d53e80, L_0000025ff0cf8b68;
+L_0000025ff0d57620 .cmp/ge 7, L_0000025ff0cf8ad8, v0000025ff0cf17d0_0;
+L_0000025ff0d57da0 .part L_0000025ff0d58660, 0, 6;
+L_0000025ff0d56180 .concat [ 6 4 0 0], L_0000025ff0d57da0, L_0000025ff0cf8bf8;
+L_0000025ff0d565e0 .functor MUXZ 10, L_0000025ff0cf8c40, L_0000025ff0d56180, L_0000025ff0d52620, C4<>;
+L_0000025ff0d576c0 .functor MUXZ 10, L_0000025ff0cf8c88, L_0000025ff0d56180, L_0000025ff0d52620, C4<>;
+S_0000025ff0ce2d40 .scope generate, "addr_gen_per_port[23]" "addr_gen_per_port[23]" 3 88, 3 88 0, S_0000025ff0c7af30;
+ .timescale 0 0;
+P_0000025ff0c61d40 .param/l "j" 0 3 88, +C4<010111>;
+L_0000025ff0d529a0 .functor AND 1, L_0000025ff0d57b20, L_0000025ff0d578a0, C4<1>, C4<1>;
+v0000025ff0ce36d0_0 .net *"_ivl_10", 0 0, L_0000025ff0d578a0;  1 drivers
+v0000025ff0ce5610_0 .net/2u *"_ivl_14", 6 0, L_0000025ff0cf8da8;  1 drivers
+L_0000025ff0cf8df0 .functor BUFT 1, C4<0000>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce3450_0 .net/2u *"_ivl_16", 3 0, L_0000025ff0cf8df0;  1 drivers
+v0000025ff0ce39f0_0 .net *"_ivl_19", 5 0, L_0000025ff0d57c60;  1 drivers
+v0000025ff0ce5430_0 .net *"_ivl_2", 7 0, L_0000025ff0d58700;  1 drivers
+L_0000025ff0cf8e38 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce3a90_0 .net/2u *"_ivl_23", 9 0, L_0000025ff0cf8e38;  1 drivers
+L_0000025ff0cf8e80 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce4f30_0 .net/2u *"_ivl_28", 9 0, L_0000025ff0cf8e80;  1 drivers
+L_0000025ff0cf8d18 .functor BUFT 1, C4<0>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce4fd0_0 .net *"_ivl_5", 0 0, L_0000025ff0cf8d18;  1 drivers
+L_0000025ff0cf8d60 .functor BUFT 1, C4<00010111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce3e50_0 .net/2u *"_ivl_6", 7 0, L_0000025ff0cf8d60;  1 drivers
+v0000025ff0ce33b0_0 .net *"_ivl_8", 0 0, L_0000025ff0d57b20;  1 drivers
+v0000025ff0ce5070_0 .net "calculated_sram_addr", 9 0, L_0000025ff0d56720;  1 drivers
+v0000025ff0ce40d0_0 .net "current_port_active", 0 0, L_0000025ff0d529a0;  1 drivers
+v0000025ff0ce31d0_0 .net "effective_sram_page_addr", 6 0, L_0000025ff0d560e0;  1 drivers
+L_0000025ff0cf8cd0 .functor BUFT 1, C4<1010101>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce3270_0 .net "upper_bound_asn_for_port", 6 0, L_0000025ff0cf8cd0;  1 drivers
+L_0000025ff0d58700 .concat [ 7 1 0 0], v0000025ff0cf17d0_0, L_0000025ff0cf8d18;
+L_0000025ff0d57b20 .cmp/ge 8, L_0000025ff0d58700, L_0000025ff0cf8d60;
+L_0000025ff0d578a0 .cmp/ge 7, L_0000025ff0cf8cd0, v0000025ff0cf17d0_0;
+L_0000025ff0d57c60 .part L_0000025ff0d560e0, 0, 6;
+L_0000025ff0d56720 .concat [ 6 4 0 0], L_0000025ff0d57c60, L_0000025ff0cf8df0;
+L_0000025ff0d56540 .functor MUXZ 10, L_0000025ff0cf8e38, L_0000025ff0d56720, L_0000025ff0d529a0, C4<>;
+L_0000025ff0d56cc0 .functor MUXZ 10, L_0000025ff0cf8e80, L_0000025ff0d56720, L_0000025ff0d529a0, C4<>;
+S_0000025ff0ce8b70 .scope generate, "addr_gen_per_port[24]" "addr_gen_per_port[24]" 3 88, 3 88 0, S_0000025ff0c7af30;
+ .timescale 0 0;
+P_0000025ff0c61480 .param/l "j" 0 3 88, +C4<011000>;
+L_0000025ff0d52070 .functor AND 1, L_0000025ff0d573a0, L_0000025ff0d56860, C4<1>, C4<1>;
+v0000025ff0ce5570_0 .net *"_ivl_10", 0 0, L_0000025ff0d56860;  1 drivers
+v0000025ff0ce4170_0 .net/2u *"_ivl_14", 6 0, L_0000025ff0cf8fa0;  1 drivers
+L_0000025ff0cf8fe8 .functor BUFT 1, C4<0000>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce3b30_0 .net/2u *"_ivl_16", 3 0, L_0000025ff0cf8fe8;  1 drivers
+v0000025ff0ce3bd0_0 .net *"_ivl_19", 5 0, L_0000025ff0d56e00;  1 drivers
+v0000025ff0ce2ff0_0 .net *"_ivl_2", 7 0, L_0000025ff0d57e40;  1 drivers
+L_0000025ff0cf9030 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce4ad0_0 .net/2u *"_ivl_23", 9 0, L_0000025ff0cf9030;  1 drivers
+L_0000025ff0cf9078 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce3d10_0 .net/2u *"_ivl_28", 9 0, L_0000025ff0cf9078;  1 drivers
+L_0000025ff0cf8f10 .functor BUFT 1, C4<0>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce56b0_0 .net *"_ivl_5", 0 0, L_0000025ff0cf8f10;  1 drivers
+L_0000025ff0cf8f58 .functor BUFT 1, C4<00011000>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce3db0_0 .net/2u *"_ivl_6", 7 0, L_0000025ff0cf8f58;  1 drivers
+v0000025ff0ce4cb0_0 .net *"_ivl_8", 0 0, L_0000025ff0d573a0;  1 drivers
+v0000025ff0ce2f50_0 .net "calculated_sram_addr", 9 0, L_0000025ff0d57760;  1 drivers
+v0000025ff0ce4350_0 .net "current_port_active", 0 0, L_0000025ff0d52070;  1 drivers
+v0000025ff0ce5110_0 .net "effective_sram_page_addr", 6 0, L_0000025ff0d57260;  1 drivers
+L_0000025ff0cf8ec8 .functor BUFT 1, C4<1010110>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce43f0_0 .net "upper_bound_asn_for_port", 6 0, L_0000025ff0cf8ec8;  1 drivers
+L_0000025ff0d57e40 .concat [ 7 1 0 0], v0000025ff0cf17d0_0, L_0000025ff0cf8f10;
+L_0000025ff0d573a0 .cmp/ge 8, L_0000025ff0d57e40, L_0000025ff0cf8f58;
+L_0000025ff0d56860 .cmp/ge 7, L_0000025ff0cf8ec8, v0000025ff0cf17d0_0;
+L_0000025ff0d56e00 .part L_0000025ff0d57260, 0, 6;
+L_0000025ff0d57760 .concat [ 6 4 0 0], L_0000025ff0d56e00, L_0000025ff0cf8fe8;
+L_0000025ff0d574e0 .functor MUXZ 10, L_0000025ff0cf9030, L_0000025ff0d57760, L_0000025ff0d52070, C4<>;
+L_0000025ff0d57580 .functor MUXZ 10, L_0000025ff0cf9078, L_0000025ff0d57760, L_0000025ff0d52070, C4<>;
+S_0000025ff0ce7d60 .scope generate, "addr_gen_per_port[25]" "addr_gen_per_port[25]" 3 88, 3 88 0, S_0000025ff0c7af30;
+ .timescale 0 0;
+P_0000025ff0c61d80 .param/l "j" 0 3 88, +C4<011001>;
+L_0000025ff0d52d20 .functor AND 1, L_0000025ff0d56fe0, L_0000025ff0d57940, C4<1>, C4<1>;
+v0000025ff0ce4b70_0 .net *"_ivl_10", 0 0, L_0000025ff0d57940;  1 drivers
+v0000025ff0ce51b0_0 .net/2u *"_ivl_14", 6 0, L_0000025ff0cf9198;  1 drivers
+L_0000025ff0cf91e0 .functor BUFT 1, C4<0000>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce4490_0 .net/2u *"_ivl_16", 3 0, L_0000025ff0cf91e0;  1 drivers
+v0000025ff0ce45d0_0 .net *"_ivl_19", 5 0, L_0000025ff0d57ee0;  1 drivers
+v0000025ff0ce3090_0 .net *"_ivl_2", 7 0, L_0000025ff0d57800;  1 drivers
+L_0000025ff0cf9228 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce6b50_0 .net/2u *"_ivl_23", 9 0, L_0000025ff0cf9228;  1 drivers
+L_0000025ff0cf9270 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce5f70_0 .net/2u *"_ivl_28", 9 0, L_0000025ff0cf9270;  1 drivers
+L_0000025ff0cf9108 .functor BUFT 1, C4<0>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce6150_0 .net *"_ivl_5", 0 0, L_0000025ff0cf9108;  1 drivers
+L_0000025ff0cf9150 .functor BUFT 1, C4<00011001>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce6470_0 .net/2u *"_ivl_6", 7 0, L_0000025ff0cf9150;  1 drivers
+v0000025ff0ce5ed0_0 .net *"_ivl_8", 0 0, L_0000025ff0d56fe0;  1 drivers
+v0000025ff0ce61f0_0 .net "calculated_sram_addr", 9 0, L_0000025ff0d58200;  1 drivers
+v0000025ff0ce6290_0 .net "current_port_active", 0 0, L_0000025ff0d52d20;  1 drivers
+v0000025ff0ce60b0_0 .net "effective_sram_page_addr", 6 0, L_0000025ff0d56a40;  1 drivers
+L_0000025ff0cf90c0 .functor BUFT 1, C4<1010111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce65b0_0 .net "upper_bound_asn_for_port", 6 0, L_0000025ff0cf90c0;  1 drivers
+L_0000025ff0d57800 .concat [ 7 1 0 0], v0000025ff0cf17d0_0, L_0000025ff0cf9108;
+L_0000025ff0d56fe0 .cmp/ge 8, L_0000025ff0d57800, L_0000025ff0cf9150;
+L_0000025ff0d57940 .cmp/ge 7, L_0000025ff0cf90c0, v0000025ff0cf17d0_0;
+L_0000025ff0d57ee0 .part L_0000025ff0d56a40, 0, 6;
+L_0000025ff0d58200 .concat [ 6 4 0 0], L_0000025ff0d57ee0, L_0000025ff0cf91e0;
+L_0000025ff0d56ae0 .functor MUXZ 10, L_0000025ff0cf9228, L_0000025ff0d58200, L_0000025ff0d52d20, C4<>;
+L_0000025ff0d56b80 .functor MUXZ 10, L_0000025ff0cf9270, L_0000025ff0d58200, L_0000025ff0d52d20, C4<>;
+S_0000025ff0ce8d00 .scope generate, "addr_gen_per_port[26]" "addr_gen_per_port[26]" 3 88, 3 88 0, S_0000025ff0c7af30;
+ .timescale 0 0;
+P_0000025ff0c61b80 .param/l "j" 0 3 88, +C4<011010>;
+L_0000025ff0d52a10 .functor AND 1, L_0000025ff0d57a80, L_0000025ff0d56040, C4<1>, C4<1>;
+v0000025ff0ce5b10_0 .net *"_ivl_10", 0 0, L_0000025ff0d56040;  1 drivers
+v0000025ff0ce6830_0 .net/2u *"_ivl_14", 6 0, L_0000025ff0cf9390;  1 drivers
+L_0000025ff0cf93d8 .functor BUFT 1, C4<0000>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce66f0_0 .net/2u *"_ivl_16", 3 0, L_0000025ff0cf93d8;  1 drivers
+v0000025ff0ce6510_0 .net *"_ivl_19", 5 0, L_0000025ff0d58340;  1 drivers
+v0000025ff0ce6790_0 .net *"_ivl_2", 7 0, L_0000025ff0d587a0;  1 drivers
+L_0000025ff0cf9420 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce6330_0 .net/2u *"_ivl_23", 9 0, L_0000025ff0cf9420;  1 drivers
+L_0000025ff0cf9468 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce68d0_0 .net/2u *"_ivl_28", 9 0, L_0000025ff0cf9468;  1 drivers
+L_0000025ff0cf9300 .functor BUFT 1, C4<0>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce63d0_0 .net *"_ivl_5", 0 0, L_0000025ff0cf9300;  1 drivers
+L_0000025ff0cf9348 .functor BUFT 1, C4<00011010>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce5a70_0 .net/2u *"_ivl_6", 7 0, L_0000025ff0cf9348;  1 drivers
+v0000025ff0ce5cf0_0 .net *"_ivl_8", 0 0, L_0000025ff0d57a80;  1 drivers
+v0000025ff0ce6c90_0 .net "calculated_sram_addr", 9 0, L_0000025ff0d56d60;  1 drivers
+v0000025ff0ce6650_0 .net "current_port_active", 0 0, L_0000025ff0d52a10;  1 drivers
+v0000025ff0ce6970_0 .net "effective_sram_page_addr", 6 0, L_0000025ff0d57080;  1 drivers
+L_0000025ff0cf92b8 .functor BUFT 1, C4<1011000>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce6010_0 .net "upper_bound_asn_for_port", 6 0, L_0000025ff0cf92b8;  1 drivers
+L_0000025ff0d587a0 .concat [ 7 1 0 0], v0000025ff0cf17d0_0, L_0000025ff0cf9300;
+L_0000025ff0d57a80 .cmp/ge 8, L_0000025ff0d587a0, L_0000025ff0cf9348;
+L_0000025ff0d56040 .cmp/ge 7, L_0000025ff0cf92b8, v0000025ff0cf17d0_0;
+L_0000025ff0d58340 .part L_0000025ff0d57080, 0, 6;
+L_0000025ff0d56d60 .concat [ 6 4 0 0], L_0000025ff0d58340, L_0000025ff0cf93d8;
+L_0000025ff0d56220 .functor MUXZ 10, L_0000025ff0cf9420, L_0000025ff0d56d60, L_0000025ff0d52a10, C4<>;
+L_0000025ff0d56f40 .functor MUXZ 10, L_0000025ff0cf9468, L_0000025ff0d56d60, L_0000025ff0d52a10, C4<>;
+S_0000025ff0ce7590 .scope generate, "addr_gen_per_port[27]" "addr_gen_per_port[27]" 3 88, 3 88 0, S_0000025ff0c7af30;
+ .timescale 0 0;
+P_0000025ff0c616c0 .param/l "j" 0 3 88, +C4<011011>;
+L_0000025ff0d52a80 .functor AND 1, L_0000025ff0d57bc0, L_0000025ff0d571c0, C4<1>, C4<1>;
+v0000025ff0ce5930_0 .net *"_ivl_10", 0 0, L_0000025ff0d571c0;  1 drivers
+v0000025ff0ce6a10_0 .net/2u *"_ivl_14", 6 0, L_0000025ff0cf9588;  1 drivers
+L_0000025ff0cf95d0 .functor BUFT 1, C4<0000>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce6ab0_0 .net/2u *"_ivl_16", 3 0, L_0000025ff0cf95d0;  1 drivers
+v0000025ff0ce5c50_0 .net *"_ivl_19", 5 0, L_0000025ff0d57f80;  1 drivers
+v0000025ff0ce6bf0_0 .net *"_ivl_2", 7 0, L_0000025ff0d579e0;  1 drivers
+L_0000025ff0cf9618 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce6dd0_0 .net/2u *"_ivl_23", 9 0, L_0000025ff0cf9618;  1 drivers
+L_0000025ff0cf9660 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce5750_0 .net/2u *"_ivl_28", 9 0, L_0000025ff0cf9660;  1 drivers
+L_0000025ff0cf94f8 .functor BUFT 1, C4<0>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce5bb0_0 .net *"_ivl_5", 0 0, L_0000025ff0cf94f8;  1 drivers
+L_0000025ff0cf9540 .functor BUFT 1, C4<00011011>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce6d30_0 .net/2u *"_ivl_6", 7 0, L_0000025ff0cf9540;  1 drivers
+v0000025ff0ce57f0_0 .net *"_ivl_8", 0 0, L_0000025ff0d57bc0;  1 drivers
+v0000025ff0ce5890_0 .net "calculated_sram_addr", 9 0, L_0000025ff0d57300;  1 drivers
+v0000025ff0ce5d90_0 .net "current_port_active", 0 0, L_0000025ff0d52a80;  1 drivers
+v0000025ff0ce59d0_0 .net "effective_sram_page_addr", 6 0, L_0000025ff0d57d00;  1 drivers
+L_0000025ff0cf94b0 .functor BUFT 1, C4<1011001>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce5e30_0 .net "upper_bound_asn_for_port", 6 0, L_0000025ff0cf94b0;  1 drivers
+L_0000025ff0d579e0 .concat [ 7 1 0 0], v0000025ff0cf17d0_0, L_0000025ff0cf94f8;
+L_0000025ff0d57bc0 .cmp/ge 8, L_0000025ff0d579e0, L_0000025ff0cf9540;
+L_0000025ff0d571c0 .cmp/ge 7, L_0000025ff0cf94b0, v0000025ff0cf17d0_0;
+L_0000025ff0d57f80 .part L_0000025ff0d57d00, 0, 6;
+L_0000025ff0d57300 .concat [ 6 4 0 0], L_0000025ff0d57f80, L_0000025ff0cf95d0;
+L_0000025ff0d58020 .functor MUXZ 10, L_0000025ff0cf9618, L_0000025ff0d57300, L_0000025ff0d52a80, C4<>;
+L_0000025ff0d58520 .functor MUXZ 10, L_0000025ff0cf9660, L_0000025ff0d57300, L_0000025ff0d52a80, C4<>;
+S_0000025ff0ce86c0 .scope generate, "addr_gen_per_port[28]" "addr_gen_per_port[28]" 3 88, 3 88 0, S_0000025ff0c7af30;
+ .timescale 0 0;
+P_0000025ff0c61700 .param/l "j" 0 3 88, +C4<011100>;
+L_0000025ff0d52af0 .functor AND 1, L_0000025ff0d57120, L_0000025ff0d58160, C4<1>, C4<1>;
+v0000025ff0ceaeb0_0 .net *"_ivl_10", 0 0, L_0000025ff0d58160;  1 drivers
+v0000025ff0cea0f0_0 .net/2u *"_ivl_14", 6 0, L_0000025ff0cf9780;  1 drivers
+L_0000025ff0cf97c8 .functor BUFT 1, C4<0000>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cea190_0 .net/2u *"_ivl_16", 3 0, L_0000025ff0cf97c8;  1 drivers
+v0000025ff0ceae10_0 .net *"_ivl_19", 5 0, L_0000025ff0d56c20;  1 drivers
+v0000025ff0cea230_0 .net *"_ivl_2", 7 0, L_0000025ff0d580c0;  1 drivers
+L_0000025ff0cf9810 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ceb450_0 .net/2u *"_ivl_23", 9 0, L_0000025ff0cf9810;  1 drivers
+L_0000025ff0cf9858 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ceb630_0 .net/2u *"_ivl_28", 9 0, L_0000025ff0cf9858;  1 drivers
+L_0000025ff0cf96f0 .functor BUFT 1, C4<0>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ceab90_0 .net *"_ivl_5", 0 0, L_0000025ff0cf96f0;  1 drivers
+L_0000025ff0cf9738 .functor BUFT 1, C4<00011100>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cea550_0 .net/2u *"_ivl_6", 7 0, L_0000025ff0cf9738;  1 drivers
+v0000025ff0cea690_0 .net *"_ivl_8", 0 0, L_0000025ff0d57120;  1 drivers
+v0000025ff0ceaf50_0 .net "calculated_sram_addr", 9 0, L_0000025ff0d583e0;  1 drivers
+v0000025ff0ce9dd0_0 .net "current_port_active", 0 0, L_0000025ff0d52af0;  1 drivers
+v0000025ff0ce9e70_0 .net "effective_sram_page_addr", 6 0, L_0000025ff0d582a0;  1 drivers
+L_0000025ff0cf96a8 .functor BUFT 1, C4<1011010>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce9f10_0 .net "upper_bound_asn_for_port", 6 0, L_0000025ff0cf96a8;  1 drivers
+L_0000025ff0d580c0 .concat [ 7 1 0 0], v0000025ff0cf17d0_0, L_0000025ff0cf96f0;
+L_0000025ff0d57120 .cmp/ge 8, L_0000025ff0d580c0, L_0000025ff0cf9738;
+L_0000025ff0d58160 .cmp/ge 7, L_0000025ff0cf96a8, v0000025ff0cf17d0_0;
+L_0000025ff0d56c20 .part L_0000025ff0d582a0, 0, 6;
+L_0000025ff0d583e0 .concat [ 6 4 0 0], L_0000025ff0d56c20, L_0000025ff0cf97c8;
+L_0000025ff0d58480 .functor MUXZ 10, L_0000025ff0cf9810, L_0000025ff0d583e0, L_0000025ff0d52af0, C4<>;
+L_0000025ff0d567c0 .functor MUXZ 10, L_0000025ff0cf9858, L_0000025ff0d583e0, L_0000025ff0d52af0, C4<>;
+S_0000025ff0ce6f50 .scope generate, "addr_gen_per_port[29]" "addr_gen_per_port[29]" 3 88, 3 88 0, S_0000025ff0c7af30;
+ .timescale 0 0;
+P_0000025ff0c61780 .param/l "j" 0 3 88, +C4<011101>;
+L_0000025ff0d52700 .functor AND 1, L_0000025ff0d569a0, L_0000025ff0d585c0, C4<1>, C4<1>;
+v0000025ff0ce9510_0 .net *"_ivl_10", 0 0, L_0000025ff0d585c0;  1 drivers
+v0000025ff0ceac30_0 .net/2u *"_ivl_14", 6 0, L_0000025ff0cf9978;  1 drivers
+L_0000025ff0cf99c0 .functor BUFT 1, C4<0000>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ceaff0_0 .net/2u *"_ivl_16", 3 0, L_0000025ff0cf99c0;  1 drivers
+v0000025ff0ce93d0_0 .net *"_ivl_19", 5 0, L_0000025ff0d56360;  1 drivers
+v0000025ff0ceb590_0 .net *"_ivl_2", 7 0, L_0000025ff0d57440;  1 drivers
+L_0000025ff0cf9a08 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce91f0_0 .net/2u *"_ivl_23", 9 0, L_0000025ff0cf9a08;  1 drivers
+L_0000025ff0cf9a50 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ceaa50_0 .net/2u *"_ivl_28", 9 0, L_0000025ff0cf9a50;  1 drivers
+L_0000025ff0cf98e8 .functor BUFT 1, C4<0>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ceb6d0_0 .net *"_ivl_5", 0 0, L_0000025ff0cf98e8;  1 drivers
+L_0000025ff0cf9930 .functor BUFT 1, C4<00011101>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce9bf0_0 .net/2u *"_ivl_6", 7 0, L_0000025ff0cf9930;  1 drivers
+v0000025ff0ce90b0_0 .net *"_ivl_8", 0 0, L_0000025ff0d569a0;  1 drivers
+v0000025ff0ceacd0_0 .net "calculated_sram_addr", 9 0, L_0000025ff0d56400;  1 drivers
+v0000025ff0ceb270_0 .net "current_port_active", 0 0, L_0000025ff0d52700;  1 drivers
+v0000025ff0cea5f0_0 .net "effective_sram_page_addr", 6 0, L_0000025ff0d562c0;  1 drivers
+L_0000025ff0cf98a0 .functor BUFT 1, C4<1011011>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce9ab0_0 .net "upper_bound_asn_for_port", 6 0, L_0000025ff0cf98a0;  1 drivers
+L_0000025ff0d57440 .concat [ 7 1 0 0], v0000025ff0cf17d0_0, L_0000025ff0cf98e8;
+L_0000025ff0d569a0 .cmp/ge 8, L_0000025ff0d57440, L_0000025ff0cf9930;
+L_0000025ff0d585c0 .cmp/ge 7, L_0000025ff0cf98a0, v0000025ff0cf17d0_0;
+L_0000025ff0d56360 .part L_0000025ff0d562c0, 0, 6;
+L_0000025ff0d56400 .concat [ 6 4 0 0], L_0000025ff0d56360, L_0000025ff0cf99c0;
+L_0000025ff0d56ea0 .functor MUXZ 10, L_0000025ff0cf9a08, L_0000025ff0d56400, L_0000025ff0d52700, C4<>;
+L_0000025ff0d564a0 .functor MUXZ 10, L_0000025ff0cf9a50, L_0000025ff0d56400, L_0000025ff0d52700, C4<>;
+S_0000025ff0ce7720 .scope generate, "addr_gen_per_port[30]" "addr_gen_per_port[30]" 3 88, 3 88 0, S_0000025ff0c7af30;
+ .timescale 0 0;
+P_0000025ff0c61840 .param/l "j" 0 3 88, +C4<011110>;
+L_0000025ff0d52b60 .functor AND 1, L_0000025ff0d56900, L_0000025ff0d588e0, C4<1>, C4<1>;
+v0000025ff0cea730_0 .net *"_ivl_10", 0 0, L_0000025ff0d588e0;  1 drivers
+v0000025ff0cea910_0 .net/2u *"_ivl_14", 6 0, L_0000025ff0cf9b70;  1 drivers
+L_0000025ff0cf9bb8 .functor BUFT 1, C4<0000>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cea050_0 .net/2u *"_ivl_16", 3 0, L_0000025ff0cf9bb8;  1 drivers
+v0000025ff0cead70_0 .net *"_ivl_19", 5 0, L_0000025ff0d5ae60;  1 drivers
+v0000025ff0cea7d0_0 .net *"_ivl_2", 7 0, L_0000025ff0d56680;  1 drivers
+L_0000025ff0cf9c00 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ceb090_0 .net/2u *"_ivl_23", 9 0, L_0000025ff0cf9c00;  1 drivers
+L_0000025ff0cf9c48 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cea410_0 .net/2u *"_ivl_28", 9 0, L_0000025ff0cf9c48;  1 drivers
+L_0000025ff0cf9ae0 .functor BUFT 1, C4<0>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce9790_0 .net *"_ivl_5", 0 0, L_0000025ff0cf9ae0;  1 drivers
+L_0000025ff0cf9b28 .functor BUFT 1, C4<00011110>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce9150_0 .net/2u *"_ivl_6", 7 0, L_0000025ff0cf9b28;  1 drivers
+v0000025ff0cea2d0_0 .net *"_ivl_8", 0 0, L_0000025ff0d56900;  1 drivers
+v0000025ff0cea370_0 .net "calculated_sram_addr", 9 0, L_0000025ff0d5ab40;  1 drivers
+v0000025ff0ceaaf0_0 .net "current_port_active", 0 0, L_0000025ff0d52b60;  1 drivers
+v0000025ff0ceb3b0_0 .net "effective_sram_page_addr", 6 0, L_0000025ff0d594c0;  1 drivers
+L_0000025ff0cf9a98 .functor BUFT 1, C4<1011100>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce9fb0_0 .net "upper_bound_asn_for_port", 6 0, L_0000025ff0cf9a98;  1 drivers
+L_0000025ff0d56680 .concat [ 7 1 0 0], v0000025ff0cf17d0_0, L_0000025ff0cf9ae0;
+L_0000025ff0d56900 .cmp/ge 8, L_0000025ff0d56680, L_0000025ff0cf9b28;
+L_0000025ff0d588e0 .cmp/ge 7, L_0000025ff0cf9a98, v0000025ff0cf17d0_0;
+L_0000025ff0d5ae60 .part L_0000025ff0d594c0, 0, 6;
+L_0000025ff0d5ab40 .concat [ 6 4 0 0], L_0000025ff0d5ae60, L_0000025ff0cf9bb8;
+L_0000025ff0d5a780 .functor MUXZ 10, L_0000025ff0cf9c00, L_0000025ff0d5ab40, L_0000025ff0d52b60, C4<>;
+L_0000025ff0d59f60 .functor MUXZ 10, L_0000025ff0cf9c48, L_0000025ff0d5ab40, L_0000025ff0d52b60, C4<>;
+S_0000025ff0ce83a0 .scope generate, "addr_gen_per_port[31]" "addr_gen_per_port[31]" 3 88, 3 88 0, S_0000025ff0c7af30;
+ .timescale 0 0;
+P_0000025ff0c61900 .param/l "j" 0 3 88, +C4<011111>;
+L_0000025ff0d52d90 .functor AND 1, L_0000025ff0d59240, L_0000025ff0d5a640, C4<1>, C4<1>;
+v0000025ff0cea9b0_0 .net *"_ivl_10", 0 0, L_0000025ff0d5a640;  1 drivers
+v0000025ff0ce9290_0 .net/2u *"_ivl_14", 6 0, L_0000025ff0cf9d68;  1 drivers
+L_0000025ff0cf9db0 .functor BUFT 1, C4<0000>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce9970_0 .net/2u *"_ivl_16", 3 0, L_0000025ff0cf9db0;  1 drivers
+v0000025ff0ce98d0_0 .net *"_ivl_19", 5 0, L_0000025ff0d592e0;  1 drivers
+v0000025ff0cea870_0 .net *"_ivl_2", 7 0, L_0000025ff0d58fc0;  1 drivers
+L_0000025ff0cf9df8 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ceb130_0 .net/2u *"_ivl_23", 9 0, L_0000025ff0cf9df8;  1 drivers
+L_0000025ff0cf9e40 .functor BUFT 1, C4<0001111111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce9330_0 .net/2u *"_ivl_28", 9 0, L_0000025ff0cf9e40;  1 drivers
+L_0000025ff0cf9cd8 .functor BUFT 1, C4<0>, C4<0>, C4<0>, C4<0>;
+v0000025ff0cea4b0_0 .net *"_ivl_5", 0 0, L_0000025ff0cf9cd8;  1 drivers
+L_0000025ff0cf9d20 .functor BUFT 1, C4<00011111>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ceb1d0_0 .net/2u *"_ivl_6", 7 0, L_0000025ff0cf9d20;  1 drivers
+v0000025ff0ceb310_0 .net *"_ivl_8", 0 0, L_0000025ff0d59240;  1 drivers
+v0000025ff0ceb4f0_0 .net "calculated_sram_addr", 9 0, L_0000025ff0d5ac80;  1 drivers
+v0000025ff0ce8f70_0 .net "current_port_active", 0 0, L_0000025ff0d52d90;  1 drivers
+v0000025ff0ce9830_0 .net "effective_sram_page_addr", 6 0, L_0000025ff0d59ce0;  1 drivers
+L_0000025ff0cf9c90 .functor BUFT 1, C4<1011101>, C4<0>, C4<0>, C4<0>;
+v0000025ff0ce9010_0 .net "upper_bound_asn_for_port", 6 0, L_0000025ff0cf9c90;  1 drivers
+L_0000025ff0d58fc0 .concat [ 7 1 0 0], v0000025ff0cf17d0_0, L_0000025ff0cf9cd8;
+L_0000025ff0d59240 .cmp/ge 8, L_0000025ff0d58fc0, L_0000025ff0cf9d20;
+L_0000025ff0d5a640 .cmp/ge 7, L_0000025ff0cf9c90, v0000025ff0cf17d0_0;
+L_0000025ff0d592e0 .part L_0000025ff0d59ce0, 0, 6;
+L_0000025ff0d5ac80 .concat [ 6 4 0 0], L_0000025ff0d592e0, L_0000025ff0cf9db0;
+L_0000025ff0d59060 .functor MUXZ 10, L_0000025ff0cf9df8, L_0000025ff0d5ac80, L_0000025ff0d52d90, C4<>;
+L_0000025ff0d59100 .functor MUXZ 10, L_0000025ff0cf9e40, L_0000025ff0d5ac80, L_0000025ff0d52d90, C4<>;
+    .scope S_0000025ff0c7af30;
+T_1 ;
+    %wait E_0000025ff0c62cc0;
+    %ix/load 4, 0, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cefd90, 4;
+    %assign/vec4 v0000025ff0cec990_0, 0;
+    %ix/load 4, 1, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cefd90, 4;
+    %assign/vec4 v0000025ff0ceca30_0, 0;
+    %ix/load 4, 2, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cefd90, 4;
+    %assign/vec4 v0000025ff0cf0bf0_0, 0;
+    %ix/load 4, 3, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cefd90, 4;
+    %assign/vec4 v0000025ff0cf2270_0, 0;
+    %ix/load 4, 4, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cefd90, 4;
+    %assign/vec4 v0000025ff0cf24f0_0, 0;
+    %ix/load 4, 5, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cefd90, 4;
+    %assign/vec4 v0000025ff0cf1190_0, 0;
+    %ix/load 4, 6, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cefd90, 4;
+    %assign/vec4 v0000025ff0cf1550_0, 0;
+    %ix/load 4, 7, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cefd90, 4;
+    %assign/vec4 v0000025ff0cf08d0_0, 0;
+    %ix/load 4, 8, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cefd90, 4;
+    %assign/vec4 v0000025ff0cf0510_0, 0;
+    %ix/load 4, 9, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cefd90, 4;
+    %assign/vec4 v0000025ff0cf0a10_0, 0;
+    %ix/load 4, 10, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cefd90, 4;
+    %assign/vec4 v0000025ff0cecad0_0, 0;
+    %ix/load 4, 11, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cefd90, 4;
+    %assign/vec4 v0000025ff0cecc10_0, 0;
+    %ix/load 4, 12, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cefd90, 4;
+    %assign/vec4 v0000025ff0ceccb0_0, 0;
+    %ix/load 4, 13, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cefd90, 4;
+    %assign/vec4 v0000025ff0cecdf0_0, 0;
+    %ix/load 4, 14, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cefd90, 4;
+    %assign/vec4 v0000025ff0cebdb0_0, 0;
+    %ix/load 4, 15, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cefd90, 4;
+    %assign/vec4 v0000025ff0ceb770_0, 0;
+    %ix/load 4, 16, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cefd90, 4;
+    %assign/vec4 v0000025ff0ceb810_0, 0;
+    %ix/load 4, 17, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cefd90, 4;
+    %assign/vec4 v0000025ff0ceb8b0_0, 0;
+    %ix/load 4, 18, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cefd90, 4;
+    %assign/vec4 v0000025ff0cf23b0_0, 0;
+    %ix/load 4, 19, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cefd90, 4;
+    %assign/vec4 v0000025ff0cf0fb0_0, 0;
+    %ix/load 4, 20, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cefd90, 4;
+    %assign/vec4 v0000025ff0cefed0_0, 0;
+    %ix/load 4, 21, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cefd90, 4;
+    %assign/vec4 v0000025ff0cf0d30_0, 0;
+    %ix/load 4, 22, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cefd90, 4;
+    %assign/vec4 v0000025ff0cf1370_0, 0;
+    %ix/load 4, 23, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cefd90, 4;
+    %assign/vec4 v0000025ff0cf1050_0, 0;
+    %ix/load 4, 24, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cefd90, 4;
+    %assign/vec4 v0000025ff0cf12d0_0, 0;
+    %ix/load 4, 25, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cefd90, 4;
+    %assign/vec4 v0000025ff0cf1410_0, 0;
+    %ix/load 4, 26, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cefd90, 4;
+    %assign/vec4 v0000025ff0cf01f0_0, 0;
+    %ix/load 4, 27, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cefd90, 4;
+    %assign/vec4 v0000025ff0cf2450_0, 0;
+    %ix/load 4, 28, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cefd90, 4;
+    %assign/vec4 v0000025ff0cf0970_0, 0;
+    %ix/load 4, 29, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cefd90, 4;
+    %assign/vec4 v0000025ff0cf0e70_0, 0;
+    %ix/load 4, 30, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cefd90, 4;
+    %assign/vec4 v0000025ff0cf15f0_0, 0;
+    %ix/load 4, 31, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cefd90, 4;
+    %assign/vec4 v0000025ff0cf14b0_0, 0;
+    %ix/load 4, 0, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cec490, 4;
+    %assign/vec4 v0000025ff0ce9650_0, 0;
+    %ix/load 4, 1, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cec490, 4;
+    %assign/vec4 v0000025ff0ce96f0_0, 0;
+    %ix/load 4, 2, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cec490, 4;
+    %assign/vec4 v0000025ff0cec670_0, 0;
+    %ix/load 4, 3, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cec490, 4;
+    %assign/vec4 v0000025ff0cebb30_0, 0;
+    %ix/load 4, 4, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cec490, 4;
+    %assign/vec4 v0000025ff0cec350_0, 0;
+    %ix/load 4, 5, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cec490, 4;
+    %assign/vec4 v0000025ff0cebd10_0, 0;
+    %ix/load 4, 6, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cec490, 4;
+    %assign/vec4 v0000025ff0cec0d0_0, 0;
+    %ix/load 4, 7, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cec490, 4;
+    %assign/vec4 v0000025ff0cec030_0, 0;
+    %ix/load 4, 8, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cec490, 4;
+    %assign/vec4 v0000025ff0cec2b0_0, 0;
+    %ix/load 4, 9, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cec490, 4;
+    %assign/vec4 v0000025ff0cebe50_0, 0;
+    %ix/load 4, 10, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cec490, 4;
+    %assign/vec4 v0000025ff0ce9a10_0, 0;
+    %ix/load 4, 11, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cec490, 4;
+    %assign/vec4 v0000025ff0ce9b50_0, 0;
+    %ix/load 4, 12, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cec490, 4;
+    %assign/vec4 v0000025ff0ce9c90_0, 0;
+    %ix/load 4, 13, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cec490, 4;
+    %assign/vec4 v0000025ff0ce9d30_0, 0;
+    %ix/load 4, 14, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cec490, 4;
+    %assign/vec4 v0000025ff0cec170_0, 0;
+    %ix/load 4, 15, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cec490, 4;
+    %assign/vec4 v0000025ff0cebf90_0, 0;
+    %ix/load 4, 16, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cec490, 4;
+    %assign/vec4 v0000025ff0cebef0_0, 0;
+    %ix/load 4, 17, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cec490, 4;
+    %assign/vec4 v0000025ff0cecd50_0, 0;
+    %ix/load 4, 18, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cec490, 4;
+    %assign/vec4 v0000025ff0cec5d0_0, 0;
+    %ix/load 4, 19, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cec490, 4;
+    %assign/vec4 v0000025ff0cebc70_0, 0;
+    %ix/load 4, 20, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cec490, 4;
+    %assign/vec4 v0000025ff0cec530_0, 0;
+    %ix/load 4, 21, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cec490, 4;
+    %assign/vec4 v0000025ff0ceb950_0, 0;
+    %ix/load 4, 22, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cec490, 4;
+    %assign/vec4 v0000025ff0ceb9f0_0, 0;
+    %ix/load 4, 23, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cec490, 4;
+    %assign/vec4 v0000025ff0cec210_0, 0;
+    %ix/load 4, 24, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cec490, 4;
+    %assign/vec4 v0000025ff0cec7b0_0, 0;
+    %ix/load 4, 25, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cec490, 4;
+    %assign/vec4 v0000025ff0cec710_0, 0;
+    %ix/load 4, 26, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cec490, 4;
+    %assign/vec4 v0000025ff0cec850_0, 0;
+    %ix/load 4, 27, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cec490, 4;
+    %assign/vec4 v0000025ff0cec8f0_0, 0;
+    %ix/load 4, 28, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cec490, 4;
+    %assign/vec4 v0000025ff0ceba90_0, 0;
+    %ix/load 4, 29, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cec490, 4;
+    %assign/vec4 v0000025ff0cecb70_0, 0;
+    %ix/load 4, 30, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cec490, 4;
+    %assign/vec4 v0000025ff0cec3f0_0, 0;
+    %ix/load 4, 31, 0;
+    %flag_set/imm 4, 0;
+    %load/vec4a v0000025ff0cec490, 4;
+    %assign/vec4 v0000025ff0cebbd0_0, 0;
+    %jmp T_1;
+    .thread T_1;
+    .scope S_0000025ff0b9f330;
+T_2 ;
+    %delay 5000, 0;
+    %load/vec4 v0000025ff0cf10f0_0;
+    %inv;
+    %store/vec4 v0000025ff0cf10f0_0, 0, 1;
+    %jmp T_2;
+    .thread T_2;
+    .scope S_0000025ff0b9f330;
+T_3 ;
+    %vpi_call 2 84 "$dumpfile", "tb_addr_sel_discrete_ports_sim.vcd" {0 0 0};
+    %vpi_call 2 85 "$dumpvars", 32'sb00000000000000000000000000000000, S_0000025ff0b9f330 {0 0 0};
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0000025ff0cf10f0_0, 0, 1;
+    %pushi/vec4 0, 0, 7;
+    %store/vec4 v0000025ff0cf17d0_0, 0, 7;
+    %delay 20000, 0;
+    %vpi_call 2 93 "$display", "INFO: Starting tb_addr_sel simulation." {0 0 0};
+    %vpi_call 2 94 "$display", "INFO: Iterating addr_serial_num from 0 to 126." {0 0 0};
+    %vpi_call 2 95 "$display", "----------------------------------------------------------------------" {0 0 0};
+    %vpi_call 2 96 "$display", "Time (ns) | ASN | w[0] | d[0] | ... | w[31] | d[31]" {0 0 0};
+    %vpi_call 2 97 "$display", "----------------------------------------------------------------------" {0 0 0};
+    %pushi/vec4 0, 0, 32;
+    %store/vec4 v0000025ff0cf1690_0, 0, 32;
+T_3.0 ;
+    %load/vec4 v0000025ff0cf1690_0;
+    %cmpi/s 126, 0, 32;
+    %flag_or 5, 4;
+    %jmp/0xz T_3.1, 5;
+    %load/vec4 v0000025ff0cf1690_0;
+    %pad/s 7;
+    %store/vec4 v0000025ff0cf17d0_0, 0, 7;
+    %delay 10000, 0;
+    %vpi_call 2 103 "$display", "%0t | %3d | %3h | %3h | ... | %3h  | %3h", $time, v0000025ff0cf17d0_0, v0000025ff0cf0f10_0, v0000025ff0cf1870_0, v0000025ff0cf32b0_0, v0000025ff0cf1cd0_0 {0 0 0};
+    %load/vec4 v0000025ff0cf1690_0;
+    %addi 1, 0, 32;
+    %store/vec4 v0000025ff0cf1690_0, 0, 32;
+    %jmp T_3.0;
+T_3.1 ;
+    %vpi_call 2 109 "$display", "--- Specific addr_serial_num checks (using task) ---" {0 0 0};
+    %pushi/vec4 0, 0, 7;
+    %store/vec4 v0000025ff0cf17d0_0, 0, 7;
+    %delay 10000, 0;
+    %fork TD_tb_addr_sel.display_detailed_ports_task, S_0000025ff0be54f0;
+    %join;
+    %pushi/vec4 1, 0, 7;
+    %store/vec4 v0000025ff0cf17d0_0, 0, 7;
+    %delay 10000, 0;
+    %fork TD_tb_addr_sel.display_detailed_ports_task, S_0000025ff0be54f0;
+    %join;
+    %pushi/vec4 31, 0, 7;
+    %store/vec4 v0000025ff0cf17d0_0, 0, 7;
+    %delay 10000, 0;
+    %fork TD_tb_addr_sel.display_detailed_ports_task, S_0000025ff0be54f0;
+    %join;
+    %pushi/vec4 32, 0, 7;
+    %store/vec4 v0000025ff0cf17d0_0, 0, 7;
+    %delay 10000, 0;
+    %fork TD_tb_addr_sel.display_detailed_ports_task, S_0000025ff0be54f0;
+    %join;
+    %pushi/vec4 62, 0, 7;
+    %store/vec4 v0000025ff0cf17d0_0, 0, 7;
+    %delay 10000, 0;
+    %fork TD_tb_addr_sel.display_detailed_ports_task, S_0000025ff0be54f0;
+    %join;
+    %pushi/vec4 98, 0, 7;
+    %store/vec4 v0000025ff0cf17d0_0, 0, 7;
+    %delay 10000, 0;
+    %fork TD_tb_addr_sel.display_detailed_ports_task, S_0000025ff0be54f0;
+    %join;
+    %pushi/vec4 126, 0, 7;
+    %store/vec4 v0000025ff0cf17d0_0, 0, 7;
+    %delay 10000, 0;
+    %fork TD_tb_addr_sel.display_detailed_ports_task, S_0000025ff0be54f0;
+    %join;
+    %vpi_call 2 118 "$display", "----------------------------------------------------------------------" {0 0 0};
+    %vpi_call 2 119 "$display", "INFO: Simulation finished." {0 0 0};
+    %vpi_call 2 120 "$finish" {0 0 0};
+    %end;
+    .thread T_3;
+# The file index is used to find the file name in the following table.
+:file_names 4;
+    "N/A";
+    "<interactive>";
+    "./tb/tb_addr_sel.v";
+    "./src/addr_sel.v";
