@@ -27,7 +27,7 @@ module systolic_controller #(
     output reg [6:0] addr_serial_num,   // Address selector for data access (7-bit)
     output reg alu_start,               // Start signal for shifting and multiplication in the systolic array
     output reg [8:0] cycle_num,         // Cycle counter for tracking systolic array progress
-    output reg [$clog2(ARRAY_SIZE)-1:0] matrix_index,      // Index for writing result data to SRAM
+    output reg [5:0] matrix_index,      // Index for writing result data to SRAM
     output reg [1:0] data_set,          // Indicates the current data set being processed
     output reg tpu_done                 // Done signal, indicates when the TPU operation is complete
 );
