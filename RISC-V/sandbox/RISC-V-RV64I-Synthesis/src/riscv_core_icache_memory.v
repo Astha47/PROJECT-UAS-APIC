@@ -38,7 +38,7 @@ module riscv_core_icache_memory (
 		if (!i_rst_n) begin : sv2v_autoblock_1
 			reg signed [31:0] i;
 			for (i = 0; i < CACHE_DEPTH; i = i + 1)
-				INSTR_MEM[i] <= 'b0;
+				INSTR_MEM[i] = 'b0;
 		end
 		else if (i_wr_en && i_block_replace) begin
 			if (!i_offset)

@@ -124,7 +124,7 @@ systolic #(
     .DATA_WIDTH(DATA_WIDTH)
 ) systolic_inst (
     .clk(clk),                                       // Clock signal
-    .srstn(srstn),                                   // Reset signal
+    .rst_n(srstn),                                   // Reset signal
     .alu_start(alu_start),                           // ALU start signal
     .cycle_num(cycle_num),                           // Cycle count
 
@@ -154,11 +154,11 @@ systolic #(
 );
 
 // Systolic controller module instantiation
-systolic_controll #(
+systolic_controller #(
     .ARRAY_SIZE(ARRAY_SIZE)
-) systolic_controll_inst (
+) systolic_controller_inst (
     .clk(clk),                                       // Clock signal
-    .srstn(srstn),                                   // Reset signal
+    .rst_n(srstn),                                   // Reset signal
     .tpu_start(tpu_start),                           // Start signal for TPU
 
     // Output signals from controller
