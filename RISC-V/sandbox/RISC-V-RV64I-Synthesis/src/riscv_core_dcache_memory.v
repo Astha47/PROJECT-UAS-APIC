@@ -39,7 +39,7 @@ module riscv_core_dcache_memory (
 		if (!i_rst_n) begin : sv2v_autoblock_1
 			reg signed [31:0] i;
 			for (i = 0; i < CACHE_DEPTH; i = i + 1)
-				DATA_MEM[i] <= 'b0;
+				DATA_MEM[i] = 'b0;
 		end
 		else if (i_wr_en && i_block_replace)
 			DATA_MEM[i_addr_from_core[11:5]] <= i_block_from_axi;

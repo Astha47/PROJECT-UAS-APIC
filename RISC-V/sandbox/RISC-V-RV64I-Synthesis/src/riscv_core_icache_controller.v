@@ -47,7 +47,7 @@ module riscv_core_icache_controller (
 			begin : sv2v_autoblock_1
 				reg signed [31:0] i;
 				for (i = 0; i < CACHE_DEPTH; i = i + 1)
-					VALID_MEM[i] <= 0;
+					VALID_MEM[i] = 0;
 			end
 			STATE <= 2'b00;
 		end
