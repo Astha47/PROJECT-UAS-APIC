@@ -155,6 +155,7 @@ module axi4_master #(
                             m_axi_bready <= 1'b1;
                             
                             state <= WRITING;
+                            $display("Time %t: AXI_MASTER IDLE->WRITING: addr=0x%h, wdata=0x%h", $time, mem_addr, mem_wdata);
                         end else if (is_read) begin
                             // Start read transaction
                             m_axi_arid <= READ_ID;
@@ -166,6 +167,7 @@ module axi4_master #(
                             m_axi_rready <= 1'b1;
                             
                             state <= READING;
+                            $display("Time %t: AXI_MASTER IDLE->READING: addr=0x%h. Asserting m_axi_rready.", $time, mem_addr);
                         end
                     end
                 end
@@ -173,6 +175,7 @@ module axi4_master #(
                 READING: begin
                     // Read address channel handshake
                     if (m_axi_arready && m_axi_arvalid) begin
+                        $display("Time %t: AXI_MASTER READING: AR handshake. m_axi_araddr=0x%h", $time, m_axi_araddr);
                         m_axi_arvalid <= 0;
                     end
                     
@@ -180,24 +183,28 @@ module axi4_master #(
                     if (m_axi_rvalid && m_axi_rready) begin
                         mem_rdata <= m_axi_rdata;
                         mem_ready <= 1;
-                        m_axi_rready <= 0;
+                        m_axi_rready <= 0; // Deassert RREADY after accepting data for this beat
                         state <= IDLE;
+                        $display("Time %t: AXI_MASTER READING->IDLE: R handshake. m_axi_rdata=0x%h, m_axi_rlast=%b. Asserting mem_ready, deasserting m_axi_rready.", $time, m_axi_rdata, m_axi_rlast);
                     end
                 end
                 
                 WRITING: begin
                     // Write address channel handshake
                     if (m_axi_awready && m_axi_awvalid) begin
+                        $display("Time %t: AXI_MASTER WRITING: AW handshake. m_axi_awaddr=0x%h", $time, m_axi_awaddr);
                         m_axi_awvalid <= 0;
                     end
                     
                     // Write data channel handshake
                     if (m_axi_wready && m_axi_wvalid) begin
+                        $display("Time %t: AXI_MASTER WRITING: W handshake. m_axi_wdata=0x%h", $time, m_axi_wdata);
                         m_axi_wvalid <= 0;
                     end
                     
                     // When both address and data are accepted, wait for response
                     if (!m_axi_awvalid && !m_axi_wvalid) begin
+                        $display("Time %t: AXI_MASTER WRITING->WRITE_RESP: AW and W accepted.", $time);
                         state <= WRITE_RESP;
                     end
                 end
@@ -208,6 +215,7 @@ module axi4_master #(
                         mem_ready <= 1;
                         m_axi_bready <= 0;
                         state <= IDLE;
+                        $display("Time %t: AXI_MASTER WRITE_RESP->IDLE: B handshake. m_axi_bresp=%b. Asserting mem_ready.", $time, m_axi_bresp);
                     end
                 end
                 

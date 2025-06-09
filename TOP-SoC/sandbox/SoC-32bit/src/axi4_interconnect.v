@@ -172,31 +172,33 @@ module axi_interconnect#(
     // Min Address: 0x00000000
     // Max Address: 0xFFFFFFFF
     
-    // Alokasi alamat memory untuk Systolic Array
-    // Head data    :   0x00000000
-    // Data Info    :   0x00000001
-    // Head Result  :   0x00000002
-    // Flags        :   0x00000003
-    // Mode         :   0x00000004
-    // Signals      :   0x00000005
+    // Updated Memory Map:
+    // DRAM Controller: 0x00000000 - 0xEFFFFFFF (CPU boot code and main memory)
+    // Systolic Array:  0xF0000000 - 0xF0000005 (SA control registers)
+    // CORDIC:          0xF0000006 - 0xF0000009 (CORDIC control registers)
+    
+    // Alokasi alamat memory untuk Systolic Array (moved to high memory)
+    // Head data    :   0xF0000000
+    // Data Info    :   0xF0000001
+    // Head Result  :   0xF0000002
+    // Flags        :   0xF0000003
+    // Mode         :   0xF0000004
+    // Signals      :   0xF0000005
 
-    // Alokasi alamat memory untuk CORDIX
-    // Data         :   0x00000006
-    // Result       :   0x00000007
-    // Flags        :   0x00000008
-    // Signals      :   0x00000009
-
-    // Alokasi alamat memory untuk DRAM Controller
-    // Start        :   0x0000000A
-    // End          :   0xFFFFFFFF
+    // Alokasi alamat memory untuk CORDIX (moved to high memory)
+    // Data         :   0xF0000006
+    // Result       :   0xF0000007
+    // Flags        :   0xF0000008
+    // Signals      :   0xF0000009
 
     // Define address ranges as parameters
-    localparam SA_START_ADDR     = 32'h00000000;
-    localparam SA_END_ADDR       = 32'h00000005;
-    localparam CORDIC_START_ADDR = 32'h00000006;
-    localparam CORDIC_END_ADDR   = 32'h00000009;
-    localparam DRAM_START_ADDR   = 32'h0000000A;
-    localparam DRAM_END_ADDR     = 32'hFFFFFFFF;
+    // Move DRAM to start from 0x00000000 so CPU can boot from address 0x00000000
+    localparam DRAM_START_ADDR   = 32'h00000000;
+    localparam DRAM_END_ADDR     = 32'hEFFFFFFF;
+    localparam SA_START_ADDR     = 32'hF0000000;
+    localparam SA_END_ADDR       = 32'hF0000005;
+    localparam CORDIC_START_ADDR = 32'hF0000006;
+    localparam CORDIC_END_ADDR   = 32'hF0000009;
 
     // Address decode logic
     // Write address decoding for S0 (RISC-V)
@@ -219,7 +221,43 @@ module axi_interconnect#(
     reg s0_dram_write_grant, s1_dram_write_grant;
     reg s0_dram_read_grant, s1_dram_read_grant;
     
-    // Simple round-robin arbitration
+    // Track ongoing transactions to maintain grants
+    reg s0_read_transaction_active, s1_read_transaction_active;
+    reg s0_write_transaction_active, s1_write_transaction_active;
+    
+    // Transaction tracking
+    always @(posedge ACLK or negedge ARESETN) begin
+        if (!ARESETN) begin
+            s0_read_transaction_active <= 1'b0;
+            s1_read_transaction_active <= 1'b0;
+            s0_write_transaction_active <= 1'b0;
+            s1_write_transaction_active <= 1'b0;
+        end else begin
+            // Track read transactions
+            if (s0_read_to_dram && S0_AXI4_ARVALID && S0_AXI4_ARREADY)
+                s0_read_transaction_active <= 1'b1;
+            else if (s0_dram_read_grant && M2_AXI4_RVALID && S0_AXI4_RREADY && M2_AXI4_RLAST)
+                s0_read_transaction_active <= 1'b0;
+                
+            if (s1_read_to_dram && S1_AXI4_ARVALID && S1_AXI4_ARREADY)
+                s1_read_transaction_active <= 1'b1;
+            else if (s1_dram_read_grant && M2_AXI4_RVALID && S1_AXI4_RREADY && M2_AXI4_RLAST)
+                s1_read_transaction_active <= 1'b0;
+                
+            // Track write transactions
+            if (s0_write_to_dram && S0_AXI4_AWVALID && S0_AXI4_AWREADY)
+                s0_write_transaction_active <= 1'b1;
+            else if (s0_dram_write_grant && M2_AXI4_BVALID && S0_AXI4_BREADY)
+                s0_write_transaction_active <= 1'b0;
+                
+            if (s1_write_to_dram && S1_AXI4_AWVALID && S1_AXI4_AWREADY)
+                s1_write_transaction_active <= 1'b1;
+            else if (s1_dram_write_grant && M2_AXI4_BVALID && S1_AXI4_BREADY)
+                s1_write_transaction_active <= 1'b0;
+        end
+    end
+    
+    // Improved arbitration logic that maintains grants during transactions
     always @(posedge ACLK or negedge ARESETN) begin
         if (!ARESETN) begin
             s0_dram_write_grant <= 1'b1; // Default priority to S0
@@ -227,9 +265,15 @@ module axi_interconnect#(
             s0_dram_read_grant <= 1'b1;
             s1_dram_read_grant <= 1'b0;
         end else begin
-            // Write arbitration
-            if (s0_write_to_dram && s1_write_to_dram) begin
-                // Toggle grants when both want access
+            // Write arbitration - maintain grant during active transaction
+            if (s0_write_transaction_active) begin
+                s0_dram_write_grant <= 1'b1;
+                s1_dram_write_grant <= 1'b0;
+            end else if (s1_write_transaction_active) begin
+                s0_dram_write_grant <= 1'b0;
+                s1_dram_write_grant <= 1'b1;
+            end else if (s0_write_to_dram && s1_write_to_dram) begin
+                // Toggle grants when both want access and no transaction active
                 s0_dram_write_grant <= ~s0_dram_write_grant;
                 s1_dram_write_grant <= ~s1_dram_write_grant;
             end else begin
@@ -237,8 +281,15 @@ module axi_interconnect#(
                 s1_dram_write_grant <= !s0_write_to_dram && s1_write_to_dram;
             end
             
-            // Read arbitration
-            if (s0_read_to_dram && s1_read_to_dram) begin
+            // Read arbitration - maintain grant during active transaction
+            if (s0_read_transaction_active) begin
+                s0_dram_read_grant <= 1'b1;
+                s1_dram_read_grant <= 1'b0;
+            end else if (s1_read_transaction_active) begin
+                s0_dram_read_grant <= 1'b0;
+                s1_dram_read_grant <= 1'b1;
+            end else if (s0_read_to_dram && s1_read_to_dram) begin
+                // Toggle grants when both want access and no transaction active
                 s0_dram_read_grant <= ~s0_dram_read_grant;
                 s1_dram_read_grant <= ~s1_dram_read_grant;
             end else begin
@@ -332,6 +383,7 @@ module axi_interconnect#(
 
     // ----- READ ADDRESS CHANNEL ROUTING -----
     
+    // LOKASI BUG
     // M0 (CORDIC - AXI4LITE) Read Address Channel
     assign M0_AXI4LITE_ARADDR = S0_AXI4_ARADDR;
     assign M0_AXI4LITE_ARPROT = 3'b000;  // Default protection bits
@@ -339,6 +391,7 @@ module axi_interconnect#(
     assign S0_AXI4_ARREADY = (s0_read_to_cordic) ? M0_AXI4LITE_ARREADY :
                             (s0_read_to_sa) ? M1_AXI4LITE_ARREADY :
                             (s0_read_to_dram && s0_dram_read_grant) ? M2_AXI4_ARREADY : 1'b0;
+    
     
     // M1 (SA - AXI4LITE) Read Address Channel
     assign M1_AXI4LITE_ARADDR = S0_AXI4_ARADDR;
@@ -375,6 +428,8 @@ module axi_interconnect#(
                            (s0_read_to_sa && M1_AXI4LITE_RVALID) ||
                            (s0_read_to_dram && s0_dram_read_grant && M2_AXI4_RVALID);
     
+    // (s0_read_to_dram && s0_dram_read_grant && M2_AXI4_RVALID);
+    
     // S1 (SA) Read Data Channel  
     assign S1_AXI4_RID = (s1_dram_read_grant) ? M2_AXI4_RID : S1_AXI4_ARID;
     assign S1_AXI4_RDATA = (s1_dram_read_grant) ? M2_AXI4_RDATA : 'b0;
@@ -391,5 +446,14 @@ module axi_interconnect#(
     // M2 (DRAM - AXI4) Read Data Channel
     assign M2_AXI4_RREADY = (s0_dram_read_grant) ? S0_AXI4_RREADY :
                            (s1_dram_read_grant) ? S1_AXI4_RREADY : 1'b0;
+
+    // Debug output for transaction tracking
+    always @(posedge ACLK) begin
+        if (s0_read_to_dram || s0_read_transaction_active || s0_dram_read_grant) begin
+            $display("[INTERCONNECT %t] S0 Read State: req=%b, active=%b, grant=%b, ARVALID=%b, ARREADY=%b, RVALID=%b, RREADY=%b, RLAST=%b",
+                    $time, s0_read_to_dram, s0_read_transaction_active, s0_dram_read_grant, 
+                    S0_AXI4_ARVALID, S0_AXI4_ARREADY, M2_AXI4_RVALID, S0_AXI4_RREADY, M2_AXI4_RLAST);
+        end
+    end
 
 endmodule
