@@ -1,0 +1,8 @@
+{
+    "DESIGN_NAME": "top",
+    "VERILOG_FILES": [
+        "src/top.v"
+    ],
+    "CLOCK_PERIOD": 25,
+    "CLOCK_PORT": "clk"
+}
