@@ -52,7 +52,7 @@ module tb_tpu_top;
         .sram_rdata_w0(sram_rdata_w0), .sram_rdata_w1(sram_rdata_w1),
         .sram_rdata_w2(sram_rdata_w2), .sram_rdata_w3(sram_rdata_w3),
         .sram_rdata_w4(sram_rdata_w4), .sram_rdata_w5(sram_rdata_w5),
-        .sram_rdata_w6(sram_rdata_w6), .sram_rdata_w7(sram_rdata_w7,
+        .sram_rdata_w6(sram_rdata_w6), .sram_rdata_w7(sram_rdata_w7),
 
         .sram_rdata_d0(sram_rdata_d0), .sram_rdata_d1(sram_rdata_d1),
         .sram_rdata_d2(sram_rdata_d2), .sram_rdata_d3(sram_rdata_d3),
@@ -67,7 +67,7 @@ module tb_tpu_top;
         .sram_raddr_d0(sram_raddr_d0), .sram_raddr_d1(sram_raddr_d1),
         .sram_raddr_d2(sram_raddr_d2), .sram_raddr_d3(sram_raddr_d3),
         .sram_raddr_d4(sram_raddr_d4), .sram_raddr_d5(sram_raddr_d5),
-        .sram_raddr_d6(sram_raddr_d6), .sram_raddr_d7(sram_raddr_d7,
+        .sram_raddr_d6(sram_raddr_d6), .sram_raddr_d7(sram_raddr_d7),
 
         .sram_write_enable_a0(sram_write_enable_a0),
         .sram_wdata_a(sram_wdata_a),
@@ -83,6 +83,11 @@ module tb_tpu_top;
 
         .tpu_done(tpu_done)
     );
+
+    initial begin
+        $dumpfile("./out/tpu_top_tb.vcd"); // Specify the VCD file name
+        $dumpvars(0, tb_tpu_top);    // Dump all variables in the tb_tpu_top module
+    end
 
     // Clock generation
     localparam CLK_PERIOD = 10; // 100 MHz clock
@@ -107,7 +112,7 @@ module tb_tpu_top;
 
         // Deassert reset after a few cycles
         repeat(5) @(posedge clk);
-        srstn = 1;
+        srstn = 0;
 
         // Start TPU operation
         repeat(5) @(posedge clk);
