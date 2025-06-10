@@ -55,8 +55,8 @@ module axi4_master #(
     output reg [DATA_WIDTH-1:0] mem_rdata
 );
     // AXI transaction IDs (can be used for more advanced features)
-    localparam READ_ID = 0;
-    localparam WRITE_ID = 0;
+    localparam READ_ID = 4'h1;
+    localparam WRITE_ID = 4'h2;
 
     // State machine states
     localparam IDLE = 2'b00;
@@ -132,6 +132,14 @@ module axi4_master #(
             
             state <= IDLE;
         end else begin
+            // Add debug output
+            $display("Time %t: AXI_MASTER state=%s, mem_valid=%b, mem_ready=%b, ARVALID=%b, ARREADY=%b, RVALID=%b, RREADY=%b", 
+                     $time, 
+                     (state == IDLE) ? "   IDLE" : 
+                     (state == READING) ? "READING" : 
+                     (state == WRITING) ? "WRITING" : "WR_RESP",
+                     mem_valid, mem_ready, m_axi_arvalid, m_axi_arready, m_axi_rvalid, m_axi_rready);
+            
             case (state)
                 IDLE: begin
                     // Clear ready signal

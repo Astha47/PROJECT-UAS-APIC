@@ -214,7 +214,7 @@ module top (
         .COMPRESSED_ISA(0),
         .ENABLE_MUL(1),
         .ENABLE_DIV(1),
-        .PROGADDR_RESET(32'h00000004)
+        .PROGADDR_RESET(32'h00000000)
     ) cpu (
         .clk(clk_sys),
         .resetn(reset_sys_n),

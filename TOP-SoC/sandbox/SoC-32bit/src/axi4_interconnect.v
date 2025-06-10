@@ -207,11 +207,10 @@ module axi_interconnect#(
     wire s0_write_to_dram   = ((S0_AXI4_AWADDR >= DRAM_START_ADDR) && S0_AXI4_AWVALID) ||
                              (~s0_write_to_sa && ~s0_write_to_cordic && S0_AXI4_AWVALID);
     
-    // Read address decoding for S0 (RISC-V)
-    wire s0_read_to_sa     = (S0_AXI4_ARADDR >= SA_START_ADDR && S0_AXI4_ARADDR <= SA_END_ADDR) && S0_AXI4_ARVALID;
-    wire s0_read_to_cordic = (S0_AXI4_ARADDR >= CORDIC_START_ADDR && S0_AXI4_ARADDR <= CORDIC_END_ADDR) && S0_AXI4_ARVALID;
-    wire s0_read_to_dram   = ((S0_AXI4_ARADDR >= DRAM_START_ADDR) && S0_AXI4_ARVALID) ||
-                            (~s0_read_to_sa && ~s0_read_to_cordic && S0_AXI4_ARVALID);
+    // Read address decoding for S0 (RISC-V) - PERBAIKAN
+    wire s0_read_to_sa     = (S0_AXI4_ARADDR >= SA_START_ADDR && S0_AXI4_ARADDR <= SA_END_ADDR);
+    wire s0_read_to_cordic = (S0_AXI4_ARADDR >= CORDIC_START_ADDR && S0_AXI4_ARADDR <= CORDIC_END_ADDR);
+    wire s0_read_to_dram   = ~s0_read_to_sa && ~s0_read_to_cordic;  // Default ke DRAM
 
     // For S1 (SA), all transactions go to DRAM
     wire s1_write_to_dram = S1_AXI4_AWVALID;
@@ -383,35 +382,36 @@ module axi_interconnect#(
 
     // ----- READ ADDRESS CHANNEL ROUTING -----
     
-    // LOKASI BUG
-    // M0 (CORDIC - AXI4LITE) Read Address Channel
+    // M0 (CORDIC - AXI4LITE) Read Address Channel - PERBAIKAN
     assign M0_AXI4LITE_ARADDR = S0_AXI4_ARADDR;
-    assign M0_AXI4LITE_ARPROT = 3'b000;  // Default protection bits
-    assign M0_AXI4LITE_ARVALID = s0_read_to_cordic;
+    assign M0_AXI4LITE_ARPROT = 3'b000;
+    assign M0_AXI4LITE_ARVALID = s0_read_to_cordic && S0_AXI4_ARVALID;
+
+    // M1 (SA - AXI4LITE) Read Address Channel - PERBAIKAN  
+    assign M1_AXI4LITE_ARADDR = S0_AXI4_ARADDR;
+    assign M1_AXI4LITE_ARPROT = 3'b000;
+    assign M1_AXI4LITE_ARVALID = s0_read_to_sa && S0_AXI4_ARVALID;
+    
+    // PERBAIKAN UTAMA - ARREADY routing
     assign S0_AXI4_ARREADY = (s0_read_to_cordic) ? M0_AXI4LITE_ARREADY :
                             (s0_read_to_sa) ? M1_AXI4LITE_ARREADY :
-                            (s0_read_to_dram && s0_dram_read_grant) ? M2_AXI4_ARREADY : 1'b0;
+                            (s0_read_to_dram) ? (s0_dram_read_grant ? M2_AXI4_ARREADY : 1'b0) : 1'b0;
     
     
-    // M1 (SA - AXI4LITE) Read Address Channel
-    assign M1_AXI4LITE_ARADDR = S0_AXI4_ARADDR;
-    assign M1_AXI4LITE_ARPROT = 3'b000;  // Default protection bits
-    assign M1_AXI4LITE_ARVALID = s0_read_to_sa;
-    
-    // M2 (DRAM - AXI4) Read Address Channel
+    // M2 (DRAM - AXI4) Read Address Channel - PERBAIKAN
     assign M2_AXI4_ARID = (s0_dram_read_grant) ? S0_AXI4_ARID :
-                         (s1_dram_read_grant) ? S1_AXI4_ARID : 'b0;
+                     (s1_dram_read_grant) ? S1_AXI4_ARID : 'b0;
     assign M2_AXI4_ARADDR = (s0_dram_read_grant) ? S0_AXI4_ARADDR :
-                           (s1_dram_read_grant) ? S1_AXI4_ARADDR : 'b0;
+                       (s1_dram_read_grant) ? S1_AXI4_ARADDR : 'b0;
     assign M2_AXI4_ARLEN = (s0_dram_read_grant) ? S0_AXI4_ARLEN :
-                          (s1_dram_read_grant) ? S1_AXI4_ARLEN : 'b0;
+                      (s1_dram_read_grant) ? S1_AXI4_ARLEN : 'b0;
     assign M2_AXI4_ARSIZE = (s0_dram_read_grant) ? S0_AXI4_ARSIZE :
-                           (s1_dram_read_grant) ? S1_AXI4_ARSIZE : 'b0;
+                       (s1_dram_read_grant) ? S1_AXI4_ARSIZE : 'b0;
     assign M2_AXI4_ARBURST = (s0_dram_read_grant) ? S0_AXI4_ARBURST :
-                            (s1_dram_read_grant) ? S1_AXI4_ARBURST : 'b0;
-    assign M2_AXI4_ARVALID = (s0_dram_read_grant && s0_read_to_dram) ||
-                            (s1_dram_read_grant && s1_read_to_dram);
-    assign S1_AXI4_ARREADY = (s1_dram_read_grant) ? M2_AXI4_ARREADY : 1'b0;
+                        (s1_dram_read_grant) ? S1_AXI4_ARBURST : 'b0;
+    assign M2_AXI4_ARVALID = (s0_dram_read_grant && s0_read_to_dram && S0_AXI4_ARVALID) ||
+                        (s1_dram_read_grant && s1_read_to_dram && S1_AXI4_ARVALID);
+    assign S1_AXI4_ARREADY = (s1_dram_read_grant && s1_read_to_dram) ? M2_AXI4_ARREADY : 1'b0;
 
     // ----- READ DATA CHANNEL ROUTING -----
     
