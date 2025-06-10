@@ -7,16 +7,17 @@ module top (
     input wire clk,
     input wire reset_n,
     
-    // LPDDR4 Interface
-    output wire                    lpddr4_ck_t,
-    output wire                    lpddr4_ck_c,
-    output wire                    lpddr4_cke,
-    output wire                    lpddr4_reset_n,
-    output wire                    lpddr4_cs_n,
-    output wire [5:0]              lpddr4_ca,
-    inout  wire [31:0]             lpddr4_dq,
-    inout  wire [3:0]              lpddr4_dqs_t,
-    inout  wire [3:0]              lpddr4_dqs_c,
+    // DRAM Interface (simplified)
+    output wire                    dram_ck,
+    output wire                    dram_cs,
+    output wire                    dram_we,
+    output wire                    dram_ras,
+    output wire                    dram_cas,
+    output wire [13:0]             dram_addr,
+    output wire [2:0]              dram_ba,
+    inout  wire [31:0]             dram_dq,
+    output wire [3:0]              dram_dm,
+    output wire                    dram_dqs,
     
     // External debug/control signals
     output wire trap
@@ -213,7 +214,7 @@ module top (
         .COMPRESSED_ISA(0),
         .ENABLE_MUL(1),
         .ENABLE_DIV(1),
-        .PROGADDR_RESET(32'h00000000)
+        .PROGADDR_RESET(32'h00000004)
     ) cpu (
         .clk(clk_sys),
         .resetn(reset_sys_n),
@@ -449,58 +450,58 @@ module top (
     dram_controller #(
         .ADDR_WIDTH(ADDR_WIDTH),
         .DATA_WIDTH(DATA_WIDTH),
-        .AXI4_ID_WIDTH(AXI4_ID_WIDTH),
-        .LPDDR4_CAPACITY_GB(LPDDR4_CAPACITY_GB)
+        .AXI4_ID_WIDTH(AXI4_ID_WIDTH)
     ) dram_controller_inst (
         // Clock and Reset
         .clk(clk_sys),
         .rst_n(reset_sys_n),
         
         // AXI4 Slave Interface
-        .S_AXI4_AWID(dram_s_axi_awid),
-        .S_AXI4_AWADDR(dram_s_axi_awaddr),
-        .S_AXI4_AWLEN(dram_s_axi_awlen),
-        .S_AXI4_AWSIZE(dram_s_axi_awsize),
-        .S_AXI4_AWBURST(dram_s_axi_awburst),
-        .S_AXI4_AWVALID(dram_s_axi_awvalid),
-        .S_AXI4_AWREADY(dram_s_axi_awready),
+        .M2_AXI4_AWID(dram_s_axi_awid),
+        .M2_AXI4_AWADDR(dram_s_axi_awaddr),
+        .M2_AXI4_AWLEN(dram_s_axi_awlen),
+        .M2_AXI4_AWSIZE(dram_s_axi_awsize),
+        .M2_AXI4_AWBURST(dram_s_axi_awburst),
+        .M2_AXI4_AWVALID(dram_s_axi_awvalid),
+        .M2_AXI4_AWREADY(dram_s_axi_awready),
         
-        .S_AXI4_WDATA(dram_s_axi_wdata),
-        .S_AXI4_WSTRB(dram_s_axi_wstrb),
-        .S_AXI4_WLAST(dram_s_axi_wlast),
-        .S_AXI4_WVALID(dram_s_axi_wvalid),
-        .S_AXI4_WREADY(dram_s_axi_wready),
+        .M2_AXI4_WDATA(dram_s_axi_wdata),
+        .M2_AXI4_WSTRB(dram_s_axi_wstrb),
+        .M2_AXI4_WLAST(dram_s_axi_wlast),
+        .M2_AXI4_WVALID(dram_s_axi_wvalid),
+        .M2_AXI4_WREADY(dram_s_axi_wready),
         
-        .S_AXI4_BID(dram_s_axi_bid),
-        .S_AXI4_BRESP(dram_s_axi_bresp),
-        .S_AXI4_BVALID(dram_s_axi_bvalid),
-        .S_AXI4_BREADY(dram_s_axi_bready),
+        .M2_AXI4_BID(dram_s_axi_bid),
+        .M2_AXI4_BRESP(dram_s_axi_bresp),
+        .M2_AXI4_BVALID(dram_s_axi_bvalid),
+        .M2_AXI4_BREADY(dram_s_axi_bready),
         
-        .S_AXI4_ARID(dram_s_axi_arid),
-        .S_AXI4_ARADDR(dram_s_axi_araddr),
-        .S_AXI4_ARLEN(dram_s_axi_arlen),
-        .S_AXI4_ARSIZE(dram_s_axi_arsize),
-        .S_AXI4_ARBURST(dram_s_axi_arburst),
-        .S_AXI4_ARVALID(dram_s_axi_arvalid),
-        .S_AXI4_ARREADY(dram_s_axi_arready),
+        .M2_AXI4_ARID(dram_s_axi_arid),
+        .M2_AXI4_ARADDR(dram_s_axi_araddr),
+        .M2_AXI4_ARLEN(dram_s_axi_arlen),
+        .M2_AXI4_ARSIZE(dram_s_axi_arsize),
+        .M2_AXI4_ARBURST(dram_s_axi_arburst),
+        .M2_AXI4_ARVALID(dram_s_axi_arvalid),
+        .M2_AXI4_ARREADY(dram_s_axi_arready),
         
-        .S_AXI4_RID(dram_s_axi_rid),
-        .S_AXI4_RDATA(dram_s_axi_rdata),
-        .S_AXI4_RRESP(dram_s_axi_rresp),
-        .S_AXI4_RLAST(dram_s_axi_rlast),
-        .S_AXI4_RVALID(dram_s_axi_rvalid),
-        .S_AXI4_RREADY(dram_s_axi_rready),
+        .M2_AXI4_RID(dram_s_axi_rid),
+        .M2_AXI4_RDATA(dram_s_axi_rdata),
+        .M2_AXI4_RRESP(dram_s_axi_rresp),
+        .M2_AXI4_RLAST(dram_s_axi_rlast),
+        .M2_AXI4_RVALID(dram_s_axi_rvalid),
+        .M2_AXI4_RREADY(dram_s_axi_rready),
         
-        // LPDDR4 Physical Interface
-        .lpddr4_ck_t(lpddr4_ck_t),
-        .lpddr4_ck_c(lpddr4_ck_c),
-        .lpddr4_cke(lpddr4_cke),
-        .lpddr4_reset_n(lpddr4_reset_n),
-        .lpddr4_cs_n(lpddr4_cs_n),
-        .lpddr4_ca(lpddr4_ca),
-        .lpddr4_dq(lpddr4_dq),
-        .lpddr4_dqs_t(lpddr4_dqs_t),
-        .lpddr4_dqs_c(lpddr4_dqs_c)
+        // DRAM Physical Interface
+        .dram_ck(dram_ck),
+        .dram_cs(dram_cs),
+        .dram_we(dram_we),
+        .dram_ras(dram_ras),
+        .dram_cas(dram_cas),
+        .dram_addr(dram_addr),
+        .dram_ba(dram_ba),
+        .dram_dq(dram_dq),
+        .dram_dm(dram_dm),
+        .dram_dqs(dram_dqs)
     );
     
     // ========== Placeholder connections for SA module ==========

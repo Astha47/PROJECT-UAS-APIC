@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 
 `include "top.v"
-`include "ramlpddr4_dummy.v"
+`include "lpddr4_dummy.v"
 
 module top_tb;
     // Testbench signals
@@ -12,16 +12,17 @@ module top_tb;
     // File handle for logging
     integer log_file;
     
-    // LPDDR4 interface signals between top and dummy RAM
-    wire lpddr4_ck_t;
-    wire lpddr4_ck_c;
-    wire lpddr4_cke;
-    wire lpddr4_reset_n;
-    wire lpddr4_cs_n;
-    wire [5:0] lpddr4_ca;
-    wire [31:0] lpddr4_dq;
-    wire [3:0] lpddr4_dqs_t;
-    wire [3:0] lpddr4_dqs_c;
+    // DRAM interface signals between top and dummy RAM - match top.v ports
+    wire dram_ck;
+    wire dram_cs;
+    wire dram_we;
+    wire dram_ras;
+    wire dram_cas;
+    wire [13:0] dram_addr;
+    wire [2:0] dram_ba;
+    wire [31:0] dram_dq;
+    wire [3:0] dram_dm;
+    wire dram_dqs;
     
     // Test tracking variables
     reg completed_lui_x4;
@@ -74,45 +75,39 @@ module top_tb;
         #100 reset_n = 1; // Release reset after 100ns
     end
     
-    // DUT instantiation - Top SoC
+    // DUT instantiation - Top SoC - using correct port names from top.v
     top dut (
         .clk(clk),
         .reset_n(reset_n),
         
-        // LPDDR4 Interface
-        .lpddr4_ck_t(lpddr4_ck_t),
-        .lpddr4_ck_c(lpddr4_ck_c),
-        .lpddr4_cke(lpddr4_cke),
-        .lpddr4_reset_n(lpddr4_reset_n),
-        .lpddr4_cs_n(lpddr4_cs_n),
-        .lpddr4_ca(lpddr4_ca),
-        .lpddr4_dq(lpddr4_dq),
-        .lpddr4_dqs_t(lpddr4_dqs_t),
-        .lpddr4_dqs_c(lpddr4_dqs_c),
+        // DRAM Interface - using actual port names from top.v
+        .dram_ck(dram_ck),
+        .dram_cs(dram_cs),
+        .dram_we(dram_we),
+        .dram_ras(dram_ras),
+        .dram_cas(dram_cas),
+        .dram_addr(dram_addr),
+        .dram_ba(dram_ba),
+        .dram_dq(dram_dq),
+        .dram_dm(dram_dm),
+        .dram_dqs(dram_dqs),
         
         // Debug output
         .trap(trap)
     );
     
-    // Instantiate the dummy LPDDR4 RAM
-    ramlpddr4_dummy #(
-        .CAPACITY_GB(4),
-        .SIM_SIZE_KB(64)  // 64KB for simulation
-    ) ram (
-        // Clock signals
-        .ck_t(lpddr4_ck_t),
-        .ck_c(lpddr4_ck_c),
-        .cke(lpddr4_cke),
-        .reset_n(lpddr4_reset_n),
-        .cs_n(lpddr4_cs_n),
-        
-        // Command/Address bus
-        .ca(lpddr4_ca),
-        
-        // Data bus
-        .dq(lpddr4_dq),
-        .dqs_t(lpddr4_dqs_t),
-        .dqs_c(lpddr4_dqs_c)
+    // Instantiate the dummy LPDDR4 RAM - direct connection
+    lpddr4_dummy ram (
+        .clk(dram_ck),
+        .cs(dram_cs),
+        .we(dram_we),
+        .ras(dram_ras),
+        .cas(dram_cas),
+        .addr(dram_addr),
+        .ba(dram_ba),
+        .dq(dram_dq),
+        .dm(dram_dm),
+        .dqs(dram_dqs)
     );
     
     // Test scenario and monitoring
@@ -199,7 +194,7 @@ module top_tb;
         last_pc = 32'h0;
     end
     
-    // Enhanced CPU and memory monitoring
+    // Enhanced CPU and memory monitoring - remove invalid DRAM controller references
     always @(posedge clk) begin
         if (!reset_n) begin
             reset_counter <= 0;
@@ -212,11 +207,6 @@ module top_tb;
                          $time, reset_counter, dut.cpu.reg_pc, dut.cpu.resetn, dut.cpu.mem_valid, dut.cpu.mem_ready);
                 $fdisplay(log_file, "Time %t: CPU Reset cycle %d - PC=0x%08x, resetn=%b, mem_valid=%b, mem_ready=%b", 
                          $time, reset_counter, dut.cpu.reg_pc, dut.cpu.resetn, dut.cpu.mem_valid, dut.cpu.mem_ready);
-                
-                $display("Time %t: DRAM Controller - init_state=%d, init_timer=%d, init_done=%b, state=%d", 
-                         $time, dut.dram_controller_inst.init_state, dut.dram_controller_inst.init_timer, dut.dram_controller_inst.init_done, dut.dram_controller_inst.state);
-                $fdisplay(log_file, "Time %t: DRAM Controller - init_state=%d, init_timer=%d, init_done=%b, state=%d", 
-                         $time, dut.dram_controller_inst.init_state, dut.dram_controller_inst.init_timer, dut.dram_controller_inst.init_done, dut.dram_controller_inst.state);
             end
             
             // Monitor CPU PC changes
@@ -249,17 +239,12 @@ module top_tb;
                 end
             end
             
-            // Monitor memory interface signals
+            // Monitor memory interface signals - remove invalid DRAM controller references
             if (dut.cpu.mem_valid && !dut.cpu.mem_ready) begin
                 $display("Time %t: Memory access waiting - valid=%b ready=%b addr=0x%08x", 
                          $time, dut.cpu.mem_valid, dut.cpu.mem_ready, dut.cpu.mem_addr);
                 $fdisplay(log_file, "Time %t: Memory access waiting - valid=%b ready=%b addr=0x%08x", 
                          $time, dut.cpu.mem_valid, dut.cpu.mem_ready, dut.cpu.mem_addr);
-                
-                $display("Time %t: DRAM Controller state=%d, init_done=%b, init_state=%d", 
-                         $time, dut.dram_controller_inst.state, dut.dram_controller_inst.init_done, dut.dram_controller_inst.init_state);
-                $fdisplay(log_file, "Time %t: DRAM Controller state=%d, init_done=%b, init_state=%d", 
-                         $time, dut.dram_controller_inst.state, dut.dram_controller_inst.init_done, dut.dram_controller_inst.init_state);
             end
             
             // Monitor trap conditions
@@ -274,19 +259,20 @@ module top_tb;
         end
     end
     
-    // Memory command monitoring
+    // Memory command monitoring - updated for actual DRAM signals
     always @(posedge clk) begin
-        if (!lpddr4_cs_n) begin
-            case(lpddr4_ca)
-                6'b000001: $display("Time %t: LPDDR4 MRW command", $time);
-                6'b000010: $display("Time %t: LPDDR4 MRR command", $time);
-                6'b000100: $display("Time %t: LPDDR4 REFRESH command", $time);
-                6'b001000: $display("Time %t: LPDDR4 PRECHARGE command", $time);
-                6'b010000: $display("Time %t: LPDDR4 ACTIVATE command", $time);
-                6'b100000: $display("Time %t: LPDDR4 WRITE command", $time);
-                6'b100001: $display("Time %t: LPDDR4 READ command", $time);
-                default: $display("Time %t: LPDDR4 Unknown command %b", $time, lpddr4_ca);
-            endcase
+        if (dram_cs) begin
+            if (!dram_ras && !dram_cas) begin
+                if (!dram_we) begin
+                    $display("Time %t: DRAM WRITE command - addr=0x%04x, ba=%d", $time, dram_addr, dram_ba);
+                end else begin
+                    $display("Time %t: DRAM READ command - addr=0x%04x, ba=%d", $time, dram_addr, dram_ba);
+                end
+            end else if (!dram_ras && dram_cas) begin
+                $display("Time %t: DRAM ACTIVATE command - addr=0x%04x, ba=%d", $time, dram_addr, dram_ba);
+            end else if (dram_ras && !dram_cas) begin
+                $display("Time %t: DRAM PRECHARGE command - addr=0x%04x, ba=%d", $time, dram_addr, dram_ba);
+            end
         end
     end
     
@@ -308,65 +294,15 @@ module top_tb;
         end
     end
     
-    // Enhanced AXI read transaction monitoring 
-    always @(posedge clk) begin
-        if (dut.dram_controller_inst.state == 8) begin // READ_DATA state
-            $display("Time %t: READ_DATA state - burst_counter=%d, active_len=%d, timing_counter=%d", 
-                     $time, dut.dram_controller_inst.burst_counter, dut.dram_controller_inst.active_len, dut.dram_controller_inst.timing_counter);
-            $display("Time %t: AXI4 READ - RVALID=%b, RREADY=%b, RLAST=%b, RDATA=0x%08x", 
-                     $time, dut.dram_s_axi_rvalid, dut.dram_s_axi_rready, dut.dram_s_axi_rlast, dut.dram_s_axi_rdata);
-        end
-        
-        // Monitor AXI read address channel
-        if (dut.dram_s_axi_arvalid && dut.dram_s_axi_arready) begin
-            $display("Time %t: AXI4 READ ADDRESS accepted - addr=0x%08x, len=%d, size=%d", 
-                     $time, dut.dram_s_axi_araddr, dut.dram_s_axi_arlen, dut.dram_s_axi_arsize);
-        end
-        
-        // Monitor AXI read data channel
-        if (dut.dram_s_axi_rvalid && dut.dram_s_axi_rready) begin
-            $display("Time %t: AXI4 READ DATA transferred - data=0x%08x, last=%b", 
-                     $time, dut.dram_s_axi_rdata, dut.dram_s_axi_rlast);
-        end
-        
-        // Monitor AXI write address channel
-        if (dut.dram_s_axi_awvalid && dut.dram_s_axi_awready) begin
-            $display("Time %t: AXI4 WRITE ADDRESS accepted - addr=0x%08x, len=%d, size=%d", 
-                     $time, dut.dram_s_axi_awaddr, dut.dram_s_axi_awlen, dut.dram_s_axi_awsize);
-        end
-        
-        // Monitor AXI write data channel
-        if (dut.dram_s_axi_wvalid && dut.dram_s_axi_wready) begin
-            $display("Time %t: AXI4 WRITE DATA transferred - data=0x%08x, strobe=0x%01x, last=%b", 
-                     $time, dut.dram_s_axi_wdata, dut.dram_s_axi_wstrb, dut.dram_s_axi_wlast);
-        end
-        
-        // Monitor AXI write response channel
-        if (dut.dram_s_axi_bvalid && dut.dram_s_axi_bready) begin
-            $display("Time %t: AXI4 WRITE RESPONSE received - id=0x%01x, resp=0x%01x", 
-                     $time, dut.dram_s_axi_bid, dut.dram_s_axi_bresp);
-        end
-    end
-    
-    // Debug AXI4 master bridge state
-    always @(posedge clk) begin
-        if (dut.cpu_axi_master.mem_valid) begin
-            $display("Time %t: AXI4 Master - state=%d, mem_valid=%b, mem_ready=%b, m_axi_rready=%b", 
-                     $time, dut.cpu_axi_master.state, dut.cpu_axi_master.mem_valid, dut.cpu_axi_master.mem_ready, dut.cpu_axi_master.m_axi_rready);
-        end
-    end
-    
-    // Monitor grant signals and transaction states
+    // Monitor grant signals and transaction states - updated for actual signals
     always @(posedge clk) begin
         time_ms = $realtime / 1000.0;
         
         if (time_ms >= 90.0 && time_ms <= 110.0) begin
-            $display("[DEBUG %t] Grant Signals: s0_dram_read_grant=%b, s1_dram_read_grant=%b",
-                    $time, dut.axi_interconnect_inst.s0_dram_read_grant, dut.axi_interconnect_inst.s1_dram_read_grant);
-            $display("[DEBUG %t] Transaction flags: s0_read_to_dram=%b, s1_read_to_dram=%b",
-                    $time, dut.axi_interconnect_inst.s0_read_to_dram, dut.axi_interconnect_inst.s1_read_to_dram);
-            $display("[DEBUG %t] AXI AR Channel: ARVALID=%b, ARREADY=%b, ARADDR=0x%h",
-                    $time, dut.axi_interconnect_inst.S0_AXI4_ARVALID, dut.axi_interconnect_inst.S0_AXI4_ARREADY, dut.axi_interconnect_inst.S0_AXI4_ARADDR);
+            $display("[DEBUG %t] DRAM Signals: cs=%b, we=%b, ras=%b, cas=%b, addr=0x%h",
+                    $time, dram_cs, dram_we, dram_ras, dram_cas, dram_addr);
+            $display("[DEBUG %t] DRAM Data: dq=0x%h, dm=0x%h, dqs=%b",
+                    $time, dram_dq, dram_dm, dram_dqs);
         end
     end
 
