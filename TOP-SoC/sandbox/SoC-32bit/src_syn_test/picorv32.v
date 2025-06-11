@@ -675,7 +675,6 @@ module picorv32 #(
 	reg is_alu_reg_imm;
 	reg is_alu_reg_reg;
 	reg is_compare;
-	reg is_jalr;
 
 	assign instr_trap = (CATCH_ILLINSN || WITH_PCPI) && !{instr_lui, instr_auipc, instr_jal, instr_jalr,
 			instr_beq, instr_bne, instr_blt, instr_bge, instr_bltu, instr_bgeu,
@@ -863,7 +862,6 @@ module picorv32 #(
 		is_sltiu_bltu_sltu <= |{instr_sltiu, instr_bltu, instr_sltu};
 		is_lbu_lhu_lw <= |{instr_lbu, instr_lhu, instr_lw};
 		is_compare <= |{is_beq_bne_blt_bge_bltu_bgeu, instr_slti, instr_slt, instr_sltiu, instr_sltu};
-		is_jalr <= instr_jalr;
 
 		if (mem_do_rinst && mem_done) begin
 			instr_lui     <= mem_rdata_latched[6:0] == 7'b0110111;
@@ -882,10 +880,6 @@ module picorv32 #(
 			{ decoded_imm_j[31:20], decoded_imm_j[10:1], decoded_imm_j[11], decoded_imm_j[19:12], decoded_imm_j[0] } <= $signed({mem_rdata_latched[31:12], 1'b0});
 
 			decoded_rd <= mem_rdata_latched[11:7];
-
-			$display("Time %t: DECODER UPDATE - PC=0x%08x, mem_rdata_latched=0x%08x, decoded_rd=%d", 
-            		$time, reg_pc, mem_rdata_latched, mem_rdata_latched[11:7]);
-
 			decoded_rs1 <= mem_rdata_latched[19:15];
 			decoded_rs2 <= mem_rdata_latched[24:20];
 
@@ -1539,11 +1533,6 @@ module picorv32 #(
 				latched_is_lh <= 0;
 				latched_is_lb <= 0;
 				latched_rd <= decoded_rd;
-
-				$display("Time %t: FETCH SET latched_rd - PC=0x%08x, decoded_rd=%d -> latched_rd", 
-            			$time, reg_pc, decoded_rd);
-
-
 				latched_compr <= compressed_instr;
 
 				if (ENABLE_IRQ && ((decoder_trigger && !irq_active && !irq_delay && |(irq_pending & ~irq_mask)) || irq_state)) begin
@@ -1830,13 +1819,6 @@ module picorv32 #(
 						set_mem_do_rinst = 1;
 					end
 				end else begin
-
-					// if (is_alu_reg_imm || is_alu_reg_reg || is_lui_auipc_jal || is_jalr) begin
-					// 	latched_rd <= decoded_rd;  
-					// 	$display("Time %t: EXEC - Updating latched_rd to %d for PC=0x%08x", 
-					// 			$time, decoded_rd, reg_pc);
-					// end
-
 					latched_branch <= instr_jalr;
 					latched_store <= 1;
 					latched_stalu <= 1;

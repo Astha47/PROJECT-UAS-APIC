@@ -447,13 +447,4 @@ module axi_interconnect#(
     assign M2_AXI4_RREADY = (s0_dram_read_grant) ? S0_AXI4_RREADY :
                            (s1_dram_read_grant) ? S1_AXI4_RREADY : 1'b0;
 
-    // Debug output for transaction tracking
-    // always @(posedge ACLK) begin
-    //     if (s0_read_to_dram || s0_read_transaction_active || s0_dram_read_grant) begin
-    //         $display("[INTERCONNECT %t] S0 Read State: req=%b, active=%b, grant=%b, ARVALID=%b, ARREADY=%b, RVALID=%b, RREADY=%b, RLAST=%b",
-    //                 $time, s0_read_to_dram, s0_read_transaction_active, s0_dram_read_grant, 
-    //                 S0_AXI4_ARVALID, S0_AXI4_ARREADY, M2_AXI4_RVALID, S0_AXI4_RREADY, M2_AXI4_RLAST);
-    //     end
-    // end
-
 endmodule

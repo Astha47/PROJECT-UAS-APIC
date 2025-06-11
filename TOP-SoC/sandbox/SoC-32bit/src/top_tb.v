@@ -32,6 +32,15 @@ module top_tb;
     reg completed_sw;
     reg completed_lw;
     
+    // TAMBAHKAN INI - Variable monitoring baru
+    reg store_completed = 1'b0;
+    reg load_completed = 1'b0;
+    reg [31:0] stored_value = 32'h0;
+    reg [31:0] loaded_value = 32'h0;
+    reg program_started = 1'b0;
+    reg reached_loop = 1'b0;
+    reg [31:0] prev_pc = 32'h0;
+    
     // Calculate expected result from test program
     integer expected_x1_value;
     integer expected_x2_value;
@@ -57,6 +66,15 @@ module top_tb;
         completed_add_x3 = 0;
         completed_sw = 0;
         completed_lw = 0;
+        
+        // TAMBAHKAN INI - Inisialisasi variable baru
+        store_completed = 1'b0;
+        load_completed = 1'b0;
+        stored_value = 32'h0;
+        loaded_value = 32'h0;
+        program_started = 1'b0;
+        reached_loop = 1'b0;
+        prev_pc = 32'h0;
         
         expected_x1_value = 10;
         expected_x2_value = 20;
@@ -201,63 +219,43 @@ module top_tb;
         end else begin
             reset_counter <= reset_counter + 1;
             
-            // Debug CPU state after reset
-            if (reset_counter < 20) begin
-                $display("Time %t: CPU Reset cycle %d - PC=0x%08x, resetn=%b, mem_valid=%b, mem_ready=%b", 
-                         $time, reset_counter, dut.cpu.reg_pc, dut.cpu.resetn, dut.cpu.mem_valid, dut.cpu.mem_ready);
-                $fdisplay(log_file, "Time %t: CPU Reset cycle %d - PC=0x%08x, resetn=%b, mem_valid=%b, mem_ready=%b", 
-                         $time, reset_counter, dut.cpu.reg_pc, dut.cpu.resetn, dut.cpu.mem_valid, dut.cpu.mem_ready);
+            // TAMBAHKAN INI - Monitor memory transactions
+            // Monitor store operation (SW)
+            if (dut.cpu.mem_valid && dut.cpu.mem_ready && |dut.cpu.mem_wstrb && dut.cpu.mem_addr == 32'h1000) begin
+                store_completed <= 1'b1;
+                stored_value <= dut.cpu.mem_wdata;
+                $display("[TESTBENCH %t] *** STORE DETECTED *** addr=0x%x, data=0x%x", 
+                        $time, dut.cpu.mem_addr, dut.cpu.mem_wdata);
+                $fdisplay(log_file, "[TESTBENCH %t] *** STORE DETECTED *** addr=0x%x, data=0x%x", 
+                        $time, dut.cpu.mem_addr, dut.cpu.mem_wdata);
             end
             
-            // Monitor CPU PC changes
-            if (dut.cpu.reg_pc !== last_pc) begin
-                $display("Time %t: PC changed: 0x%08x -> 0x%08x", $time, last_pc, dut.cpu.reg_pc);
-                $fdisplay(log_file, "Time %t: PC changed: 0x%08x -> 0x%08x", $time, last_pc, dut.cpu.reg_pc);
-                last_pc <= dut.cpu.reg_pc;
+            // Monitor load operation (LW)  
+            if (dut.cpu.mem_valid && dut.cpu.mem_ready && dut.cpu.mem_instr == 1'b0 && dut.cpu.mem_addr == 32'h1000) begin
+                load_completed <= 1'b1;
+                loaded_value <= dut.cpu.mem_rdata;
+                $display("[TESTBENCH %t] *** LOAD DETECTED *** addr=0x%x, data=0x%x", 
+                        $time, dut.cpu.mem_addr, dut.cpu.mem_rdata);
+                $fdisplay(log_file, "[TESTBENCH %t] *** LOAD DETECTED *** addr=0x%x, data=0x%x", 
+                        $time, dut.cpu.mem_addr, dut.cpu.mem_rdata);
             end
             
-            // Monitor CPU PC and instruction fetches
-            if (dut.cpu.mem_valid && dut.cpu.mem_ready && dut.cpu.mem_instr) begin
-                $display("Time %t: INSTR FETCH: PC=0x%08x, addr=0x%08x, data=0x%08x", 
-                         $time, dut.cpu.reg_pc, dut.cpu.mem_addr, dut.cpu.mem_rdata);
-                $fdisplay(log_file, "Time %t: INSTR FETCH: PC=0x%08x, addr=0x%08x, data=0x%08x", 
-                         $time, dut.cpu.reg_pc, dut.cpu.mem_addr, dut.cpu.mem_rdata);
-            end
-            
-            // Monitor memory operations (data)
-            if (dut.cpu.mem_valid && dut.cpu.mem_ready && !dut.cpu.mem_instr) begin
-                if (|dut.cpu.mem_wstrb) begin
-                    $display("Time %t: Memory WRITE: addr=0x%08x, data=0x%08x, strobe=0x%01x", 
-                             $time, dut.cpu.mem_addr, dut.cpu.mem_wdata, dut.cpu.mem_wstrb);
-                    $fdisplay(log_file, "Time %t: Memory WRITE: addr=0x%08x, data=0x%08x, strobe=0x%01x", 
-                             $time, dut.cpu.mem_addr, dut.cpu.mem_wdata, dut.cpu.mem_wstrb);
-                end else begin
-                    $display("Time %t: Memory READ:  addr=0x%08x, data=0x%08x", 
-                             $time, dut.cpu.mem_addr, dut.cpu.mem_rdata);
-                    $fdisplay(log_file, "Time %t: Memory READ:  addr=0x%08x, data=0x%08x", 
-                             $time, dut.cpu.mem_addr, dut.cpu.mem_rdata);
+            // TAMBAHKAN INI - Monitor PC progression
+            if (dut.cpu.reg_pc != prev_pc && reset_n) begin
+                if (dut.cpu.reg_pc != 32'h0) program_started <= 1'b1;
+                
+                // Check if we've reached the loop (PC jumps back)
+                if (dut.cpu.reg_pc < prev_pc && program_started) begin
+                    reached_loop <= 1'b1;
+                    $display("[TESTBENCH %t] *** PROGRAM LOOP DETECTED - Test completed! ***", $time);
+                    $fdisplay(log_file, "[TESTBENCH %t] *** PROGRAM LOOP DETECTED - Test completed! ***", $time);
                 end
-            end
-            
-            // Monitor memory interface signals - remove invalid DRAM controller references
-            if (dut.cpu.mem_valid && !dut.cpu.mem_ready) begin
-                $display("Time %t: Memory access waiting - valid=%b ready=%b addr=0x%08x", 
-                         $time, dut.cpu.mem_valid, dut.cpu.mem_ready, dut.cpu.mem_addr);
-                $fdisplay(log_file, "Time %t: Memory access waiting - valid=%b ready=%b addr=0x%08x", 
-                         $time, dut.cpu.mem_valid, dut.cpu.mem_ready, dut.cpu.mem_addr);
-            end
-            
-            // Monitor trap conditions
-            if (trap) begin
-                $display("Time %t: *** CPU TRAP DETECTED ***", $time);
-                $fdisplay(log_file, "Time %t: *** CPU TRAP DETECTED ***", $time);
-                $display("PC: 0x%08x", dut.cpu.reg_pc);
-                $fdisplay(log_file, "PC: 0x%08x", dut.cpu.reg_pc);
-                #100;
-                $finish;
+                
+                prev_pc <= dut.cpu.reg_pc;
             end
         end
     end
+    
     
     // Memory command monitoring - updated for actual DRAM signals
     always @(posedge clk) begin
@@ -377,6 +375,33 @@ module top_tb;
                                     $display("Time %t: FAIL - Register x5=0x%08x, expected=0x%08x (memory load failed)", 
                                              $time, dut.cpu.cpuregs[5], expected_x3_value);
                                     
+                                 // TAMBAHKAN INI - Enhanced success evaluation
+                                 $display("\n=== ENHANCED TEST PROGRAM EVALUATION ===");
+                                 $display("1. ADDI x1,x0,10:  %s", (dut.cpu.cpuregs[1] == expected_x1_value) ? "PASS" : "FAIL");
+                                 $display("2. ADDI x2,x0,20:  %s", (dut.cpu.cpuregs[2] == expected_x2_value) ? "PASS" : "FAIL"); 
+                                 $display("3. ADD x3,x1,x2:   %s", (dut.cpu.cpuregs[3] == expected_x3_value) ? "PASS" : "FAIL");
+                                 $display("4. LUI x4,0x1:     %s", (dut.cpu.cpuregs[4] == 32'h1000) ? "PASS" : "FAIL");
+                                 $display("5. SW x3,0(x4):    %s", store_completed ? "PASS" : "FAIL");
+                                 $display("6. LW x5,0(x4):    %s", load_completed ? "PASS" : "FAIL");
+                                 $display("7. Data integrity: %s", (stored_value == loaded_value && stored_value == 32'd30) ? "PASS" : "FAIL");
+                                 $display("8. Loop reached:   %s", reached_loop ? "PASS" : "FAIL");
+                                 
+                                 if ((dut.cpu.cpuregs[1] == expected_x1_value) && 
+                                     (dut.cpu.cpuregs[2] == expected_x2_value) && 
+                                     (dut.cpu.cpuregs[3] == expected_x3_value) && 
+                                     (dut.cpu.cpuregs[4] == 32'h1000) &&
+                                     store_completed && load_completed && 
+                                     (stored_value == loaded_value) && reached_loop) begin
+                                     $display("\n*** ALL TESTS PASSED! CPU is working correctly! ***");
+                                     $fdisplay(log_file, "\n*** ALL TESTS PASSED! CPU is working correctly! ***");
+                                 end else begin
+                                     $display("\n*** SOME TESTS FAILED! Check the implementation! ***");
+                                     $fdisplay(log_file, "\n*** SOME TESTS FAILED! Check the implementation! ***");
+                                 end
+                                 
+                                 $display("==========================================\n");
+                                 $fdisplay(log_file, "==========================================\n");
+                                 
                                  // All tests completed - print summary
                                  $display("\nTime %t: Test Program Execution Summary:", $time);
                                  $display("  - CPU initialization: PASS");
@@ -388,6 +413,29 @@ module top_tb;
                               end
                               end
             endcase
+        end
+    end
+    
+    // Monitor register file write operations
+    always @(posedge clk) begin
+        if (reset_n) begin
+            // Monitor register write signals
+            if (dut.cpu.cpuregs_write && dut.cpu.latched_rd != 0) begin
+                $display("Time %t: CPU Register Write - latched_rd=%d, cpuregs_wrdata=0x%08x, resetn=%b", 
+                        $time, dut.cpu.latched_rd, dut.cpu.cpuregs_wrdata, dut.cpu.resetn);
+            end
+            
+            // Monitor CPU state machine
+            $display("Time %t: CPU State=%s, latched_store=%b, cpuregs_write=%b, latched_rd=%d", 
+                    $time, 
+                    (dut.cpu.cpu_state == 8'b01000000) ? "FETCH" :
+                    (dut.cpu.cpu_state == 8'b00100000) ? "LD_RS1" :
+                    (dut.cpu.cpu_state == 8'b00010000) ? "LD_RS2" :
+                    (dut.cpu.cpu_state == 8'b00001000) ? "EXEC" :
+                    (dut.cpu.cpu_state == 8'b00000100) ? "SHIFT" :
+                    (dut.cpu.cpu_state == 8'b00000010) ? "STMEM" :
+                    (dut.cpu.cpu_state == 8'b00000001) ? "LDMEM" : "TRAP",
+                    dut.cpu.latched_store, dut.cpu.cpuregs_write, dut.cpu.latched_rd);
         end
     end
 endmodule
