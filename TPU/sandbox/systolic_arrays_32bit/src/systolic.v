@@ -149,6 +149,7 @@ always @(*) begin
         end
     end
     mul_result = {(PRODUCT_WIDTH){1'b0}}; // Default mul_result
+    extended_mul_result = {(OUTCOME_WIDTH){1'b0}}; // Defaut extended_mul_result
 
     if (alu_start) begin
         for (i = 0; i < ARRAY_SIZE; i = i + 1) begin
