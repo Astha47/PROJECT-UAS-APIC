@@ -1,0 +1,15 @@
+{
+	"DESIGN_NAME": "tpu_top",
+	"VERILOG_FILES": [
+		"../src/addr_sel.v",
+		"../src/quantize.v",
+		"../src/systolic_controller.v",
+		"../src/systolic.v",
+		"../src/tpu_top.v",
+		"../src/write_out.v"
+	],
+	"CLOCK_PERIOD": 50,
+	"CLOCK_PORT": "clk",
+	"PDK": "sky130A",
+	"STD_CELL_LIBRARY": "sky130_fd_sc_hd"
+}
