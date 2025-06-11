@@ -184,8 +184,8 @@ module top_tb;
         // Final verification
         $display("\nFinal Verification Status:");
         $fdisplay(log_file, "\nFinal Verification Status:");
-        $display("  - Test reached end: %s", completed_lw ? "PASS" : "FAIL");
-        $fdisplay(log_file, "  - Test reached end: %s", completed_lw ? "PASS" : "FAIL");
+        $display("  - Test reached end: %s", reached_loop ? "PASS" : "FAIL"); // Use reached_loop
+        $fdisplay(log_file, "  - Test reached end: %s", reached_loop ? "PASS" : "FAIL"); // Use reached_loop
         $display("  - PC at end: 0x%08x", dut.cpu.reg_pc);
         $fdisplay(log_file, "  - PC at end: 0x%08x", dut.cpu.reg_pc);
         $display("  - x1 (expected 10): %d", dut.cpu.cpuregs[1]);
@@ -231,7 +231,8 @@ module top_tb;
             (dut.cpu.cpuregs[3] == expected_x3_value) && 
             (dut.cpu.cpuregs[4] == 32'h1000) &&
             store_completed && load_completed && 
-            (stored_value == loaded_value) && reached_loop) begin
+            (stored_value == loaded_value && loaded_value == expected_x3_value) && // Check loaded_value against expected
+            reached_loop && (dut.cpu.cpuregs[5] == expected_x3_value) ) begin // Also check x5 final value
             $display("\n*** ALL TESTS PASSED! CPU is working correctly! ***");
             $fdisplay(log_file, "\n*** ALL TESTS PASSED! CPU is working correctly! ***");
         end else begin
@@ -296,11 +297,14 @@ module top_tb;
             if (dut.cpu.reg_pc != prev_pc && reset_n) begin
                 if (dut.cpu.reg_pc != 32'h0) program_started <= 1'b1;
                 
-                // Check if we've reached the loop (PC jumps back)
-                if (dut.cpu.reg_pc < prev_pc && program_started) begin
-                    reached_loop <= 1'b1;
-                    $display("[TESTBENCH %t] *** PROGRAM LOOP DETECTED - Test completed! ***", $time);
-                    $fdisplay(log_file, "[TESTBENCH %t] *** PROGRAM LOOP DETECTED - Test completed! ***", $time);
+                // Check if we've reached the loop (PC jumps to 0x18 and stays there)
+                if (program_started && dut.cpu.reg_pc == 32'h00000018 && prev_pc == 32'h00000018) begin
+                    if (!reached_loop) begin // Print message only once
+                        reached_loop <= 1'b1;
+                        completed_lw <= 1'b1; // LW is the instruction before the loop, so it's done.
+                        $display("[TESTBENCH %t] *** PROGRAM LOOP DETECTED - Test completed! ***", $time);
+                        $fdisplay(log_file, "[TESTBENCH %t] *** PROGRAM LOOP DETECTED - Test completed! ***", $time);
+                    end
                 end
                 
                 prev_pc <= dut.cpu.reg_pc;
@@ -364,16 +368,22 @@ module top_tb;
                 32'h00000000: if (!completed_lui_x4) 
                               $display("Time %t: Starting execution at PC=0x%08x - lui x4, 0x1", $time, dut.cpu.reg_pc);
                               
-                32'h00000004: if (!completed_addi_x1) begin
+                32'h00000004: if (!completed_addi_x1) begin // Instruction at PC=0x04 is addi x1
                               $display("Time %t: Executing PC=0x%08x - addi x1, x0, 10", $time, dut.cpu.reg_pc);
-                              completed_lui_x4 = 1;
+                              completed_lui_x4 = 1; // Mark instruction at PC=0x00 (lui x4) as processed by TB
                               end
                               
-                32'h00000008: if (!completed_addi_x2) begin
+                32'h00000008: if (!completed_addi_x2) begin // Instruction at PC=0x08 is addi x2
                               $display("Time %t: Executing PC=0x%08x - addi x2, x0, 20", $time, dut.cpu.reg_pc);
-                              completed_addi_x1 = 1;
+                              completed_addi_x1 = 1; // Mark instruction at PC=0x04 (addi x1) as processed by TB
+                              // Defer check for x1
+                              end
                               
-                              // Check if x1 has correct value
+                32'h0000000C: if (!completed_add_x3) begin // Instruction at PC=0x0C is add x3
+                              $display("Time %t: Executing PC=0x%08x - add x3, x1, x2", $time, dut.cpu.reg_pc);
+                              completed_addi_x2 = 1; // Mark instruction at PC=0x08 (addi x2) as processed by TB
+                              
+                              // Check if x1 (from instr at PC=0x04) has correct value
                               if (dut.cpu.cpuregs[1] == expected_x1_value)
                                 $display("Time %t: PASS - Register x1=0x%08x, expected=0x%08x", 
                                          $time, dut.cpu.cpuregs[1], expected_x1_value);
@@ -382,11 +392,11 @@ module top_tb;
                                          $time, dut.cpu.cpuregs[1], expected_x1_value);
                               end
                               
-                32'h0000000C: if (!completed_add_x3) begin
-                              $display("Time %t: Executing PC=0x%08x - add x3, x1, x2", $time, dut.cpu.reg_pc);
-                              completed_addi_x2 = 1;
+                32'h00000010: if (!completed_sw) begin // Instruction at PC=0x10 is sw x3
+                              $display("Time %t: Executing PC=0x%08x - sw x3, 0(x4)", $time, dut.cpu.reg_pc);
+                              completed_add_x3 = 1; // Mark instruction at PC=0x0C (add x3) as processed by TB
                               
-                              // Check if x2 has correct value
+                              // Check if x2 (from instr at PC=0x08) has correct value
                               if (dut.cpu.cpuregs[2] == expected_x2_value)
                                 $display("Time %t: PASS - Register x2=0x%08x, expected=0x%08x", 
                                          $time, dut.cpu.cpuregs[2], expected_x2_value);
@@ -395,23 +405,22 @@ module top_tb;
                                          $time, dut.cpu.cpuregs[2], expected_x2_value);
                               end
                               
-                32'h00000010: if (!completed_sw) begin
-                              $display("Time %t: Executing PC=0x%08x - sw x3, 0(x4)", $time, dut.cpu.reg_pc);
-                              completed_add_x3 = 1;
+                32'h00000014: if (!completed_lw && !reached_loop) begin // Instruction at PC=0x14 is lw x5. Use !reached_loop to prevent re-entry after loop.
+                              $display("Time %t: Executing PC=0x%08x - lw x5, 0(x4)", $time, dut.cpu.reg_pc);
+                              completed_sw = 1; // Mark instruction at PC=0x10 (sw x3) as processed by TB
+                              // $display("Time %t: Store operation completed, checking memory write via DRAM controller...", $time); // This message might be too early. store_completed flag is better.
                               
-                              // Check if x3 has correct value (sum of x1 and x2)
+                              // Check if x3 (from instr at PC=0x0C) has correct value
                               if (dut.cpu.cpuregs[3] == expected_x3_value)
                                 $display("Time %t: PASS - Register x3=0x%08x, expected=0x%08x (arithmetic operation successful)", 
                                          $time, dut.cpu.cpuregs[3], expected_x3_value);
                               else
-                                $display("Time %t: FAIL - Register x3=0x%08x, expected=0x%08x", 
+                                $display("Time %t: FAIL - Register x3=0x%08x, expected=0x%08x", // Corrected typo from 0x08x
                                          $time, dut.cpu.cpuregs[3], expected_x3_value);
                               end
-                              
-                32'h00000014: if (!completed_lw) begin
-                              $display("Time %t: Executing PC=0x%08x - lw x5, 0(x4)", $time, dut.cpu.reg_pc);
-                              completed_sw = 1;
-                              $display("Time %t: Store operation completed, checking memory write via DRAM controller...", $time);
+                32'h00000018: begin // Loop target address
+                                // completed_lw is set by the reached_loop logic now
+                                // This case can be used for any first-time loop entry actions if needed
                               end
                               
             endcase
