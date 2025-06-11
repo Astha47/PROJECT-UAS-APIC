@@ -159,6 +159,9 @@ module top_tb;
             $display("Mem[0x%08x] = 0x%08x", i*4, ram.memory[i]);
             $fdisplay(log_file, "Mem[0x%08x] = 0x%08x", i*4, ram.memory[i]);
         end
+
+        $display("Mem[0x%08x] = 0x%08x", 4096, ram.memory[1024]); // Check address 0x1000
+
         $display("");
         $fdisplay(log_file, "");
     end
@@ -410,6 +413,7 @@ module top_tb;
                                  $display("  - Arithmetic operation: %s", (dut.cpu.cpuregs[3] == expected_x3_value) ? "PASS" : "FAIL");
                                  $display("  - Memory store/load via AXI/DRAM: %s\n", 
                                           (dut.cpu.cpuregs[5] == expected_x3_value) ? "PASS" : "FAIL");
+                                $display("Mem[0x%08x] = 0x%08x", 4096, ram.memory[1024]); // Check address 0x1000 (1024 = 0x1000/4)
                               end
                               end
             endcase

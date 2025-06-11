@@ -115,15 +115,14 @@ module dram_controller #(
                 end
                 
                 DATA_PHASE: begin
-                    // if (M2_AXI4_WVALID && M2_AXI4_WREADY) begin
-                    if (M2_AXI4_WREADY) begin
+                    if (M2_AXI4_WVALID && M2_AXI4_WREADY) begin
                         // Convert to DRAM signals - ensure write happens
                         dram_cs <= 1'b0;
                         dram_we <= 1'b0;
                         dram_ras <= 1'b0;
                         dram_cas <= 1'b0;
-                        // Fix address mapping: handle 0x1000 properly
-                        dram_addr <= write_addr[15:2];  // Use bits [15:2] for word address
+                        // Simple address mapping: word address directly
+                        dram_addr <= {6'b000000, write_addr[9:2]};  // Word address (divide by 4)
                         dram_ba <= 3'b000;     // Use bank 0 for simplicity
                         dram_data_out <= M2_AXI4_WDATA;
                         dram_data_oe <= 1'b1;
@@ -188,8 +187,8 @@ module dram_controller #(
                     dram_we <= 1'b1;
                     dram_ras <= 1'b0;
                     dram_cas <= 1'b0;
-                    // Fix address mapping: handle 0x1000 properly
-                    dram_addr <= read_addr[15:2];   // Use bits [15:2] for word address
+                    // Simple address mapping: word address directly
+                    dram_addr <= {6'b000000, read_addr[9:2]};   // Word address (divide by 4)
                     dram_ba <= 3'b000;     // Use bank 0 for simplicity
                     dram_data_oe <= 1'b0;  // Ensure we're not driving the bus
                     read_state <= DATA_PHASE;
