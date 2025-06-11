@@ -2,23 +2,25 @@ module cordic_top (
     input  wire        clk,
     input  wire        rst,
     input  wire        start,
+    input  wire        mode,
     input  wire signed [31:0] theta_deg,
-    output wire signed [31:0] cos_out,
-    output wire signed [31:0] sin_out,
+    output wire signed [31:0] result_out,
     output wire        done
 );
 
     // Internal wires and regs
-    reg  [1:0] state;
     localparam IDLE = 2'd0,
                WAIT_THETA = 2'd1,
                START_CORDIC = 2'd2;
-
+    reg [1:0] state = IDLE;
+    reg done_cordic;
     reg cordic_start;
     wire signed [31:0] theta_mapped;
     wire [1:0] kuadran;
     wire isNegative;
     wire signed [31:0] cos_raw, sin_raw;
+    reg done_d;
+    wire done_pulse = done & ~done_d;
 
     // Degree Handler
     degree_handler_q16 deg_handler_inst (
@@ -37,21 +39,25 @@ module cordic_top (
         .angle(theta_mapped),
         .cos_out(cos_raw),
         .sin_out(sin_raw),
-        .done(done)
+        .done(done_cordic)
     );
 
     // Sign Handler
     sign_handler_q16 sign_handler_inst (
+        .clk(clk),
+        .done(done_cordic),
         .kuadran(kuadran),
         .isNegative(isNegative),
         .cos_in(cos_raw),
         .sin_in(sin_raw),
-        .cos_out(cos_out),
-        .sin_out(sin_out)
+        .mode(mode),
+        .result_out(result_out),
+        .done_out(done)
     );
 
     // FSM to delay cordic_start
     always @(posedge clk or posedge rst) begin
+        done_d <= done;
         if (rst) begin
             state <= IDLE;
             cordic_start <= 0;
@@ -69,7 +75,7 @@ module cordic_top (
                 end
                 START_CORDIC: begin
                     cordic_start <= 0; // only pulse start once
-                    if (done)
+                    if (done_pulse)
                         state <= IDLE;
                 end
             endcase

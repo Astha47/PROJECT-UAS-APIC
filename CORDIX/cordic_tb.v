@@ -2,9 +2,9 @@ module cordic_tb;
 
     parameter WIDTH = 32;
 
-    reg clk, rst, start;
+    reg clk, rst, start, mode;
     reg signed [WIDTH-1:0] theta_deg;
-    wire signed [WIDTH-1:0] sin_out, cos_out;
+    wire signed [WIDTH-1:0] result_out;
     wire done;
 
     // Instantiate the top-level CORDIC module
@@ -12,9 +12,9 @@ module cordic_tb;
         .clk(clk),
         .rst(rst),
         .start(start),
+        .mode(mode),
         .theta_deg(theta_deg),
-        .cos_out(cos_out),
-        .sin_out(sin_out),
+        .result_out(result_out),
         .done(done)
     );
 
@@ -38,21 +38,29 @@ module cordic_tb;
         $dumpvars(0, cordic_tb);
 
         // Init
-        clk = 0; rst = 1; start = 0; theta_deg = 0;
+        clk = 0; rst = 1; start = 0; mode = 0; theta_deg = 0;
         #20;
         rst = 0;
 
         // Run test cases
         theta_deg = ANG_0;    start = 1; #10; start = 0; #30; wait(done); #20;
+        mode = 1; start = 1; #10; start = 0; #30; wait(done); #20; mode = 0;
         theta_deg = ANG_30;   start = 1; #10; start = 0; #30; wait(done); #20;
+        mode = 1; start = 1; #10; start = 0; #30; wait(done); #20; mode = 0;
         theta_deg = ANG_45;   start = 1; #10; start = 0; #30; wait(done); #20;
+        mode = 1; start = 1; #10; start = 0; #30; wait(done); #20; mode = 0;
         theta_deg = ANG_60;   start = 1; #10; start = 0; #30; wait(done); #20;
+        mode = 1; start = 1; #10; start = 0; #30; wait(done); #20; mode = 0;
         theta_deg = ANG_90;   start = 1; #10; start = 0; #30; wait(done); #20;
+        mode = 1; start = 1; #10; start = 0; #30; wait(done); #20; mode = 0;
         theta_deg = ANG_N30;  start = 1; #10; start = 0; #30; wait(done); #20;
+        mode = 1; start = 1; #10; start = 0; #30; wait(done); #20; mode = 0;
         theta_deg = ANG_N45;  start = 1; #10; start = 0; #30; wait(done); #20;
+        mode = 1; start = 1; #10; start = 0; #30; wait(done); #20; mode = 0;
         theta_deg = ANG_N60;  start = 1; #10; start = 0; #30; wait(done); #20;
+        mode = 1; start = 1; #10; start = 0; #30; wait(done); #20; mode = 0;
         theta_deg = ANG_N90;  start = 1; #10; start = 0; #30; wait(done); #20;
-
+        mode = 1; start = 1; #10; start = 0; #30; wait(done); #20; mode = 0;
         $finish;
     end
 
