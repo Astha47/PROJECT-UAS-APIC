@@ -44,6 +44,7 @@ module dram_controller #(
     
     // LPDDR4 Interface
     output reg                      dram_ck,
+    // output wire                      dram_ck,
     output reg                      dram_cs,
     output reg                      dram_we,
     output reg                      dram_ras,
@@ -66,13 +67,17 @@ module dram_controller #(
     reg [7:0] read_count;
     
     // State machine parameters
-    localparam IDLE = 2'b00;
-    localparam ADDR_PHASE = 2'b01;
-    localparam DATA_PHASE = 2'b10;
-    localparam RESP_PHASE = 2'b11;
+    localparam IDLE = 3'b000;
+    localparam ADDR_PHASE = 3'b001;
+    localparam DATA_PHASE = 3'b010;
+    localparam WAIT       = 3'b011;
+    localparam RESP_PHASE = 3'b100;
     
-    reg [1:0] write_state;
-    reg [1:0] read_state;
+    
+    reg [2:0] write_state;
+    reg [2:0] read_state;  // Changed from [1:0] to [2:0]
+
+    reg executed_status = 1'b0; // Status to indicate if a write has been executed
     
     reg [DATA_WIDTH-1:0] dram_data_out;
     reg dram_data_oe;
@@ -122,6 +127,7 @@ module dram_controller #(
                         dram_we <= 1'b0;
                         dram_ras <= 1'b0;
                         dram_cas <= 1'b0;
+                        executed_status <= 1'b1; // Indicate write has been executed
                         // Fix address mapping: handle 0x1000 properly
                         dram_addr <= write_addr[15:2];  // Use bits [15:2] for word address
                         dram_ba <= 3'b000;     // Use bank 0 for simplicity
@@ -133,11 +139,21 @@ module dram_controller #(
                         write_addr <= write_addr + 4;
                         
                         if (M2_AXI4_WLAST) begin
-                            write_state <= RESP_PHASE;
-                            M2_AXI4_WREADY <= 1'b0;
+                            write_state <= WAIT;
                         end
                     end
                 end
+
+                WAIT: begin
+                    // Wait for DRAM write to complete
+                    if (!executed_status) begin
+                        write_state <= RESP_PHASE;
+                        M2_AXI4_WREADY <= 1'b0;
+                    end else begin
+                        // Keep waiting
+                        dram_cs <= 1'b0; // Keep chip select active
+                    end
+                end 
                 
                 RESP_PHASE: begin
                     // Keep write signals active for one more cycle to ensure write completes
@@ -232,9 +248,14 @@ module dram_controller #(
         if (!rst_n) begin
             dram_ck <= 1'b0;
         end else begin
+            if (dram_ck == 1'b1) begin
+                executed_status <= 1'b0; // Reset to a known state if undriven
+            end
             dram_ck <= ~dram_ck;
         end
     end
+
+    // assign dram_ck = clk; // Use the same clock for DRAM
 
 
 endmodule

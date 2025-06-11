@@ -176,7 +176,7 @@ module top_tb;
         $dumpvars(0, top_tb);
         
         // Run for a reasonable amount of time
-        #200000; // 200us simulation - longer for CPU testing
+        #1000; // Run for 2000ns (2us); 
         
         $display("Simulation complete at time %t", $time);
         $fdisplay(log_file, "Simulation complete at time %t", $time);
@@ -202,6 +202,55 @@ module top_tb;
         // Close the log file before finishing
         $fclose(log_file);
         $display("Log file closed");
+
+        // Check if the test was successful
+        $display("Time %t: Reached infinite loop at PC=0x%08x", $time, dut.cpu.reg_pc);
+                               
+                                
+        // Check if x5 has correct value (loaded from memory)
+        if (dut.cpu.cpuregs[5] == expected_x3_value)
+           $display("Time %t: PASS - Register x5=0x%08x, expected=0x%08x (memory load successful)", 
+                    $time, dut.cpu.cpuregs[5], expected_x3_value);
+        else
+           $display("Time %t: FAIL - Register x5=0x%08x, expected=0x%08x (memory load failed)", 
+                    $time, dut.cpu.cpuregs[5], expected_x3_value);
+           
+        // TAMBAHKAN INI - Enhanced success evaluation
+        $display("\n=== ENHANCED TEST PROGRAM EVALUATION ===");
+        $display("1. ADDI x1,x0,10:  %s", (dut.cpu.cpuregs[1] == expected_x1_value) ? "PASS" : "FAIL");
+        $display("2. ADDI x2,x0,20:  %s", (dut.cpu.cpuregs[2] == expected_x2_value) ? "PASS" : "FAIL"); 
+        $display("3. ADD x3,x1,x2:   %s", (dut.cpu.cpuregs[3] == expected_x3_value) ? "PASS" : "FAIL");
+        $display("4. LUI x4,0x1:     %s", (dut.cpu.cpuregs[4] == 32'h1000) ? "PASS" : "FAIL");
+        $display("5. SW x3,0(x4):    %s", store_completed ? "PASS" : "FAIL");
+        $display("6. LW x5,0(x4):    %s", load_completed ? "PASS" : "FAIL");
+        $display("7. Data integrity: %s", (stored_value == loaded_value && stored_value == 32'd30) ? "PASS" : "FAIL");
+        $display("8. Loop reached:   %s", reached_loop ? "PASS" : "FAIL");
+        
+        if ((dut.cpu.cpuregs[1] == expected_x1_value) && 
+            (dut.cpu.cpuregs[2] == expected_x2_value) && 
+            (dut.cpu.cpuregs[3] == expected_x3_value) && 
+            (dut.cpu.cpuregs[4] == 32'h1000) &&
+            store_completed && load_completed && 
+            (stored_value == loaded_value) && reached_loop) begin
+            $display("\n*** ALL TESTS PASSED! CPU is working correctly! ***");
+            $fdisplay(log_file, "\n*** ALL TESTS PASSED! CPU is working correctly! ***");
+        end else begin
+            $display("\n*** SOME TESTS FAILED! Check the implementation! ***");
+            $fdisplay(log_file, "\n*** SOME TESTS FAILED! Check the implementation! ***");
+        end
+        
+        $display("==========================================\n");
+        $fdisplay(log_file, "==========================================\n");
+        
+        // All tests completed - print summary
+        $display("\nTime %t: Test Program Execution Summary:", $time);
+        $display("  - CPU initialization: PASS");
+        $display("  - Register access: %s", (dut.cpu.cpuregs[1] == expected_x1_value && 
+                                            dut.cpu.cpuregs[2] == expected_x2_value) ? "PASS" : "FAIL");
+        $display("  - Arithmetic operation: %s", (dut.cpu.cpuregs[3] == expected_x3_value) ? "PASS" : "FAIL");
+        $display("  - Memory store/load via AXI/DRAM: %s\n", 
+                  (dut.cpu.cpuregs[5] == expected_x3_value) ? "PASS" : "FAIL");
+        $display("Mem[0x%08x] = 0x%08x", 4096, ram.memory[1024]); // Check address 0x1000 (1024 = 0x1000/4)
         
         $finish;
     end
@@ -365,57 +414,6 @@ module top_tb;
                               $display("Time %t: Store operation completed, checking memory write via DRAM controller...", $time);
                               end
                               
-                32'h00000018: begin
-                              if (!completed_lw) begin
-                                 $display("Time %t: Reached infinite loop at PC=0x%08x", $time, dut.cpu.reg_pc);
-                                 completed_lw = 1;
-                                 
-                                 // Check if x5 has correct value (loaded from memory)
-                                 if (dut.cpu.cpuregs[5] == expected_x3_value)
-                                    $display("Time %t: PASS - Register x5=0x%08x, expected=0x%08x (memory load successful)", 
-                                             $time, dut.cpu.cpuregs[5], expected_x3_value);
-                                 else
-                                    $display("Time %t: FAIL - Register x5=0x%08x, expected=0x%08x (memory load failed)", 
-                                             $time, dut.cpu.cpuregs[5], expected_x3_value);
-                                    
-                                 // TAMBAHKAN INI - Enhanced success evaluation
-                                 $display("\n=== ENHANCED TEST PROGRAM EVALUATION ===");
-                                 $display("1. ADDI x1,x0,10:  %s", (dut.cpu.cpuregs[1] == expected_x1_value) ? "PASS" : "FAIL");
-                                 $display("2. ADDI x2,x0,20:  %s", (dut.cpu.cpuregs[2] == expected_x2_value) ? "PASS" : "FAIL"); 
-                                 $display("3. ADD x3,x1,x2:   %s", (dut.cpu.cpuregs[3] == expected_x3_value) ? "PASS" : "FAIL");
-                                 $display("4. LUI x4,0x1:     %s", (dut.cpu.cpuregs[4] == 32'h1000) ? "PASS" : "FAIL");
-                                 $display("5. SW x3,0(x4):    %s", store_completed ? "PASS" : "FAIL");
-                                 $display("6. LW x5,0(x4):    %s", load_completed ? "PASS" : "FAIL");
-                                 $display("7. Data integrity: %s", (stored_value == loaded_value && stored_value == 32'd30) ? "PASS" : "FAIL");
-                                 $display("8. Loop reached:   %s", reached_loop ? "PASS" : "FAIL");
-                                 
-                                 if ((dut.cpu.cpuregs[1] == expected_x1_value) && 
-                                     (dut.cpu.cpuregs[2] == expected_x2_value) && 
-                                     (dut.cpu.cpuregs[3] == expected_x3_value) && 
-                                     (dut.cpu.cpuregs[4] == 32'h1000) &&
-                                     store_completed && load_completed && 
-                                     (stored_value == loaded_value) && reached_loop) begin
-                                     $display("\n*** ALL TESTS PASSED! CPU is working correctly! ***");
-                                     $fdisplay(log_file, "\n*** ALL TESTS PASSED! CPU is working correctly! ***");
-                                 end else begin
-                                     $display("\n*** SOME TESTS FAILED! Check the implementation! ***");
-                                     $fdisplay(log_file, "\n*** SOME TESTS FAILED! Check the implementation! ***");
-                                 end
-                                 
-                                 $display("==========================================\n");
-                                 $fdisplay(log_file, "==========================================\n");
-                                 
-                                 // All tests completed - print summary
-                                 $display("\nTime %t: Test Program Execution Summary:", $time);
-                                 $display("  - CPU initialization: PASS");
-                                 $display("  - Register access: %s", (dut.cpu.cpuregs[1] == expected_x1_value && 
-                                                                     dut.cpu.cpuregs[2] == expected_x2_value) ? "PASS" : "FAIL");
-                                 $display("  - Arithmetic operation: %s", (dut.cpu.cpuregs[3] == expected_x3_value) ? "PASS" : "FAIL");
-                                 $display("  - Memory store/load via AXI/DRAM: %s\n", 
-                                          (dut.cpu.cpuregs[5] == expected_x3_value) ? "PASS" : "FAIL");
-                                $display("Mem[0x%08x] = 0x%08x", 4096, ram.memory[1024]); // Check address 0x1000 (1024 = 0x1000/4)
-                              end
-                              end
             endcase
         end
     end

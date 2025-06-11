@@ -62,8 +62,8 @@ always @(posedge clk) begin
     if (~rst_n) begin
         for (i = 0; i < ARRAY_SIZE; i = i + 1) begin
             for (j = 0; j < ARRAY_SIZE; j = j + 1) begin
-                weight_queue[i][j] <= {(DATA_WIDTH){1'b0}}; // Inisialisasi dengan lebar yang benar
-                data_queue[i][j] <= {(DATA_WIDTH){1'b0}};   // Inisialisasi dengan lebar yang benar
+                weight_queue[i][j] = {(DATA_WIDTH){1'b0}}; // Inisialisasi dengan lebar yang benar
+                data_queue[i][j] = {(DATA_WIDTH){1'b0}};   // Inisialisasi dengan lebar yang benar
             end
         end
     end
@@ -91,7 +91,7 @@ always @(posedge clk) begin
         
         for (i = 1; i < ARRAY_SIZE; i = i + 1) begin
             for (j = 0; j < ARRAY_SIZE; j = j + 1) begin
-                weight_queue[i][j] <= weight_queue[i-1][j];
+                weight_queue[i][j] = weight_queue[i-1][j];
             end
         end
                 
@@ -116,7 +116,7 @@ always @(posedge clk) begin
 
         for (i = 0; i < ARRAY_SIZE; i = i + 1) begin
             for (j = 1; j < ARRAY_SIZE; j = j + 1) begin
-                data_queue[i][j] <= data_queue[i][j-1];
+                data_queue[i][j] = data_queue[i][j-1];
             end
         end
     end
