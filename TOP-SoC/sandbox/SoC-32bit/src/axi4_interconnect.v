@@ -232,27 +232,31 @@ module axi_interconnect#(
             s0_write_transaction_active <= 1'b0;
             s1_write_transaction_active <= 1'b0;
         end else begin
-            // Track read transactions
-            if (s0_read_to_dram && S0_AXI4_ARVALID && S0_AXI4_ARREADY)
-                s0_read_transaction_active <= 1'b1;
-            else if (s0_dram_read_grant && M2_AXI4_RVALID && S0_AXI4_RREADY && M2_AXI4_RLAST)
-                s0_read_transaction_active <= 1'b0;
+            // --- FIXED LOGIC: Prioritize ending a transaction over starting a new one ---
+
+            // Track read transactions for S0
+            if (s0_dram_read_grant && M2_AXI4_RVALID && S0_AXI4_RREADY && M2_AXI4_RLAST)
+                s0_read_transaction_active <= 1'b0; // End transaction first
+            else if (s0_read_to_dram && S0_AXI4_ARVALID && S0_AXI4_ARREADY)
+                s0_read_transaction_active <= 1'b1; // Then start new one
                 
-            if (s1_read_to_dram && S1_AXI4_ARVALID && S1_AXI4_ARREADY)
-                s1_read_transaction_active <= 1'b1;
-            else if (s1_dram_read_grant && M2_AXI4_RVALID && S1_AXI4_RREADY && M2_AXI4_RLAST)
+            // Track read transactions for S1
+            if (s1_dram_read_grant && M2_AXI4_RVALID && S1_AXI4_RREADY && M2_AXI4_RLAST)
                 s1_read_transaction_active <= 1'b0;
+            else if (s1_read_to_dram && S1_AXI4_ARVALID && S1_AXI4_ARREADY)
+                s1_read_transaction_active <= 1'b1;
                 
-            // Track write transactions
-            if (s0_write_to_dram && S0_AXI4_AWVALID && S0_AXI4_AWREADY)
-                s0_write_transaction_active <= 1'b1;
-            else if (s0_dram_write_grant && M2_AXI4_BVALID && S0_AXI4_BREADY)
+            // Track write transactions for S0
+            if (s0_dram_write_grant && M2_AXI4_BVALID && S0_AXI4_BREADY)
                 s0_write_transaction_active <= 1'b0;
+            else if (s0_write_to_dram && S0_AXI4_AWVALID && S0_AXI4_AWREADY)
+                s0_write_transaction_active <= 1'b1;
                 
-            if (s1_write_to_dram && S1_AXI4_AWVALID && S1_AXI4_AWREADY)
-                s1_write_transaction_active <= 1'b1;
-            else if (s1_dram_write_grant && M2_AXI4_BVALID && S1_AXI4_BREADY)
+            // Track write transactions for S1
+            if (s1_dram_write_grant && M2_AXI4_BVALID && S1_AXI4_BREADY)
                 s1_write_transaction_active <= 1'b0;
+            else if (s1_write_to_dram && S1_AXI4_AWVALID && S1_AXI4_AWREADY)
+                s1_write_transaction_active <= 1'b1;
         end
     end
     
@@ -336,7 +340,7 @@ module axi_interconnect#(
     assign M0_AXI4LITE_WVALID = s0_write_to_cordic && S0_AXI4_WVALID;
     assign S0_AXI4_WREADY = (s0_write_to_cordic) ? M0_AXI4LITE_WREADY :
                            (s0_write_to_sa) ? M1_AXI4LITE_WREADY :
-                           (s0_write_to_dram && s0_dram_write_grant) ? M2_AXI4_WREADY : 1'b0;
+                           (s0_dram_write_grant) ? M2_AXI4_WREADY : 1'b0;
     
     // M1 (SA - AXI4LITE) Write Data Channel
     assign M1_AXI4LITE_WDATA = S0_AXI4_WDATA;
@@ -363,7 +367,7 @@ module axi_interconnect#(
                           (s0_write_to_dram && s0_dram_write_grant) ? M2_AXI4_BRESP : 2'b00;
     assign S0_AXI4_BVALID = (s0_write_to_cordic && M0_AXI4LITE_BVALID) ||
                            (s0_write_to_sa && M1_AXI4LITE_BVALID) ||
-                           (s0_write_to_dram && s0_dram_write_grant && M2_AXI4_BVALID);
+                           (s0_dram_write_grant && M2_AXI4_BVALID);
     
     // S1 (SA) Write Response Channel
     assign S1_AXI4_BID = (s1_dram_write_grant) ? M2_AXI4_BID : S1_AXI4_AWID;

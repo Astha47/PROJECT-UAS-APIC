@@ -33,7 +33,7 @@ module dram_controller #(
     input  wire [2:0]               M2_AXI4_ARSIZE,
     input  wire [1:0]               M2_AXI4_ARBURST,
     input  wire                     M2_AXI4_ARVALID,
-    output reg                      M2_AXI4_ARREADY,
+    output wire                     M2_AXI4_ARREADY, // FIX: Changed from reg to wire
     // Read Data Channel
     output reg  [AXI4_ID_WIDTH-1:0] M2_AXI4_RID,
     output reg  [DATA_WIDTH-1:0]    M2_AXI4_RDATA,
@@ -75,8 +75,11 @@ module dram_controller #(
     
     
     reg [2:0] write_state;
-    reg [2:0] read_state;  // Changed from [1:0] to [2:0]
+    reg [2:0] read_state;
 
+    // FIX: Combinatorially assign ARREADY based on state. It's only ready in IDLE.
+    assign M2_AXI4_ARREADY = (read_state == IDLE);
+    
     reg executed_status = 1'b0; // Status to indicate if a write has been executed
     
     reg [DATA_WIDTH-1:0] dram_data_out;
@@ -106,7 +109,7 @@ module dram_controller #(
             case (write_state)
                 IDLE: begin
                     M2_AXI4_AWREADY <= 1'b1;
-                    dram_cs <= 1'b1;
+                    dram_cs <= 1'b0;
                     dram_data_oe <= 1'b0;
                     if (M2_AXI4_AWVALID && M2_AXI4_AWREADY) begin
                         write_id <= M2_AXI4_AWID;
@@ -177,7 +180,7 @@ module dram_controller #(
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
             read_state <= IDLE;
-            M2_AXI4_ARREADY <= 1'b0;
+            // M2_AXI4_ARREADY <= 1'b0; // REMOVED: Now driven by assign
             M2_AXI4_RVALID <= 1'b0;
             M2_AXI4_RRESP <= 2'b00;
             M2_AXI4_RLAST <= 1'b0;
@@ -186,15 +189,15 @@ module dram_controller #(
         end else begin
             case (read_state)
                 IDLE: begin
-                    M2_AXI4_ARREADY <= 1'b1;
+                    // M2_AXI4_ARREADY <= 1'b1; // REMOVED: Now driven by assign
                     M2_AXI4_RVALID <= 1'b0;
-                    if (M2_AXI4_ARVALID && M2_AXI4_ARREADY) begin
+                    if (M2_AXI4_ARVALID) begin
                         read_id <= M2_AXI4_ARID;
                         read_addr <= M2_AXI4_ARADDR;
                         read_len <= M2_AXI4_ARLEN;
                         read_count <= 8'h0;
                         read_state <= ADDR_PHASE;
-                        M2_AXI4_ARREADY <= 1'b0;
+                        // M2_AXI4_ARREADY <= 1'b0; // REMOVED: Now driven by assign
                     end
                 end
                 

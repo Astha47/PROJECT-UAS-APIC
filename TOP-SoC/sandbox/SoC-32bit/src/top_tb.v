@@ -176,7 +176,7 @@ module top_tb;
         $dumpvars(0, top_tb);
         
         // Run for a reasonable amount of time
-        #1000; // Run for 2000ns (2us); 
+        #2000; // Run for 1000ns (2us); 
         
         $display("Simulation complete at time %t", $time);
         $fdisplay(log_file, "Simulation complete at time %t", $time);

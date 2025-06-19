@@ -216,7 +216,7 @@ module top (
         .ENABLE_DIV(1),
         .PROGADDR_RESET(32'h00000000),
         .REGS_INIT_ZERO(1),
-        .LATCHED_MEM_RDATA(0)
+        .LATCHED_MEM_RDATA(1)
     ) cpu (
         .clk(clk_sys),
         .resetn(reset_sys_n),

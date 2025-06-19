@@ -65,6 +65,9 @@ module axi4_master #(
     localparam WRITE_RESP = 2'b11;
     
     reg [1:0] state;
+    reg aw_handshake_done, w_handshake_done;
+
+    reg [1:0] debug_state_writing;
     
     // Helper signals
     wire is_write = mem_valid && (|mem_wstrb);
@@ -97,6 +100,11 @@ module axi4_master #(
         
         mem_ready = 0;
         mem_rdata = 0;
+
+        aw_handshake_done = 0;
+        w_handshake_done = 0;
+
+        debug_state_writing = 0;
         
         state = IDLE;
     end
@@ -129,6 +137,9 @@ module axi4_master #(
             
             mem_ready <= 0;
             mem_rdata <= 0;
+
+            aw_handshake_done <= 0;
+            w_handshake_done <= 0;
             
             state <= IDLE;
         end else begin
@@ -144,6 +155,8 @@ module axi4_master #(
                 IDLE: begin
                     // Clear ready signal
                     mem_ready <= 0;
+                    aw_handshake_done <= 0;
+                    w_handshake_done <= 0;
                     
                     if (mem_valid) begin
                         if (is_write) begin
@@ -161,6 +174,8 @@ module axi4_master #(
                             m_axi_wvalid <= 1'b1;
                             
                             m_axi_bready <= 1'b1;
+
+                            debug_state_writing <= 2'b01;
                             
                             state <= WRITING;
                             // $display("Time %t: AXI_MASTER IDLE->WRITING: addr=0x%h, wdata=0x%h", $time, mem_addr, mem_wdata);
@@ -202,18 +217,23 @@ module axi4_master #(
                     if (m_axi_awready && m_axi_awvalid) begin
                         // $display("Time %t: AXI_MASTER WRITING: AW handshake. m_axi_awaddr=0x%h", $time, m_axi_awaddr);
                         m_axi_awvalid <= 0;
+                        debug_state_writing <= 2'b10;
+                        aw_handshake_done <= 1; // Mark AW handshake as done
                     end
                     
                     // Write data channel handshake
                     if (m_axi_wready && m_axi_wvalid) begin
                         // $display("Time %t: AXI_MASTER WRITING: W handshake. m_axi_wdata=0x%h", $time, m_axi_wdata);
                         m_axi_wvalid <= 0;
+                        debug_state_writing <= 2'b11;
+                        w_handshake_done <= 1; // Mark W handshake as done
                     end
                     
                     // When both address and data are accepted, wait for response
-                    if (!m_axi_awvalid && !m_axi_wvalid) begin
+                    if (aw_handshake_done && w_handshake_done) begin
                         // $display("Time %t: AXI_MASTER WRITING->WRITE_RESP: AW and W accepted.", $time);
                         state <= WRITE_RESP;
+                        debug_state_writing <= 2'b00;
                     end
                 end
                 

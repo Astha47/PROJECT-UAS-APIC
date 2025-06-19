@@ -1,0 +1,387 @@
+WARNING: ./lpddr4_dummy.v:38: $readmemh(test_program.hex): Not enough words in the file for the requested range [0:65535].
+LPDDR4: Memory initialized, size =       65536 words
+Log file opened successfully
+Test program will be loaded by LPDDR4 dummy memory from test_program.hex
+Starting SoC with PicoRV32 CPU test
+VCD info: dumpfile top_tb.vcd opened for output.
+Time               105000: CPU State= FETCH, latched_store=0, cpuregs_write=0, latched_rd= x
+Time               105000: Starting execution at PC=0x00000000 - lui x4, 0x1000
+Time               105000: Register dump:
+  x1=0x00000000 x2=0x00000000 x3=0x00000000 x4=0x00000000
+  x5=0x00000000 x6=0x00000000 x7=0x00000000 x8=0x00000000
+Time               105000: FETCH SET latched_rd - PC=0x00000000, decoded_rd= x -> latched_rd
+Time               115000: Starting execution at PC=0x00000000 - lui x4, 0x1000
+Time               115000: CPU State= FETCH, latched_store=0, cpuregs_write=0, latched_rd= x
+Time               115000: FETCH SET latched_rd - PC=0x00000000, decoded_rd= x -> latched_rd
+Time               125000: CPU State= FETCH, latched_store=0, cpuregs_write=0, latched_rd= x
+Time               125000: Starting execution at PC=0x00000000 - lui x4, 0x1000
+Time               125000: FETCH SET latched_rd - PC=0x00000000, decoded_rd= x -> latched_rd
+Time               135000: Starting execution at PC=0x00000000 - lui x4, 0x1000
+Time               135000: CPU State= FETCH, latched_store=0, cpuregs_write=0, latched_rd= x
+Time               135000: FETCH SET latched_rd - PC=0x00000000, decoded_rd= x -> latched_rd
+Time               145000: CPU State= FETCH, latched_store=0, cpuregs_write=0, latched_rd= x
+Time               145000: Starting execution at PC=0x00000000 - lui x4, 0x1000
+Time               145000: FETCH SET latched_rd - PC=0x00000000, decoded_rd= x -> latched_rd
+LPDDR4: Read addr=0000 data=00001237 (AXI_addr would be: 0x00000000)
+
+Memory Contents (First 10 Addresses):
+Mem[0x00000000] = 0x00001237
+Mem[0x00000004] = 0x00a00093
+Mem[0x00000008] = 0x01400113
+Mem[0x0000000c] = 0x002081b3
+Mem[0x00000010] = 0x00322023
+Mem[0x00000014] = 0x00022283
+Mem[0x00000018] = 0x00128293
+Mem[0x0000001c] = 0x00529463
+Mem[0x00000020] = 0x06400093
+Mem[0x00000024] = 0x00000063
+Mem[0x00001000] = 0x00000000
+
+Time               155000: Starting execution at PC=0x00000000 - lui x4, 0x1000
+Time               155000: CPU State= FETCH, latched_store=0, cpuregs_write=0, latched_rd= x
+Time               155000: FETCH SET latched_rd - PC=0x00000000, decoded_rd= x -> latched_rd
+Time               165000: CPU State= FETCH, latched_store=0, cpuregs_write=0, latched_rd= x
+Time               165000: Starting execution at PC=0x00000000 - lui x4, 0x1000
+Time               165000: FETCH SET latched_rd - PC=0x00000000, decoded_rd= x -> latched_rd
+LPDDR4: Read addr=0000 data=00001237 (AXI_addr would be: 0x00000000)
+Time               175000: Starting execution at PC=0x00000000 - lui x4, 0x1000
+Time               175000: CPU State= FETCH, latched_store=0, cpuregs_write=0, latched_rd= x
+Time               175000: FETCH SET latched_rd - PC=0x00000000, decoded_rd= x -> latched_rd
+Time               185000: CPU State= FETCH, latched_store=0, cpuregs_write=0, latched_rd= x
+Time               185000: Starting execution at PC=0x00000000 - lui x4, 0x1000
+Time               185000: FETCH SET latched_rd - PC=0x00000000, decoded_rd= x -> latched_rd
+Time               185000: DECODER UPDATE - PC=0x00000000, mem_rdata_latched=0x00001237, decoded_rd= 4
+LPDDR4: Read addr=0000 data=00001237 (AXI_addr would be: 0x00000000)
+Time               195000: Starting execution at PC=0x00000000 - lui x4, 0x1000
+Time               195000: CPU State= FETCH, latched_store=0, cpuregs_write=0, latched_rd= x
+Time               195000: FETCH SET latched_rd - PC=0x00000000, decoded_rd= 4 -> latched_rd
+Time               205000: CPU State=LD_RS1, latched_store=0, cpuregs_write=0, latched_rd= 4
+Time               205000: Starting execution at PC=0x00000000 - lui x4, 0x1000
+LPDDR4: Read addr=0000 data=00001237 (AXI_addr would be: 0x00000000)
+Time               215000: Starting execution at PC=0x00000000 - lui x4, 0x1000
+Time               215000: CPU State=  EXEC, latched_store=0, cpuregs_write=0, latched_rd= 4
+Time               225000: CPU Register Write - latched_rd= 4, cpuregs_wrdata=0x00001000, resetn=1
+Time               225000: CPU State= FETCH, latched_store=1, cpuregs_write=1, latched_rd= 4
+Time               225000: Starting execution at PC=0x00000000 - lui x4, 0x1000
+Time               225000: FETCH SET latched_rd - PC=0x00000000, decoded_rd= 4 -> latched_rd
+LPDDR4: Read addr=0000 data=00001237 (AXI_addr would be: 0x00000000)
+Time               235000: Executing PC=0x00000004 - addi x1, x0, 10
+Time               235000: CPU State= FETCH, latched_store=0, cpuregs_write=0, latched_rd= 4
+Time               235000: FETCH SET latched_rd - PC=0x00000004, decoded_rd= 4 -> latched_rd
+Time               245000: CPU State= FETCH, latched_store=0, cpuregs_write=0, latched_rd= 4
+Time               245000: Executing PC=0x00000004 - addi x1, x0, 10
+Time               245000: FETCH SET latched_rd - PC=0x00000004, decoded_rd= 4 -> latched_rd
+Time               245000: DECODER UPDATE - PC=0x00000004, mem_rdata_latched=0x00001237, decoded_rd= 4
+LPDDR4: Read addr=0000 data=00001237 (AXI_addr would be: 0x00000000)
+Time               255000: Executing PC=0x00000004 - addi x1, x0, 10
+Time               255000: CPU State= FETCH, latched_store=0, cpuregs_write=0, latched_rd= 4
+Time               255000: FETCH SET latched_rd - PC=0x00000004, decoded_rd= 4 -> latched_rd
+Time               265000: CPU State=LD_RS1, latched_store=0, cpuregs_write=0, latched_rd= 4
+Time               265000: Executing PC=0x00000004 - addi x1, x0, 10
+LPDDR4: Read addr=0001 data=00a00093 (AXI_addr would be: 0x00000004)
+Time               275000: Executing PC=0x00000004 - addi x1, x0, 10
+Time               275000: CPU State=  EXEC, latched_store=0, cpuregs_write=0, latched_rd= 4
+Time               285000: CPU Register Write - latched_rd= 4, cpuregs_wrdata=0x00001000, resetn=1
+Time               285000: CPU State= FETCH, latched_store=1, cpuregs_write=1, latched_rd= 4
+Time               285000: Executing PC=0x00000004 - addi x1, x0, 10
+Time               285000: FETCH SET latched_rd - PC=0x00000004, decoded_rd= 4 -> latched_rd
+LPDDR4: Read addr=0001 data=00a00093 (AXI_addr would be: 0x00000004)
+Time               295000: Executing PC=0x00000008 - addi x2, x0, 20
+Time               295000: CPU State= FETCH, latched_store=0, cpuregs_write=0, latched_rd= 4
+Time               295000: FETCH SET latched_rd - PC=0x00000008, decoded_rd= 4 -> latched_rd
+Time               305000: CPU State= FETCH, latched_store=0, cpuregs_write=0, latched_rd= 4
+Time               305000: Executing PC=0x00000008 - addi x2, x0, 20
+Time               305000: FETCH SET latched_rd - PC=0x00000008, decoded_rd= 4 -> latched_rd
+Time               305000: DECODER UPDATE - PC=0x00000008, mem_rdata_latched=0x00a00093, decoded_rd= 1
+LPDDR4: Read addr=0001 data=00a00093 (AXI_addr would be: 0x00000004)
+Time               315000: Executing PC=0x00000008 - addi x2, x0, 20
+Time               315000: CPU State= FETCH, latched_store=0, cpuregs_write=0, latched_rd= 4
+Time               315000: FETCH SET latched_rd - PC=0x00000008, decoded_rd= 1 -> latched_rd
+Time               325000: CPU State=LD_RS1, latched_store=0, cpuregs_write=0, latched_rd= 1
+Time               325000: Executing PC=0x00000008 - addi x2, x0, 20
+LPDDR4: Read addr=0002 data=01400113 (AXI_addr would be: 0x00000008)
+Time               335000: Executing PC=0x00000008 - addi x2, x0, 20
+Time               335000: CPU State=  EXEC, latched_store=0, cpuregs_write=0, latched_rd= 1
+Time               345000: CPU Register Write - latched_rd= 1, cpuregs_wrdata=0x0000000a, resetn=1
+Time               345000: CPU State= FETCH, latched_store=1, cpuregs_write=1, latched_rd= 1
+Time               345000: Executing PC=0x00000008 - addi x2, x0, 20
+Time               345000: FETCH SET latched_rd - PC=0x00000008, decoded_rd= 1 -> latched_rd
+LPDDR4: Read addr=0002 data=01400113 (AXI_addr would be: 0x00000008)
+Time               355000: Executing PC=0x0000000c - add x3, x1, x2
+Time               355000: PASS - Register x1=0x0000000a, expected=0x0000000a
+Time               355000: CPU State= FETCH, latched_store=0, cpuregs_write=0, latched_rd= 1
+Time               355000: FETCH SET latched_rd - PC=0x0000000c, decoded_rd= 1 -> latched_rd
+Time               365000: CPU State= FETCH, latched_store=0, cpuregs_write=0, latched_rd= 1
+Time               365000: Executing PC=0x0000000c - add x3, x1, x2
+Time               365000: PASS - Register x1=0x0000000a, expected=0x0000000a
+Time               365000: FETCH SET latched_rd - PC=0x0000000c, decoded_rd= 1 -> latched_rd
+Time               365000: DECODER UPDATE - PC=0x0000000c, mem_rdata_latched=0x01400113, decoded_rd= 2
+LPDDR4: Read addr=0002 data=01400113 (AXI_addr would be: 0x00000008)
+Time               375000: Executing PC=0x0000000c - add x3, x1, x2
+Time               375000: PASS - Register x1=0x0000000a, expected=0x0000000a
+Time               375000: CPU State= FETCH, latched_store=0, cpuregs_write=0, latched_rd= 1
+Time               375000: FETCH SET latched_rd - PC=0x0000000c, decoded_rd= 2 -> latched_rd
+Time               385000: CPU State=LD_RS1, latched_store=0, cpuregs_write=0, latched_rd= 2
+Time               385000: Executing PC=0x0000000c - add x3, x1, x2
+Time               385000: PASS - Register x1=0x0000000a, expected=0x0000000a
+LPDDR4: Read addr=0003 data=002081b3 (AXI_addr would be: 0x0000000c)
+Time               395000: Executing PC=0x0000000c - add x3, x1, x2
+Time               395000: PASS - Register x1=0x0000000a, expected=0x0000000a
+Time               395000: CPU State=  EXEC, latched_store=0, cpuregs_write=0, latched_rd= 2
+Time               405000: CPU Register Write - latched_rd= 2, cpuregs_wrdata=0x00000014, resetn=1
+Time               405000: CPU State= FETCH, latched_store=1, cpuregs_write=1, latched_rd= 2
+Time               405000: Executing PC=0x0000000c - add x3, x1, x2
+Time               405000: PASS - Register x1=0x0000000a, expected=0x0000000a
+Time               405000: FETCH SET latched_rd - PC=0x0000000c, decoded_rd= 2 -> latched_rd
+LPDDR4: Read addr=0003 data=002081b3 (AXI_addr would be: 0x0000000c)
+Time               415000: Executing PC=0x00000010 - sw x3, 0(x4)
+Time               415000: PASS - Register x2=0x00000014, expected=0x00000014
+Time               415000: CPU State= FETCH, latched_store=0, cpuregs_write=0, latched_rd= 2
+Time               415000: FETCH SET latched_rd - PC=0x00000010, decoded_rd= 2 -> latched_rd
+Time               425000: CPU State= FETCH, latched_store=0, cpuregs_write=0, latched_rd= 2
+Time               425000: Executing PC=0x00000010 - sw x3, 0(x4)
+Time               425000: PASS - Register x2=0x00000014, expected=0x00000014
+Time               425000: FETCH SET latched_rd - PC=0x00000010, decoded_rd= 2 -> latched_rd
+Time               425000: DECODER UPDATE - PC=0x00000010, mem_rdata_latched=0x002081b3, decoded_rd= 3
+LPDDR4: Read addr=0003 data=002081b3 (AXI_addr would be: 0x0000000c)
+Time               435000: Executing PC=0x00000010 - sw x3, 0(x4)
+Time               435000: PASS - Register x2=0x00000014, expected=0x00000014
+Time               435000: CPU State= FETCH, latched_store=0, cpuregs_write=0, latched_rd= 2
+Time               435000: FETCH SET latched_rd - PC=0x00000010, decoded_rd= 3 -> latched_rd
+Time               445000: CPU State=LD_RS1, latched_store=0, cpuregs_write=0, latched_rd= 3
+Time               445000: Executing PC=0x00000010 - sw x3, 0(x4)
+Time               445000: PASS - Register x2=0x00000014, expected=0x00000014
+LPDDR4: Read addr=0004 data=00322023 (AXI_addr would be: 0x00000010)
+Time               455000: Executing PC=0x00000010 - sw x3, 0(x4)
+Time               455000: PASS - Register x2=0x00000014, expected=0x00000014
+Time               455000: CPU State=LD_RS2, latched_store=0, cpuregs_write=0, latched_rd= 3
+Time               465000: CPU State=  EXEC, latched_store=0, cpuregs_write=0, latched_rd= 3
+Time               465000: Executing PC=0x00000010 - sw x3, 0(x4)
+Time               465000: PASS - Register x2=0x00000014, expected=0x00000014
+LPDDR4: Read addr=0004 data=00322023 (AXI_addr would be: 0x00000010)
+Time               475000: Executing PC=0x00000010 - sw x3, 0(x4)
+Time               475000: PASS - Register x2=0x00000014, expected=0x00000014
+Time               475000: CPU Register Write - latched_rd= 3, cpuregs_wrdata=0x0000001e, resetn=1
+Time               475000: CPU State= FETCH, latched_store=1, cpuregs_write=1, latched_rd= 3
+Time               475000: FETCH SET latched_rd - PC=0x00000010, decoded_rd= 3 -> latched_rd
+Time               485000: CPU State= FETCH, latched_store=0, cpuregs_write=0, latched_rd= 3
+Time               485000: Executing PC=0x00000014 - lw x5, 0(x4)
+Time               485000: PASS - Register x3=0x0000001e, expected=0x0000001e (arithmetic operation successful)
+Time               485000: FETCH SET latched_rd - PC=0x00000014, decoded_rd= 3 -> latched_rd
+Time               485000: DECODER UPDATE - PC=0x00000014, mem_rdata_latched=0x00322023, decoded_rd= 0
+LPDDR4: Read addr=0004 data=00322023 (AXI_addr would be: 0x00000010)
+Time               495000: Executing PC=0x00000014 - lw x5, 0(x4)
+Time               495000: PASS - Register x3=0x0000001e, expected=0x0000001e (arithmetic operation successful)
+Time               495000: CPU State= FETCH, latched_store=0, cpuregs_write=0, latched_rd= 3
+Time               495000: FETCH SET latched_rd - PC=0x00000014, decoded_rd= 0 -> latched_rd
+Time               505000: CPU State=LD_RS1, latched_store=0, cpuregs_write=0, latched_rd= 0
+Time               505000: Executing PC=0x00000014 - lw x5, 0(x4)
+Time               505000: PASS - Register x3=0x0000001e, expected=0x0000001e (arithmetic operation successful)
+LPDDR4: Read addr=0005 data=00022283 (AXI_addr would be: 0x00000014)
+Time               515000: Executing PC=0x00000014 - lw x5, 0(x4)
+Time               515000: PASS - Register x3=0x0000001e, expected=0x0000001e (arithmetic operation successful)
+Time               515000: CPU State=LD_RS2, latched_store=0, cpuregs_write=0, latched_rd= 0
+Time               525000: CPU State= STMEM, latched_store=0, cpuregs_write=0, latched_rd= 0
+Time               525000: Executing PC=0x00000014 - lw x5, 0(x4)
+Time               525000: PASS - Register x3=0x0000001e, expected=0x0000001e (arithmetic operation successful)
+LPDDR4: Read addr=0005 data=00022283 (AXI_addr would be: 0x00000014)
+Time               535000: Executing PC=0x00000014 - lw x5, 0(x4)
+Time               535000: PASS - Register x3=0x0000001e, expected=0x0000001e (arithmetic operation successful)
+Time               535000: CPU State= STMEM, latched_store=0, cpuregs_write=0, latched_rd= 0
+Time               545000: CPU State= STMEM, latched_store=0, cpuregs_write=0, latched_rd= 0
+Time               545000: Executing PC=0x00000014 - lw x5, 0(x4)
+Time               545000: PASS - Register x3=0x0000001e, expected=0x0000001e (arithmetic operation successful)
+Time               545000: DECODER UPDATE - PC=0x00000014, mem_rdata_latched=0x00022283, decoded_rd= 5
+LPDDR4: Read addr=0005 data=00022283 (AXI_addr would be: 0x00000014)
+Time               555000: Executing PC=0x00000014 - lw x5, 0(x4)
+Time               555000: PASS - Register x3=0x0000001e, expected=0x0000001e (arithmetic operation successful)
+Time               555000: CPU State= STMEM, latched_store=0, cpuregs_write=0, latched_rd= 0
+Time               565000: CPU State= STMEM, latched_store=0, cpuregs_write=0, latched_rd= 0
+Time               565000: Executing PC=0x00000014 - lw x5, 0(x4)
+Time               565000: PASS - Register x3=0x0000001e, expected=0x0000001e (arithmetic operation successful)
+LPDDR4: Read addr=0006 data=00128293 (AXI_addr would be: 0x00000018)
+Time               575000: Executing PC=0x00000014 - lw x5, 0(x4)
+Time               575000: PASS - Register x3=0x0000001e, expected=0x0000001e (arithmetic operation successful)
+Time               575000: CPU State= STMEM, latched_store=0, cpuregs_write=0, latched_rd= 0
+Time               585000: CPU State= STMEM, latched_store=0, cpuregs_write=0, latched_rd= 0
+Time               585000: Executing PC=0x00000014 - lw x5, 0(x4)
+Time               585000: PASS - Register x3=0x0000001e, expected=0x0000001e (arithmetic operation successful)
+LPDDR4: Read addr=0006 data=00128293 (AXI_addr would be: 0x00000018)
+Time               595000: Executing PC=0x00000014 - lw x5, 0(x4)
+Time               595000: PASS - Register x3=0x0000001e, expected=0x0000001e (arithmetic operation successful)
+Time               595000: CPU State= STMEM, latched_store=0, cpuregs_write=0, latched_rd= 0
+Time               605000: CPU State= STMEM, latched_store=0, cpuregs_write=0, latched_rd= 0
+Time               605000: Executing PC=0x00000014 - lw x5, 0(x4)
+Time               605000: PASS - Register x3=0x0000001e, expected=0x0000001e (arithmetic operation successful)
+[TESTBENCH               605000] *** STORE DETECTED *** addr=0x00001000, data=0x0000001e
+[TESTBENCH               605000] *** LOAD DETECTED *** addr=0x00001000, data=0x00128293
+LPDDR4: Read addr=0006 data=00128293 (AXI_addr would be: 0x00000018)
+Time               615000: Executing PC=0x00000014 - lw x5, 0(x4)
+Time               615000: PASS - Register x3=0x0000001e, expected=0x0000001e (arithmetic operation successful)
+Time               615000: CPU State= FETCH, latched_store=0, cpuregs_write=0, latched_rd= 0
+Time               615000: FETCH SET latched_rd - PC=0x00000014, decoded_rd= 5 -> latched_rd
+Time               625000: CPU State=LD_RS1, latched_store=0, cpuregs_write=0, latched_rd= 5
+Time               625000: Executing PC=0x00000018 - addi x5, x5, 1 (x5=         0->         1)
+LPDDR4: Read addr=0006 data=00128293 (AXI_addr would be: 0x00000018)
+Time               635000: Executing PC=0x00000018 - addi x5, x5, 1 (x5=         0->         1)
+Time               635000: CPU State= LDMEM, latched_store=0, cpuregs_write=0, latched_rd= 5
+Time               645000: CPU State= LDMEM, latched_store=1, cpuregs_write=0, latched_rd= 5
+Time               645000: Executing PC=0x00000018 - addi x5, x5, 1 (x5=         0->         1)
+ALERTT !!!! LPDDR4: Write addr=0400 data=00XXXXXX (AXI_addr would be: 0x00001000)
+LPDDR4: Write addr=0400 data=00XXXXXX (AXI_addr would be: 0x00001000)
+Time               655000: Executing PC=0x00000018 - addi x5, x5, 1 (x5=         0->         1)
+Time               655000: CPU State= LDMEM, latched_store=1, cpuregs_write=0, latched_rd= 5
+Time               665000: CPU State= LDMEM, latched_store=1, cpuregs_write=0, latched_rd= 5
+Time               665000: Executing PC=0x00000018 - addi x5, x5, 1 (x5=         0->         1)
+ALERTT !!!! LPDDR4: Write addr=0400 data=0000001e (AXI_addr would be: 0x00001000)
+LPDDR4: Write addr=0400 data=0000001e (AXI_addr would be: 0x00001000)
+Time               675000: Executing PC=0x00000018 - addi x5, x5, 1 (x5=         0->         1)
+Time               675000: CPU State= LDMEM, latched_store=1, cpuregs_write=0, latched_rd= 5
+Time               685000: CPU State= LDMEM, latched_store=1, cpuregs_write=0, latched_rd= 5
+Time               685000: Executing PC=0x00000018 - addi x5, x5, 1 (x5=         0->         1)
+Time               685000: DRAM READ command - addr=0x0400, ba=0
+Time               695000: DRAM READ command - addr=0x0400, ba=0
+Time               695000: Executing PC=0x00000018 - addi x5, x5, 1 (x5=         0->         1)
+Time               695000: CPU State= LDMEM, latched_store=1, cpuregs_write=0, latched_rd= 5
+Time               695000: DECODER UPDATE - PC=0x00000018, mem_rdata_latched=0x00128293, decoded_rd= 5
+Time               705000: CPU State= LDMEM, latched_store=1, cpuregs_write=0, latched_rd= 5
+Time               705000: Executing PC=0x00000018 - addi x5, x5, 1 (x5=         0->         1)
+LPDDR4: Read addr=0400 data=0000001e (AXI_addr would be: 0x00001000)
+Time               715000: Executing PC=0x00000018 - addi x5, x5, 1 (x5=         0->         1)
+Time               715000: CPU State= LDMEM, latched_store=1, cpuregs_write=0, latched_rd= 5
+Time               725000: CPU State= LDMEM, latched_store=1, cpuregs_write=0, latched_rd= 5
+Time               725000: Executing PC=0x00000018 - addi x5, x5, 1 (x5=         0->         1)
+Time               735000: DRAM READ command - addr=0x0007, ba=0
+Time               735000: Executing PC=0x00000018 - addi x5, x5, 1 (x5=         0->         1)
+Time               735000: CPU State= LDMEM, latched_store=1, cpuregs_write=0, latched_rd= 5
+Time               745000: CPU State= LDMEM, latched_store=1, cpuregs_write=0, latched_rd= 5
+Time               745000: Executing PC=0x00000018 - addi x5, x5, 1 (x5=         0->         1)
+LPDDR4: Read addr=0007 data=00529463 (AXI_addr would be: 0x0000001c)
+[TESTBENCH               755000] *** LOAD DETECTED *** addr=0x00001000, data=0x0000001e
+Time               755000: Executing PC=0x00000018 - addi x5, x5, 1 (x5=         0->         1)
+Time               755000: CPU State= LDMEM, latched_store=1, cpuregs_write=0, latched_rd= 5
+Time               765000: CPU Register Write - latched_rd= 5, cpuregs_wrdata=0x0000001e, resetn=1
+Time               765000: CPU State= FETCH, latched_store=1, cpuregs_write=1, latched_rd= 5
+Time               765000: Executing PC=0x00000018 - addi x5, x5, 1 (x5=         0->         1)
+Time               765000: FETCH SET latched_rd - PC=0x00000018, decoded_rd= 5 -> latched_rd
+LPDDR4: Read addr=0007 data=00529463 (AXI_addr would be: 0x0000001c)
+Time               775000: Executing PC=0x0000001c - bne x5, x1, skip (x5=        30, x1=        10)
+Time               775000: BRANCH TEST - Condition TRUE (x5!=x1), should branch to 0x24
+Time               775000: CPU State=LD_RS1, latched_store=0, cpuregs_write=0, latched_rd= 5
+Time               785000: CPU State=  EXEC, latched_store=0, cpuregs_write=0, latched_rd= 5
+Time               785000: Executing PC=0x0000001c - bne x5, x1, skip (x5=        30, x1=        10)
+Time               785000: BRANCH TEST - Condition TRUE (x5!=x1), should branch to 0x24
+Time               795000: DRAM READ command - addr=0x0400, ba=0
+Time               795000: Executing PC=0x0000001c - bne x5, x1, skip (x5=        30, x1=        10)
+Time               795000: BRANCH TEST - Condition TRUE (x5!=x1), should branch to 0x24
+Time               795000: CPU Register Write - latched_rd= 5, cpuregs_wrdata=0x0000001f, resetn=1
+Time               795000: CPU State= FETCH, latched_store=1, cpuregs_write=1, latched_rd= 5
+Time               795000: FETCH SET latched_rd - PC=0x0000001c, decoded_rd= 5 -> latched_rd
+Time               805000: CPU State= FETCH, latched_store=0, cpuregs_write=0, latched_rd= 5
+Time               805000: ERROR - PC=0x00000020 should be skipped by BNE branch!
+Time               805000: FETCH SET latched_rd - PC=0x00000020, decoded_rd= 5 -> latched_rd
+LPDDR4: Read addr=0400 data=0000001e (AXI_addr would be: 0x00001000)
+Time               815000: ERROR - PC=0x00000020 should be skipped by BNE branch!
+Time               815000: CPU State= FETCH, latched_store=0, cpuregs_write=0, latched_rd= 5
+Time               815000: DECODER UPDATE - PC=0x00000020, mem_rdata_latched=0x00529463, decoded_rd= 8
+Time               815000: FETCH SET latched_rd - PC=0x00000020, decoded_rd= 5 -> latched_rd
+Time               825000: CPU State= FETCH, latched_store=0, cpuregs_write=0, latched_rd= 5
+Time               825000: ERROR - PC=0x00000020 should be skipped by BNE branch!
+Time               825000: FETCH SET latched_rd - PC=0x00000020, decoded_rd= 8 -> latched_rd
+LPDDR4: Read addr=0400 data=0000001e (AXI_addr would be: 0x00001000)
+Time               835000: ERROR - PC=0x00000020 should be skipped by BNE branch!
+Time               835000: CPU State=LD_RS1, latched_store=0, cpuregs_write=0, latched_rd= 8
+Time               845000: CPU State=LD_RS2, latched_store=0, cpuregs_write=0, latched_rd= 8
+Time               845000: ERROR - PC=0x00000020 should be skipped by BNE branch!
+Time               855000: DRAM READ command - addr=0x0008, ba=0
+Time               855000: ERROR - PC=0x00000020 should be skipped by BNE branch!
+Time               855000: CPU State=  EXEC, latched_store=0, cpuregs_write=0, latched_rd= 8
+Time               865000: CPU State=  EXEC, latched_store=0, cpuregs_write=0, latched_rd= 0
+Time               865000: ERROR - PC=0x00000020 should be skipped by BNE branch!
+LPDDR4: Read addr=0008 data=06400093 (AXI_addr would be: 0x00000020)
+Time               875000: ERROR - PC=0x00000020 should be skipped by BNE branch!
+Time               875000: CPU State=  EXEC, latched_store=0, cpuregs_write=0, latched_rd= 0
+Time               875000: DECODER UPDATE - PC=0x00000020, mem_rdata_latched=0x0000001e, decoded_rd= 0
+Time               885000: CPU State= FETCH, latched_store=0, cpuregs_write=0, latched_rd= 0
+Time               885000: ERROR - PC=0x00000020 should be skipped by BNE branch!
+Time               885000: FETCH SET latched_rd - PC=0x00000020, decoded_rd= 0 -> latched_rd
+LPDDR4: Read addr=0008 data=06400093 (AXI_addr would be: 0x00000020)
+Time               895000: PASS - BNE branch successful, reached skip target at PC=0x00000024
+Time               895000: CPU State=LD_RS1, latched_store=0, cpuregs_write=0, latched_rd= 0
+Time               905000: CPU State=LD_RS2, latched_store=0, cpuregs_write=0, latched_rd= 0
+Time               905000: PASS - BNE branch successful, reached skip target at PC=0x00000024
+Time               915000: DRAM READ command - addr=0x0009, ba=0
+Time               915000: PASS - BNE branch successful, reached skip target at PC=0x00000024
+Time               915000: CPU State=LD_RS2, latched_store=0, cpuregs_write=0, latched_rd= 0
+Time               925000: CPU State=LD_RS2, latched_store=0, cpuregs_write=0, latched_rd= 0
+Time               925000: PASS - BNE branch successful, reached skip target at PC=0x00000024
+LPDDR4: Read addr=0009 data=00000063 (AXI_addr would be: 0x00000024)
+Time               935000: PASS - BNE branch successful, reached skip target at PC=0x00000024
+Time               935000: CPU State=LD_RS2, latched_store=0, cpuregs_write=0, latched_rd= 0
+Time               945000: CPU State=LD_RS2, latched_store=0, cpuregs_write=0, latched_rd= 0
+Time               945000: PASS - BNE branch successful, reached skip target at PC=0x00000024
+LPDDR4: Read addr=0009 data=00000063 (AXI_addr would be: 0x00000024)
+Time               955000: PASS - BNE branch successful, reached skip target at PC=0x00000024
+Time               955000: CPU State=LD_RS2, latched_store=0, cpuregs_write=0, latched_rd= 0
+Time               965000: CPU State=LD_RS2, latched_store=0, cpuregs_write=0, latched_rd= 0
+Time               965000: PASS - BNE branch successful, reached skip target at PC=0x00000024
+Time               975000: DRAM READ command - addr=0x000a, ba=0
+Time               975000: PASS - BNE branch successful, reached skip target at PC=0x00000024
+Time               975000: CPU State=LD_RS2, latched_store=0, cpuregs_write=0, latched_rd= 0
+Time               985000: CPU State=LD_RS2, latched_store=0, cpuregs_write=0, latched_rd= 0
+Time               985000: PASS - BNE branch successful, reached skip target at PC=0x00000024
+LPDDR4: Read addr=000a data=00000000 (AXI_addr would be: 0x00000028)
+Time               995000: PASS - BNE branch successful, reached skip target at PC=0x00000024
+Time               995000: CPU State=LD_RS2, latched_store=0, cpuregs_write=0, latched_rd= 0
+Time              1005000: CPU State=LD_RS2, latched_store=0, cpuregs_write=0, latched_rd= 0
+Time              1005000: PASS - BNE branch successful, reached skip target at PC=0x00000024
+LPDDR4: Read addr=000a data=00000000 (AXI_addr would be: 0x00000028)
+Time              1015000: PASS - BNE branch successful, reached skip target at PC=0x00000024
+Time              1015000: CPU State=LD_RS2, latched_store=0, cpuregs_write=0, latched_rd= 0
+Time              1025000: CPU State=LD_RS2, latched_store=0, cpuregs_write=0, latched_rd= 0
+Time              1025000: PASS - BNE branch successful, reached skip target at PC=0x00000024
+LPDDR4: Read addr=000a data=00000000 (AXI_addr would be: 0x00000028)
+Time              1035000: PASS - BNE branch successful, reached skip target at PC=0x00000024
+Time              1035000: CPU State=LD_RS2, latched_store=0, cpuregs_write=0, latched_rd= 0
+Time              1045000: CPU State=LD_RS2, latched_store=0, cpuregs_write=0, latched_rd= 0
+Time              1045000: PASS - BNE branch successful, reached skip target at PC=0x00000024
+LPDDR4: Read addr=000a data=00000000 (AXI_addr would be: 0x00000028)
+Time              1055000: PASS - BNE branch successful, reached skip target at PC=0x00000024
+Time              1055000: CPU State=LD_RS2, latched_store=0, cpuregs_write=0, latched_rd= 0
+Time              1065000: CPU State=LD_RS2, latched_store=0, cpuregs_write=0, latched_rd= 0
+Time              1065000: PASS - BNE branch successful, reached skip target at PC=0x00000024
+LPDDR4: Read addr=000a data=00000000 (AXI_addr would be: 0x00000028)
+Time              1075000: PASS - BNE branch successful, reached skip target at PC=0x00000024
+Time              1075000: CPU State=LD_RS2, latched_store=0, cpuregs_write=0, latched_rd= 0
+Time              1085000: CPU State=  TRAP, latched_store=0, cpuregs_write=0, latched_rd= 0
+Time              1085000: PASS - BNE branch successful, reached skip target at PC=0x00000024
+LPDDR4: Read addr=000a data=00000000 (AXI_addr would be: 0x00000028)
+Time              1095000: PASS - BNE branch successful, reached skip target at PC=0x00000024
+Time              1095000: CPU State=  TRAP, latched_store=0, cpuregs_write=0, latched_rd= 0
+CPU Trap detected at time              1095000
+Time              1105000: CPU State=  TRAP, latched_store=0, cpuregs_write=0, latched_rd= 0
+Time              1105000: PASS - BNE branch successful, reached skip target at PC=0x00000024
+LPDDR4: Read addr=000a data=00000000 (AXI_addr would be: 0x00000028)
+Time              1115000: PASS - BNE branch successful, reached skip target at PC=0x00000024
+Time              1115000: CPU State=  TRAP, latched_store=0, cpuregs_write=0, latched_rd= 0
+Time              1125000: CPU State=  TRAP, latched_store=0, cpuregs_write=0, latched_rd= 0
+Time              1125000: PASS - BNE branch successful, reached skip target at PC=0x00000024
+LPDDR4: Read addr=000a data=00000000 (AXI_addr would be: 0x00000028)
+Time              1135000: PASS - BNE branch successful, reached skip target at PC=0x00000024
+Time              1135000: CPU State=  TRAP, latched_store=0, cpuregs_write=0, latched_rd= 0
+Time              1145000: CPU State=  TRAP, latched_store=0, cpuregs_write=0, latched_rd= 0
+Time              1145000: PASS - BNE branch successful, reached skip target at PC=0x00000024
+LPDDR4: Read addr=000a data=00000000 (AXI_addr would be: 0x00000028)
+Time              1155000: PASS - BNE branch successful, reached skip target at PC=0x00000024
+Time              1155000: CPU State=  TRAP, latched_store=0, cpuregs_write=0, latched_rd= 0
+Time              1165000: CPU State=  TRAP, latched_store=0, cpuregs_write=0, latched_rd= 0
+Time              1165000: PASS - BNE branch successful, reached skip target at PC=0x00000024
+LPDDR4: Read addr=000a data=00000000 (AXI_addr would be: 0x00000028)
+Time              1175000: PASS - BNE branch successful, reached skip target at PC=0x00000024
+Time              1175000: CPU State=  TRAP, latched_store=0, cpuregs_write=0, latched_rd= 0
+Time              1185000: CPU State=  TRAP, latched_store=0, cpuregs_write=0, latched_rd= 0
+Time              1185000: PASS - BNE branch successful, reached skip target at PC=0x00000024
+LPDDR4: Read addr=000a data=00000000 (AXI_addr would be: 0x00000028)
+top_tb.v:142: $finish called at 1195000 (1ps)
+Time              1195000: PASS - BNE branch successful, reached skip target at PC=0x00000024
+Time              1195000: CPU State=  TRAP, latched_store=0, cpuregs_write=0, latched_rd= 0

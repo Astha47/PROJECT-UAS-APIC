@@ -1825,6 +1825,7 @@ module picorv32 #(
 					latched_branch <= TWO_CYCLE_COMPARE ? alu_out_0_q : alu_out_0;
 					if (mem_done)
 						cpu_state <= cpu_state_fetch;
+					// cpu_state <= cpu_state_fetch;
 					if (TWO_CYCLE_COMPARE ? alu_out_0_q : alu_out_0) begin
 						decoder_trigger <= 0;
 						set_mem_do_rinst = 1;
