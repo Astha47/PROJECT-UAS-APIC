@@ -1,0 +1,41 @@
+WARNING: ./lpddr4_dummy.v:38: $readmemh(test_program_clean.hex): Not enough words in the file for the requested range [0:65535].
+LPDDR4: Memory initialized, size =       65536 words
+VCD info: dumpfile tb_cpu_system.vcd opened for output.
+Time                50000: Reset released
+Time                55000: FETCH SET latched_rd - PC=0x00000000, decoded_rd= x -> latched_rd
+Time                65000: FETCH SET latched_rd - PC=0x00000000, decoded_rd= x -> latched_rd
+Time                75000: FETCH SET latched_rd - PC=0x00000000, decoded_rd= x -> latched_rd
+Time 75000: AXI4 Master - New request: addr=0x00000000, is_read=1, is_write=0
+Time 75000: AXI4 Master - Starting READ transaction: addr=0x00000000
+Time                85000: FETCH SET latched_rd - PC=0x00000000, decoded_rd= x -> latched_rd
+Time 85000: AXI4 Master - ARREADY/ARVALID handshake completed
+Time                95000: FETCH SET latched_rd - PC=0x00000000, decoded_rd= x -> latched_rd
+LPDDR4: Read addr=0000 data=13010500 (AXI_addr would be: 0x00000000)
+Time               105000: FETCH SET latched_rd - PC=0x00000000, decoded_rd= x -> latched_rd
+Time               115000: FETCH SET latched_rd - PC=0x00000000, decoded_rd= x -> latched_rd
+LPDDR4: Read addr=0000 data=13010500 (AXI_addr would be: 0x00000000)
+Time               125000: FETCH SET latched_rd - PC=0x00000000, decoded_rd= x -> latched_rd
+Time 125000: AXI4 Master - RVALID/RREADY handshake: data=0x13010500
+Time               135000: DECODER UPDATE - PC=0x00000000, mem_rdata_latched=0x13010500, decoded_rd=10
+Time               135000: FETCH SET latched_rd - PC=0x00000000, decoded_rd= x -> latched_rd
+Time               135000: Instruction          0 executed at PC=0x00000000, Data=0x13010500
+Time 135000: AXI4 Master - New request: addr=0x00000000, is_read=1, is_write=0
+Time 135000: AXI4 Master - Starting READ transaction: addr=0x00000000
+LPDDR4: Read addr=0000 data=13010500 (AXI_addr would be: 0x00000000)
+Time               145000: FETCH SET latched_rd - PC=0x00000000, decoded_rd=10 -> latched_rd
+Time 145000: AXI4 Master - ARREADY/ARVALID handshake completed
+LPDDR4: Read addr=0000 data=13010500 (AXI_addr would be: 0x00000000)
+Time               165000: CPU DEBUG - PC=0x00000000, next_PC=0x00000004, mem_valid=1, mem_ready=0, cpu_state=128, mem_addr=0x00000004
+Time               165000: DRAM DEBUG - ARVALID=0, ARREADY=0, ARADDR=0x00000000, RVALID=0, RREADY=1, read_state=2
+Time               175000: CPU DEBUG - PC=0x00000000, next_PC=0x00000004, mem_valid=1, mem_ready=0, cpu_state=128, mem_addr=0x00000004
+Time               175000: DRAM DEBUG - ARVALID=0, ARREADY=0, ARADDR=0x00000000, RVALID=0, RREADY=1, read_state=2
+Time               175000: CPU TRAP occurred!
+  - PC: 0x00000000
+  - next_PC: 0x00000004
+  - mem_addr: 0x00000004
+  - mem_valid: 1
+  - mem_ready: 0
+  - cpu_state: 128
+SIMULATION FAILED - CPU trapped
+tb_cpu_system.v:286: $finish called at 175000 (1ps)
+LPDDR4: Read addr=0000 data=13010500 (AXI_addr would be: 0x00000000)

@@ -1,20 +1,33 @@
 Log file opened successfully
-Test program will be loaded by LPDDR4 dummy memory from test_program.hex
-Starting SoC with PicoRV32 CPU test
+Counter test program will be loaded by LPDDR4 dummy memory from test_program_ez.hex
+Starting SoC with PicoRV32 CPU counter test
+VCD file generation enabled: top_tb_soc_simulation.vcd
 
 Memory Contents (First 10 Addresses):
-Mem[0x00000000] = 0x00001237
-Mem[0x00000004] = 0x00a00093
-Mem[0x00000008] = 0x01400113
-Mem[0x0000000c] = 0x002081b3
-Mem[0x00000010] = 0x00322023
-Mem[0x00000014] = 0x00022283
-Mem[0x00000018] = 0xffe00ee3
+Mem[0x00000000] = 0x3fc00093
+Mem[0x00000004] = 0x91300193
+Mem[0x00000008] = 0x0030a023
+Mem[0x0000000c] = 0x0000a103
+Mem[0x00000010] = 0x00110113
+Mem[0x00000014] = 0x0020a023
+Mem[0x00000018] = 0xff5ff06f
 Mem[0x0000001c] = 0x00000013
 Mem[0x00000020] = 0x00000013
 Mem[0x00000024] = 0x00000013
 
-[TESTBENCH               605000] *** STORE DETECTED *** addr=0x00001000, data=0x0000001e
-[TESTBENCH               605000] *** LOAD DETECTED *** addr=0x00001000, data=0xffe00ee3
-[TESTBENCH               755000] *** LOAD DETECTED *** addr=0x00001000, data=0x0000001e
-CPU Trap detected at time              1095000
+Starting detailed VCD dump after reset completion
+[TESTBENCH               485000] *** STORE DETECTED *** addr=0x000003fc, data=0xfffff913
+[TESTBENCH               485000] *** LOAD DETECTED *** addr=0x000003fc, data=0x00110113
+[TESTBENCH               635000] *** LOAD DETECTED *** addr=0x000003fc, data=0xfffff913
+[TESTBENCH               815000] *** STORE DETECTED *** addr=0x000003fc, data=0xfffff914
+[TESTBENCH               815000] *** LOAD DETECTED *** addr=0x000003fc, data=0xff5ff06f
+Simulation complete at time              5000000
+
+Final Counter Program Verification:
+  - Program completed: FAIL
+  - PC at end: 0x00000014
+  - x1 (memory addr, expected 1020):       1020
+  - x2 (counter value): 4294965524
+  - Loop iterations:          0
+  - Memory[1020]: 0xfffff914
+

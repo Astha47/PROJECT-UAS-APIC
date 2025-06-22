@@ -1,0 +1,45 @@
+// RISC-V test program for arithmetic, sw, lw, and jump operations
+// Start at address 0x00000000
+
+// Test 1: Basic arithmetic operations
+13010500  // addi x2, x0, 5      ; x2 = 5
+93010A00  // addi x3, x0, 10     ; x3 = 10
+33210100  // add  x2, x2, x3     ; x2 = x2 + x3 = 15
+B3220100  // sub  x5, x2, x3     ; x5 = x2 - x3 = 5
+
+// Test 2: Store word operations - store to address 0x1000
+37140000  // lui  x8, 0x0001     ; x8 = 0x1000 (upper 20 bits)
+23A04200  // sw   x2, 0(x8)      ; store x2 (15) to address 0x1000
+23A24200  // sw   x5, 4(x8)      ; store x5 (5) to address 0x1004
+
+// Test 3: Load word operations - load from address 0x1000
+03250400  // lw   x10, 0(x8)     ; load from 0x1000 to x10 (should be 15)
+83254400  // lw   x11, 4(x8)     ; load from 0x1004 to x11 (should be 5)
+
+// Test 4: More arithmetic with loaded values
+33650500  // add  x10, x10, x11  ; x10 = x10 + x11 = 20
+B3650500  // sub  x11, x10, x11  ; x11 = x10 - x11 = 15
+
+// Test 5: Store results to address 0x1008
+23A54200  // sw   x10, 8(x8)     ; store x10 (20) to address 0x1008
+23A74200  // sw   x11, 12(x8)    ; store x11 (15) to address 0x100C
+
+// Test 6: Conditional jump test
+93610100  // addi x3, x0, 1      ; x3 = 1
+13620100  // addi x4, x0, 1      ; x4 = 1
+63E20200  // beq  x3, x4, +4     ; if x3 == x4, jump forward 4 bytes (skip next instruction)
+13310100  // addi x2, x0, 1      ; this should be skipped
+93310200  // addi x3, x0, 2      ; x3 = 2 (this should execute)
+
+// Test 7: Unconditional jump test
+6F004000  // jal  x0, +64        ; jump forward 64 bytes to end
+13710100  // addi x2, x0, 1      ; this should be skipped
+93710100  // addi x15, x0, 1     ; this should be skipped
+
+// Test 8: Final verification store (this is the jump target)
+// Address should be around 0x00000040
+93F10F00  // addi x31, x0, 15    ; x31 = 15 (test marker)
+23AF4200  // sw   x31, 16(x8)    ; store test marker to 0x1010
+
+// End of program - infinite loop
+6F00F0FF  // jal  x0, -16        ; infinite loop

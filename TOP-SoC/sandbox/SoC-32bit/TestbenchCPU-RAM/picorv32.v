@@ -643,8 +643,6 @@ module picorv32 #(
 
 	// Instruction Decoder
 
-	reg [31:0] data_gonna_execute;
-
 	reg instr_lui, instr_auipc, instr_jal, instr_jalr;
 	reg instr_beq, instr_bne, instr_blt, instr_bge, instr_bltu, instr_bgeu;
 	reg instr_lb, instr_lh, instr_lw, instr_lbu, instr_lhu, instr_sb, instr_sh, instr_sw;
@@ -868,8 +866,6 @@ module picorv32 #(
 		is_jalr <= instr_jalr;
 
 		if (mem_do_rinst && mem_done) begin
-
-			data_gonna_execute <= mem_rdata_latched;
 			instr_lui     <= mem_rdata_latched[6:0] == 7'b0110111;
 			instr_auipc   <= mem_rdata_latched[6:0] == 7'b0010111;
 			instr_jal     <= mem_rdata_latched[6:0] == 7'b1101111;

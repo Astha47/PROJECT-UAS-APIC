@@ -35,7 +35,7 @@ module lpddr4_dummy (
         end
         
         // Load program from hex file
-        $readmemh("test_program_ez.hex", memory);
+        $readmemh("test_program_clean.hex", memory);
         data_out = 32'h0;
         output_enable = 1'b0;
         write_data = 32'h0;
