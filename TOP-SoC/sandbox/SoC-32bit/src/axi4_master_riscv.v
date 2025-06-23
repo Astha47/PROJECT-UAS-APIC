@@ -55,16 +55,19 @@ module axi4_master #(
     output reg [DATA_WIDTH-1:0] mem_rdata
 );
     // AXI transaction IDs (can be used for more advanced features)
-    localparam READ_ID = 4'h1;
-    localparam WRITE_ID = 4'h2;
+    localparam INSTR_READ_ID = 4'h1;  // Instruction fetch
+    localparam DATA_READ_ID = 4'h2;   // Data read
+    localparam DATA_WRITE_ID = 4'h3;  // Data write
 
     // State machine states
-    localparam IDLE = 2'b00;
-    localparam READING = 2'b01;
-    localparam WRITING = 2'b10;
-    localparam WRITE_RESP = 2'b11;
+    localparam IDLE = 3'b000;
+    localparam READING = 3'b001;
+    localparam WRITING = 3'b010;
+    localparam WRITE_RESP = 3'b011;
+    localparam READ_DONE = 3'b100;
+    localparam WRITE_DONE = 3'b101;
     
-    reg [1:0] state;
+    reg [2:0] state;
     reg aw_handshake_done, w_handshake_done;
 
     reg [1:0] debug_state_writing;
@@ -153,7 +156,7 @@ module axi4_master #(
             
             case (state)
                 IDLE: begin
-                    // Clear ready signal
+                    // Clear ready signal and handshake flags
                     mem_ready <= 0;
                     aw_handshake_done <= 0;
                     w_handshake_done <= 0;
@@ -161,7 +164,7 @@ module axi4_master #(
                     if (mem_valid) begin
                         if (is_write) begin
                             // Start write transaction
-                            m_axi_awid <= WRITE_ID;
+                            m_axi_awid <= DATA_WRITE_ID;
                             m_axi_awaddr <= mem_addr;
                             m_axi_awlen <= 8'b0; // Single transfer
                             m_axi_awsize <= 3'b010; // 4 bytes
@@ -181,7 +184,7 @@ module axi4_master #(
                             // $display("Time %t: AXI_MASTER IDLE->WRITING: addr=0x%h, wdata=0x%h", $time, mem_addr, mem_wdata);
                         end else if (is_read) begin
                             // Start read transaction
-                            m_axi_arid <= READ_ID;
+                            m_axi_arid <= mem_instr ? INSTR_READ_ID : DATA_READ_ID;
                             m_axi_araddr <= mem_addr;
                             m_axi_arlen <= 8'b0; // Single transfer
                             m_axi_arsize <= 3'b010; // 4 bytes
@@ -207,8 +210,16 @@ module axi4_master #(
                         mem_rdata <= m_axi_rdata;
                         mem_ready <= 1;
                         m_axi_rready <= 0; // Deassert RREADY after accepting data for this beat
+                        state <= READ_DONE;
+                        // $display("Time %t: AXI_MASTER READING->READ_DONE: R handshake. m_axi_rdata=0x%h. Asserting mem_ready.", $time, m_axi_rdata);
+                    end
+                end
+
+                READ_DONE: begin
+                    mem_ready <= 0; // De-assert mem_ready to create a pulse
+                    // Wait for CPU to de-assert mem_valid
+                    if (!mem_valid) begin
                         state <= IDLE;
-                        // $display("Time %t: AXI_MASTER READING->IDLE: R handshake. m_axi_rdata=0x%h, m_axi_rlast=%b. Asserting mem_ready, deasserting m_axi_rready.", $time, m_axi_rdata, m_axi_rlast);
                     end
                 end
                 
@@ -242,8 +253,16 @@ module axi4_master #(
                     if (m_axi_bvalid && m_axi_bready) begin
                         mem_ready <= 1;
                         m_axi_bready <= 0;
+                        state <= WRITE_DONE;
+                        // $display("Time %t: AXI_MASTER WRITE_RESP->WRITE_DONE: B handshake. m_axi_bresp=%b. Asserting mem_ready.", $time, m_axi_bresp);
+                    end
+                end
+
+                WRITE_DONE: begin
+                    mem_ready <= 0; // De-assert mem_ready to create a pulse
+                    // Wait for CPU to de-assert mem_valid
+                    if (!mem_valid) begin
                         state <= IDLE;
-                        // $display("Time %t: AXI_MASTER WRITE_RESP->IDLE: B handshake. m_axi_bresp=%b. Asserting mem_ready.", $time, m_axi_bresp);
                     end
                 end
                 

@@ -286,8 +286,8 @@ module top_tb;
             if (dut.cpu.reg_pc != prev_pc && reset_n) begin
                 if (dut.cpu.reg_pc != 32'h0) program_started <= 1'b1;
                 
-                // Check if we've reached the loop (PC jumps to 0x08 from 0x14)
-                if (program_started && dut.cpu.reg_pc == 32'h00000008 && prev_pc == 32'h00000014) begin
+                // Check if we've reached the loop (PC jumps backwards to 0x0c)
+                if (program_started && dut.cpu.reg_pc == 32'h0000000c && prev_pc > dut.cpu.reg_pc) begin
                     if (!reached_loop) begin // Print message only first time we reach loop
                         reached_loop <= 1'b1;
                         $display("[TESTBENCH %t] *** PROGRAM LOOP DETECTED - Counter test in progress! ***", $time);

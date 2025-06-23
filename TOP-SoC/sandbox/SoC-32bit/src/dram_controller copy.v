@@ -212,33 +212,35 @@ module dram_controller #(
                     dram_ba <= 3'b000;     // Use bank 0 for simplicity
                     
                     dram_data_oe <= 1'b0;  // Ensure we're not driving the bus
-                    executed_status <= 1'b1;
                     read_state <= DATA_PHASE;
                 end
                 
                 DATA_PHASE: begin
-                    // Wait for DRAM data to be available
-                    if (!executed_status) begin
-                        M2_AXI4_RID <= read_id;
-                        M2_AXI4_RDATA <= dram_dq; // Read data from DRAM
-                        M2_AXI4_RRESP <= 2'b00; // OKAY
-                        M2_AXI4_RVALID <= 1'b1;
-                        M2_AXI4_RLAST <= (read_count == read_len);
+                    M2_AXI4_RID <= read_id;
+                    M2_AXI4_RDATA <= dram_dq;
+                    M2_AXI4_RRESP <= 2'b00; // OKAY
+                    M2_AXI4_RLAST <= (read_count == read_len);
+                    
+                    if (M2_AXI4_RREADY ) begin
+                        read_count <= read_count + 1;
+                        read_addr <= read_addr + 4;
+                        read_data_valid <= 1'b0;
                         
-                        if (M2_AXI4_RREADY && M2_AXI4_RVALID) begin
-                            read_count <= read_count + 1;
-                            read_addr <= read_addr + 4;
-                            read_data_valid <= 1'b0;
-                            
-                            if (M2_AXI4_RLAST) begin
-                                read_state <= IDLE;
-                                M2_AXI4_RVALID <= 1'b0;
-                                M2_AXI4_RLAST <= 1'b0;
-                            end else begin
-                                read_state <= ADDR_PHASE;
-                            end
-                        end  
+                        if (M2_AXI4_RLAST) begin
+                            M2_AXI4_RVALID <= 1'b1;
+                            M2_AXI4_RLAST <= 1'b0;
+                            read_state <= RESP_PHASE;
+                        end else begin
+                            read_state <= ADDR_PHASE;
+                        end
                     end
+                end
+
+                RESP_PHASE: begin
+                    M2_AXI4_RVALID <= 1'b0;
+                    M2_AXI4_RRESP <= 2'b00; // OKAY
+                    M2_AXI4_RLAST <= 1'b0;
+                    read_state <= IDLE;
                 end
             endcase
         end
@@ -250,7 +252,7 @@ module dram_controller #(
             dram_ck <= 1'b0;
         end else begin
             if (dram_ck == 1'b1) begin
-                executed_status <= 1'b0;
+                executed_status <= 1'b0; // Reset to a known state if undriven
             end
             dram_ck <= ~dram_ck;
         end
