@@ -1,2 +1,0 @@
-node yang di devbug 
-S0_AXI4_BVALID
