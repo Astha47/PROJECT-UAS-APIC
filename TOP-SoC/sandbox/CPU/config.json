@@ -1,0 +1,10 @@
+{
+    "DESIGN_NAME": "picorv32",
+    "PDK": "sky130A",
+    "STD_CELL_LIBRARY": "sky130_fd_sc_hd",
+    "VERILOG_FILES": [
+        "./src/picorv32.v"
+    ],
+    "CLOCK_PERIOD": 25,
+    "CLOCK_PORT": "clk"
+}

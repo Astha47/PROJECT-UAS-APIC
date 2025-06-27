@@ -63,11 +63,12 @@ module cordic_top (
 
     // FSM to delay cordic_start
     always @(posedge clk or posedge rst) begin
-        done_d <= done;
         if (rst) begin
             state <= IDLE;
             cordic_start <= 0;
+            done_d <= 0;
         end else begin
+            done_d <= done;
             case (state)
                 IDLE: begin
                     if (start)
