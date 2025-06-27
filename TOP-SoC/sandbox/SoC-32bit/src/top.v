@@ -207,18 +207,7 @@ module top (
     wire                       dram_s_axi_rready;
     
     // ========== Instantiate PicoRV32 CPU ==========
-    picorv32 #(
-        .ENABLE_COUNTERS(1),
-        .ENABLE_REGS_16_31(1),
-        .ENABLE_REGS_DUALPORT(0),
-        .BARREL_SHIFTER(0),
-        .COMPRESSED_ISA(0),
-        .ENABLE_MUL(1),
-        .ENABLE_DIV(1),
-        .PROGADDR_RESET(32'h00000000),
-        .REGS_INIT_ZERO(1),
-        .LATCHED_MEM_RDATA(1)
-    ) cpu (
+    picorv32 cpu (
         .clk(clk_sys),
         .resetn(reset_sys_n),
         .trap(trap),

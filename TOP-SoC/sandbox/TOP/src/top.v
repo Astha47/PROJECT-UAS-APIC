@@ -1,8 +1,8 @@
-`include "picorv32.v"
-`include "axi4_master_riscv.v"
-`include "axi4_interconnect.v"
-`include "dram_controller.v"
-`include "cordic_system.v"
+// `include "picorv32.v"
+// `include "axi4_master_riscv.v"
+// `include "axi4_interconnect.v"
+// `include "dram_controller.v"
+// `include "cordic_system.v"
 
 module top (
     input wire clk,
@@ -206,19 +206,25 @@ module top (
     wire                       dram_s_axi_rvalid;
     wire                       dram_s_axi_rready;
     
+    // ========== Additional wires for unused PicoRV32 ports ==========
+    wire        mem_la_read;
+    wire        mem_la_write;
+    wire [31:0] mem_la_addr;
+    wire [31:0] mem_la_wdata;
+    wire [3:0]  mem_la_wstrb;
+    
+    wire        pcpi_valid;
+    wire [31:0] pcpi_insn;
+    wire [31:0] pcpi_rs1;
+    wire [31:0] pcpi_rs2;
+    
+    wire [31:0] eoi;
+    
+    wire        trace_valid;
+    wire [35:0] trace_data;
+    
     // ========== Instantiate PicoRV32 CPU ==========
-    picorv32 #(
-        .ENABLE_COUNTERS(1),
-        .ENABLE_REGS_16_31(1),
-        .ENABLE_REGS_DUALPORT(0),
-        .BARREL_SHIFTER(0),
-        .COMPRESSED_ISA(0),
-        .ENABLE_MUL(1),
-        .ENABLE_DIV(1),
-        .PROGADDR_RESET(32'h00000000),
-        .REGS_INIT_ZERO(1),
-        .LATCHED_MEM_RDATA(1)
-    ) cpu (
+    picorv32 cpu (
         .clk(clk_sys),
         .resetn(reset_sys_n),
         .trap(trap),
@@ -230,7 +236,32 @@ module top (
         .mem_addr(mem_addr),
         .mem_wdata(mem_wdata),
         .mem_wstrb(mem_wstrb),
-        .mem_rdata(mem_rdata)
+        .mem_rdata(mem_rdata),
+        
+        // Look-ahead interface (unused)
+        .mem_la_read(mem_la_read),
+        .mem_la_write(mem_la_write),
+        .mem_la_addr(mem_la_addr),
+        .mem_la_wdata(mem_la_wdata),
+        .mem_la_wstrb(mem_la_wstrb),
+        
+        // PCPI interface (unused since ENABLE_PCPI=0)
+        .pcpi_valid(pcpi_valid),
+        .pcpi_insn(pcpi_insn),
+        .pcpi_rs1(pcpi_rs1),
+        .pcpi_rs2(pcpi_rs2),
+        .pcpi_wr(1'b0),
+        .pcpi_rd(32'h0),
+        .pcpi_wait(1'b0),
+        .pcpi_ready(1'b0),
+        
+        // IRQ interface (unused since ENABLE_IRQ=0)
+        .irq(32'h0),
+        .eoi(eoi),
+        
+        // Trace interface (unused since ENABLE_TRACE=0)
+        .trace_valid(trace_valid),
+        .trace_data(trace_data)
     );
     
     // ========== Instantiate AXI4 Master Bridge for CPU ==========
@@ -531,23 +562,64 @@ module top (
         .rready(cordic_axil_rready)
     );
     
-    // ========== Placeholder connections for SA module ==========
-    // Will be replaced with actual module instantiation later
+    // ========== Tie off unused SA AXI4 Master signals ==========
+    // Write Address Channel
+    assign sa_m_axi_awid = {AXI4_ID_WIDTH{1'b0}};
+    assign sa_m_axi_awaddr = {ADDR_WIDTH{1'b0}};
+    assign sa_m_axi_awlen = 8'h00;
+    assign sa_m_axi_awsize = 3'b000;
+    assign sa_m_axi_awburst = 2'b00;
     assign sa_m_axi_awvalid = 1'b0;
+    
+    // Write Data Channel
+    assign sa_m_axi_wdata = {DATA_WIDTH{1'b0}};
+    assign sa_m_axi_wstrb = {(DATA_WIDTH/8){1'b0}};
+    assign sa_m_axi_wlast = 1'b0;
     assign sa_m_axi_wvalid = 1'b0;
+    
+    // Write Response Channel
     assign sa_m_axi_bready = 1'b0;
+    
+    // Read Address Channel
+    assign sa_m_axi_arid = {AXI4_ID_WIDTH{1'b0}};
+    assign sa_m_axi_araddr = {ADDR_WIDTH{1'b0}};
+    assign sa_m_axi_arlen = 8'h00;
+    assign sa_m_axi_arsize = 3'b000;
+    assign sa_m_axi_arburst = 2'b00;
     assign sa_m_axi_arvalid = 1'b0;
+    
+    // Read Data Channel
     assign sa_m_axi_rready = 1'b0;
     
-    
-    // Tie off AXI-Lite signals for SA control
+    // ========== Tie off unused SA AXI4-Lite Control signals ==========
+    // Write Address Channel
     assign sa_axil_awready = 1'b0;
+    
+    // Write Data Channel
     assign sa_axil_wready = 1'b0;
+    
+    // Write Response Channel
     assign sa_axil_bresp = 2'b00;
     assign sa_axil_bvalid = 1'b0;
+    
+    // Read Address Channel
     assign sa_axil_arready = 1'b0;
-    assign sa_axil_rdata = 32'h0;
+    
+    // Read Data Channel
+    assign sa_axil_rdata = {DATA_WIDTH{1'b0}};
     assign sa_axil_rresp = 2'b00;
     assign sa_axil_rvalid = 1'b0;
     
+    // ========== Tie off unused PicoRV32 outputs ==========
+    // Look-ahead interface outputs are not connected anywhere, so they're inherently floating
+    // PCPI outputs are not connected since PCPI is disabled
+    // IRQ eoi output is not used
+    // Trace outputs are not used since tracing is disabled
+    
+    // Create dummy wires to absorb unused outputs if needed by synthesis tools
+    wire dummy_absorb;
+    assign dummy_absorb = mem_la_read | mem_la_write | (|mem_la_addr) | (|mem_la_wdata) | (|mem_la_wstrb) |
+                         pcpi_valid | (|pcpi_insn) | (|pcpi_rs1) | (|pcpi_rs2) |
+                         (|eoi) | trace_valid | (|trace_data);
+
 endmodule
