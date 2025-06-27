@@ -1,0 +1,26 @@
+Log file opened successfully
+CORDIC test program will be loaded by LPDDR4 dummy memory from test_program_test_cordic.hex
+Starting SoC with PicoRV32 CPU CORDIC test
+VCD file generation enabled: top_tb_soc_cordic_simulation.vcd
+
+Memory Contents (First 10 Addresses):
+Mem[0x00000000] = 0xf00000b7
+Mem[0x00000004] = 0x01808093
+Mem[0x00000008] = 0xf0000137
+Mem[0x0000000c] = 0x01c10113
+Mem[0x00000010] = 0xf00001b7
+Mem[0x00000014] = 0x02018193
+Mem[0x00000018] = 0xf0000237
+Mem[0x0000001c] = 0x02420213
+Mem[0x00000020] = 0x002d02b7
+Mem[0x00000024] = 0x00028293
+
+Simulation complete at time              5000000
+
+Final CORDIC Program Verification:
+  - Program execution: PASS (PC=0x00000044)
+  - x1 (REG_INPUT_DATA addr): 0xf0000018 (expected 0xf0000018)
+  - x5 (Input Angle): 0x002d0000 (expected 0x002d0000)
+  - x9 (CORDIC Result): 0x0000b504
+
+=== CORDIC MMIO TEST: PASS ===

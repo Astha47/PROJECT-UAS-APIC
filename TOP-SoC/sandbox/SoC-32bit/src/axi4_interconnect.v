@@ -174,47 +174,50 @@ module axi_interconnect#(
     
     // Updated Memory Map:
     // DRAM Controller: 0x00000000 - 0xEFFFFFFF (CPU boot code and main memory)
-    // Systolic Array:  0xF0000000 - 0xF0000005 (SA control registers)
-    // CORDIC:          0xF0000006 - 0xF0000009 (CORDIC control registers)
+    // Systolic Array:  0xF0000000 - 0xF0000014 (SA control registers)
+    // CORDIC:          0xF0000018 - 0xF0000024 (CORDIC control registers)
     
     // Alokasi alamat memory untuk Systolic Array (moved to high memory)
     // Head data    :   0xF0000000
-    // Data Info    :   0xF0000001
-    // Head Result  :   0xF0000002
-    // Flags        :   0xF0000003
-    // Mode         :   0xF0000004
-    // Signals      :   0xF0000005
+    // Data Info    :   0xF0000004
+    // Head Result  :   0xF0000008
+    // Flags        :   0xF000000C
+    // Mode         :   0xF0000010
+    // Signals      :   0xF0000014
 
-    // Alokasi alamat memory untuk CORDIX (moved to high memory)
-    // Data         :   0xF0000006
-    // Result       :   0xF0000007
-    // Flags        :   0xF0000008
-    // Signals      :   0xF0000009
+    // Alokasi alamat memory untuk CORDIC (moved to high memory)
+    // Data         :   0xF0000018 (4026531864)
+    // Result       :   0xF000001C (4026531868)
+    // Flags        :   0xF0000020 (4026531872)
+    // Signals      :   0xF0000024 (4026531876)
 
     // Define address ranges as parameters
     // Move DRAM to start from 0x00000000 so CPU can boot from address 0x00000000
     localparam DRAM_START_ADDR   = 32'h00000000;
     localparam DRAM_END_ADDR     = 32'hEFFFFFFF;
     localparam SA_START_ADDR     = 32'hF0000000;
-    localparam SA_END_ADDR       = 32'hF0000005;
-    localparam CORDIC_START_ADDR = 32'hF0000006;
-    localparam CORDIC_END_ADDR   = 32'hF0000009;
+    localparam SA_END_ADDR       = 32'hF0000014;
+    localparam CORDIC_START_ADDR = 32'hF0000018;
+    localparam CORDIC_END_ADDR   = 32'hF0000024;
 
-    // Address decode logic
+    // --- PERBAIKAN: Transaction state registers ---
+    reg s0_cordic_write_active, s0_sa_write_active;
+    reg s0_cordic_read_active, s0_sa_read_active;
+
+    // Address decode logic (renamed for clarity)
     // Write address decoding for S0 (RISC-V)
-    wire s0_write_to_sa     = (S0_AXI4_AWADDR >= SA_START_ADDR && S0_AXI4_AWADDR <= SA_END_ADDR) && S0_AXI4_AWVALID;
-    wire s0_write_to_cordic = (S0_AXI4_AWADDR >= CORDIC_START_ADDR && S0_AXI4_AWADDR <= CORDIC_END_ADDR) && S0_AXI4_AWVALID;
-    wire s0_write_to_dram   = ((S0_AXI4_AWADDR >= DRAM_START_ADDR) && S0_AXI4_AWVALID) ||
-                             (~s0_write_to_sa && ~s0_write_to_cordic && S0_AXI4_AWVALID);
+    wire s0_write_req_sa     = (S0_AXI4_AWADDR >= SA_START_ADDR && S0_AXI4_AWADDR <= SA_END_ADDR);
+    wire s0_write_req_cordic = (S0_AXI4_AWADDR >= CORDIC_START_ADDR && S0_AXI4_AWADDR <= CORDIC_END_ADDR);
+    wire s0_write_req_dram   = ~s0_write_req_sa && ~s0_write_req_cordic;
     
-    // Read address decoding for S0 (RISC-V) - PERBAIKAN
-    wire s0_read_to_sa     = (S0_AXI4_ARADDR >= SA_START_ADDR && S0_AXI4_ARADDR <= SA_END_ADDR);
-    wire s0_read_to_cordic = (S0_AXI4_ARADDR >= CORDIC_START_ADDR && S0_AXI4_ARADDR <= CORDIC_END_ADDR);
-    wire s0_read_to_dram   = ~s0_read_to_sa && ~s0_read_to_cordic;  // Default ke DRAM
+    // Read address decoding for S0 (RISC-V)
+    wire s0_read_req_sa     = (S0_AXI4_ARADDR >= SA_START_ADDR && S0_AXI4_ARADDR <= SA_END_ADDR);
+    wire s0_read_req_cordic = (S0_AXI4_ARADDR >= CORDIC_START_ADDR && S0_AXI4_ARADDR <= CORDIC_END_ADDR);
+    wire s0_read_req_dram   = ~s0_read_req_sa && ~s0_read_req_cordic;
 
     // For S1 (SA), all transactions go to DRAM
-    wire s1_write_to_dram = S1_AXI4_AWVALID;
-    wire s1_read_to_dram = S1_AXI4_ARVALID;
+    wire s1_write_req_dram = S1_AXI4_AWVALID; // Renamed for consistency
+    wire s1_read_req_dram  = S1_AXI4_ARVALID;   // Renamed for consistency
 
     // Arbitration between S0 and S1 for DRAM access
     reg s0_dram_write_grant, s1_dram_write_grant;
@@ -231,31 +234,60 @@ module axi_interconnect#(
             s1_read_transaction_active <= 1'b0;
             s0_write_transaction_active <= 1'b0;
             s1_write_transaction_active <= 1'b0;
+            // Reset new state registers
+            s0_cordic_write_active <= 1'b0;
+            s0_sa_write_active <= 1'b0;
+            s0_cordic_read_active <= 1'b0;
+            s0_sa_read_active <= 1'b0;
         end else begin
             // --- FIXED LOGIC: Prioritize ending a transaction over starting a new one ---
 
-            // Track read transactions for S0
-            if (s0_dram_read_grant && M2_AXI4_RVALID && S0_AXI4_RREADY && M2_AXI4_RLAST)
-                s0_read_transaction_active <= 1'b0; // End transaction first
-            else if (s0_read_to_dram && S0_AXI4_ARVALID && S0_AXI4_ARREADY)
-                s0_read_transaction_active <= 1'b1; // Then start new one
+            // Track read transactions for S0 to DRAM
+            if (s0_read_transaction_active && M2_AXI4_RVALID && S0_AXI4_RREADY && M2_AXI4_RLAST)
+                s0_read_transaction_active <= 1'b0;
+            else if (s0_read_req_dram && S0_AXI4_ARVALID && S0_AXI4_ARREADY)
+                s0_read_transaction_active <= 1'b1;
+
+            // Track read transactions for S0 to CORDIC
+            if (s0_cordic_read_active && M0_AXI4LITE_RVALID && S0_AXI4_RREADY) // AXI-Lite RLAST is implicit
+                s0_cordic_read_active <= 1'b0;
+            else if (s0_read_req_cordic && S0_AXI4_ARVALID && S0_AXI4_ARREADY)
+                s0_cordic_read_active <= 1'b1;
+
+            // Track read transactions for S0 to SA
+            if (s0_sa_read_active && M1_AXI4LITE_RVALID && S0_AXI4_RREADY) // AXI-Lite RLAST is implicit
+                s0_sa_read_active <= 1'b0;
+            else if (s0_read_req_sa && S0_AXI4_ARVALID && S0_AXI4_ARREADY)
+                s0_sa_read_active <= 1'b1;
                 
             // Track read transactions for S1
-            if (s1_dram_read_grant && M2_AXI4_RVALID && S1_AXI4_RREADY && M2_AXI4_RLAST)
+            if (s1_read_transaction_active && M2_AXI4_RVALID && S1_AXI4_RREADY && M2_AXI4_RLAST)
                 s1_read_transaction_active <= 1'b0;
-            else if (s1_read_to_dram && S1_AXI4_ARVALID && S1_AXI4_ARREADY)
+            else if (s1_read_req_dram && S1_AXI4_ARVALID && S1_AXI4_ARREADY)
                 s1_read_transaction_active <= 1'b1;
                 
-            // Track write transactions for S0
-            if (s0_dram_write_grant && M2_AXI4_BVALID && S0_AXI4_BREADY)
+            // Track write transactions for S0 to DRAM
+            if (s0_write_transaction_active && M2_AXI4_BVALID && S0_AXI4_BREADY)
                 s0_write_transaction_active <= 1'b0;
-            else if (s0_write_to_dram && S0_AXI4_AWVALID && S0_AXI4_AWREADY)
+            else if (s0_write_req_dram && S0_AXI4_AWVALID && S0_AXI4_AWREADY)
                 s0_write_transaction_active <= 1'b1;
+
+            // Track write transactions for S0 to CORDIC
+            if (s0_cordic_write_active && M0_AXI4LITE_BVALID && S0_AXI4_BREADY)
+                s0_cordic_write_active <= 1'b0;
+            else if (s0_write_req_cordic && S0_AXI4_AWVALID && S0_AXI4_AWREADY)
+                s0_cordic_write_active <= 1'b1;
+
+            // Track write transactions for S0 to SA
+            if (s0_sa_write_active && M1_AXI4LITE_BVALID && S0_AXI4_BREADY)
+                s0_sa_write_active <= 1'b0;
+            else if (s0_write_req_sa && S0_AXI4_AWVALID && S0_AXI4_AWREADY)
+                s0_sa_write_active <= 1'b1;
                 
             // Track write transactions for S1
-            if (s1_dram_write_grant && M2_AXI4_BVALID && S1_AXI4_BREADY)
+            if (s1_write_transaction_active && M2_AXI4_BVALID && S1_AXI4_BREADY)
                 s1_write_transaction_active <= 1'b0;
-            else if (s1_write_to_dram && S1_AXI4_AWVALID && S1_AXI4_AWREADY)
+            else if (s1_write_req_dram && S1_AXI4_AWVALID && S1_AXI4_AWREADY)
                 s1_write_transaction_active <= 1'b1;
         end
     end
@@ -275,13 +307,13 @@ module axi_interconnect#(
             end else if (s1_write_transaction_active) begin
                 s0_dram_write_grant <= 1'b0;
                 s1_dram_write_grant <= 1'b1;
-            end else if (s0_write_to_dram && s1_write_to_dram) begin
+            end else if (s0_write_req_dram && S0_AXI4_AWVALID && s1_write_req_dram) begin
                 // Toggle grants when both want access and no transaction active
                 s0_dram_write_grant <= ~s0_dram_write_grant;
                 s1_dram_write_grant <= ~s1_dram_write_grant;
             end else begin
-                s0_dram_write_grant <= s0_write_to_dram;
-                s1_dram_write_grant <= !s0_write_to_dram && s1_write_to_dram;
+                s0_dram_write_grant <= s0_write_req_dram && S0_AXI4_AWVALID;
+                s1_dram_write_grant <= !(s0_write_req_dram && S0_AXI4_AWVALID) && s1_write_req_dram;
             end
             
             // Read arbitration - maintain grant during active transaction
@@ -291,13 +323,13 @@ module axi_interconnect#(
             end else if (s1_read_transaction_active) begin
                 s0_dram_read_grant <= 1'b0;
                 s1_dram_read_grant <= 1'b1;
-            end else if (s0_read_to_dram && s1_read_to_dram) begin
+            end else if (s0_read_req_dram && S0_AXI4_ARVALID && s1_read_req_dram) begin
                 // Toggle grants when both want access and no transaction active
                 s0_dram_read_grant <= ~s0_dram_read_grant;
                 s1_dram_read_grant <= ~s1_dram_read_grant;
             end else begin
-                s0_dram_read_grant <= s0_read_to_dram;
-                s1_dram_read_grant <= !s0_read_to_dram && s1_read_to_dram;
+                s0_dram_read_grant <= s0_read_req_dram && S0_AXI4_ARVALID;
+                s1_dram_read_grant <= !(s0_read_req_dram && S0_AXI4_ARVALID) && s1_read_req_dram;
             end
         end
     end
@@ -307,15 +339,15 @@ module axi_interconnect#(
     // M0 (CORDIC - AXI4LITE) Write Address Channel
     assign M0_AXI4LITE_AWADDR = S0_AXI4_AWADDR;  // Pass through address
     assign M0_AXI4LITE_AWPROT = 3'b000;  // Default protection bits
-    assign M0_AXI4LITE_AWVALID = s0_write_to_cordic;
-    assign S0_AXI4_AWREADY = (s0_write_to_cordic) ? M0_AXI4LITE_AWREADY : 
-                            (s0_write_to_sa) ? M1_AXI4LITE_AWREADY :
-                            (s0_write_to_dram && s0_dram_write_grant) ? M2_AXI4_AWREADY : 1'b0;
+    assign M0_AXI4LITE_AWVALID = s0_write_req_cordic && S0_AXI4_AWVALID;
+    assign S0_AXI4_AWREADY = (s0_write_req_cordic) ? M0_AXI4LITE_AWREADY : 
+                            (s0_write_req_sa) ? M1_AXI4LITE_AWREADY :
+                            (s0_write_req_dram && s0_dram_write_grant) ? M2_AXI4_AWREADY : 1'b0;
     
     // M1 (SA - AXI4LITE) Write Address Channel
     assign M1_AXI4LITE_AWADDR = S0_AXI4_AWADDR;  // Pass through address
     assign M1_AXI4LITE_AWPROT = 3'b000;  // Default protection bits
-    assign M1_AXI4LITE_AWVALID = s0_write_to_sa;
+    assign M1_AXI4LITE_AWVALID = s0_write_req_sa && S0_AXI4_AWVALID;
     
     // M2 (DRAM - AXI4) Write Address Channel
     assign M2_AXI4_AWID = (s0_dram_write_grant) ? S0_AXI4_AWID : 
@@ -328,8 +360,8 @@ module axi_interconnect#(
                            (s1_dram_write_grant) ? S1_AXI4_AWSIZE : 'b0;
     assign M2_AXI4_AWBURST = (s0_dram_write_grant) ? S0_AXI4_AWBURST : 
                             (s1_dram_write_grant) ? S1_AXI4_AWBURST : 'b0;
-    assign M2_AXI4_AWVALID = (s0_dram_write_grant && s0_write_to_dram) || 
-                            (s1_dram_write_grant && s1_write_to_dram);
+    assign M2_AXI4_AWVALID = (s0_dram_write_grant && s0_write_req_dram && S0_AXI4_AWVALID) || 
+                            (s1_dram_write_grant && s1_write_req_dram);
     assign S1_AXI4_AWREADY = (s1_dram_write_grant) ? M2_AXI4_AWREADY : 1'b0;
 
     // ----- WRITE DATA CHANNEL ROUTING -----
@@ -337,15 +369,15 @@ module axi_interconnect#(
     // M0 (CORDIC - AXI4LITE) Write Data Channel
     assign M0_AXI4LITE_WDATA = S0_AXI4_WDATA;
     assign M0_AXI4LITE_WSTRB = S0_AXI4_WSTRB;
-    assign M0_AXI4LITE_WVALID = s0_write_to_cordic && S0_AXI4_WVALID;
-    assign S0_AXI4_WREADY = (s0_write_to_cordic) ? M0_AXI4LITE_WREADY :
-                           (s0_write_to_sa) ? M1_AXI4LITE_WREADY :
-                           (s0_dram_write_grant) ? M2_AXI4_WREADY : 1'b0;
+    assign M0_AXI4LITE_WVALID = s0_cordic_write_active && S0_AXI4_WVALID;
+    assign S0_AXI4_WREADY = (s0_cordic_write_active) ? M0_AXI4LITE_WREADY :
+                           (s0_sa_write_active) ? M1_AXI4LITE_WREADY :
+                           (s0_write_transaction_active) ? M2_AXI4_WREADY : 1'b0;
     
     // M1 (SA - AXI4LITE) Write Data Channel
     assign M1_AXI4LITE_WDATA = S0_AXI4_WDATA;
     assign M1_AXI4LITE_WSTRB = S0_AXI4_WSTRB;
-    assign M1_AXI4LITE_WVALID = s0_write_to_sa && S0_AXI4_WVALID;
+    assign M1_AXI4LITE_WVALID = s0_sa_write_active && S0_AXI4_WVALID;
     
     // M2 (DRAM - AXI4) Write Data Channel
     assign M2_AXI4_WDATA = (s0_dram_write_grant) ? S0_AXI4_WDATA :
@@ -354,20 +386,20 @@ module axi_interconnect#(
                           (s1_dram_write_grant) ? S1_AXI4_WSTRB : 'b0;
     assign M2_AXI4_WLAST = (s0_dram_write_grant) ? S0_AXI4_WLAST :
                           (s1_dram_write_grant) ? S1_AXI4_WLAST : 'b0;
-    assign M2_AXI4_WVALID = (s0_dram_write_grant && S0_AXI4_WVALID && s0_write_to_dram) ||
-                           (s1_dram_write_grant && S1_AXI4_WVALID);
+    assign M2_AXI4_WVALID = (s0_dram_write_grant && S0_AXI4_WVALID && s0_write_transaction_active) ||
+                           (s1_dram_write_grant && S1_AXI4_WVALID && s1_write_transaction_active);
     assign S1_AXI4_WREADY = (s1_dram_write_grant) ? M2_AXI4_WREADY : 1'b0;
 
     // ----- WRITE RESPONSE CHANNEL ROUTING -----
     
     // S0 (RISC-V) Write Response Channel
-    assign S0_AXI4_BID = (s0_write_to_dram && s0_dram_write_grant) ? M2_AXI4_BID : S0_AXI4_AWID;
-    assign S0_AXI4_BRESP = (s0_write_to_cordic) ? {1'b0, M0_AXI4LITE_BRESP[0]} :
-                          (s0_write_to_sa) ? {1'b0, M1_AXI4LITE_BRESP[0]} :
-                          (s0_write_to_dram && s0_dram_write_grant) ? M2_AXI4_BRESP : 2'b00;
-    assign S0_AXI4_BVALID = (s0_write_to_cordic && M0_AXI4LITE_BVALID) ||
-                           (s0_write_to_sa && M1_AXI4LITE_BVALID) ||
-                           (s0_dram_write_grant && M2_AXI4_BVALID);
+    assign S0_AXI4_BID = (s0_write_transaction_active) ? M2_AXI4_BID : S0_AXI4_AWID;
+    assign S0_AXI4_BRESP = (s0_cordic_write_active) ? M0_AXI4LITE_BRESP :
+                          (s0_sa_write_active) ? M1_AXI4LITE_BRESP :
+                          (s0_write_transaction_active) ? M2_AXI4_BRESP : 2'b00;
+    assign S0_AXI4_BVALID = (s0_cordic_write_active && M0_AXI4LITE_BVALID) ||
+                           (s0_sa_write_active && M1_AXI4LITE_BVALID) ||
+                           (s0_write_transaction_active && M2_AXI4_BVALID);
     
     // S1 (SA) Write Response Channel
     assign S1_AXI4_BID = (s1_dram_write_grant) ? M2_AXI4_BID : S1_AXI4_AWID;
@@ -375,10 +407,10 @@ module axi_interconnect#(
     assign S1_AXI4_BVALID = (s1_dram_write_grant && M2_AXI4_BVALID);
     
     // M0 (CORDIC - AXI4LITE) Write Response Channel
-    assign M0_AXI4LITE_BREADY = (s0_write_to_cordic) ? S0_AXI4_BREADY : 1'b0;
+    assign M0_AXI4LITE_BREADY = s0_cordic_write_active && S0_AXI4_BREADY;
     
     // M1 (SA - AXI4LITE) Write Response Channel
-    assign M1_AXI4LITE_BREADY = (s0_write_to_sa) ? S0_AXI4_BREADY : 1'b0;
+    assign M1_AXI4LITE_BREADY = s0_sa_write_active && S0_AXI4_BREADY;
     
     // M2 (DRAM - AXI4) Write Response Channel
     assign M2_AXI4_BREADY = (s0_dram_write_grant) ? S0_AXI4_BREADY :
@@ -389,17 +421,17 @@ module axi_interconnect#(
     // M0 (CORDIC - AXI4LITE) Read Address Channel - PERBAIKAN
     assign M0_AXI4LITE_ARADDR = S0_AXI4_ARADDR;
     assign M0_AXI4LITE_ARPROT = 3'b000;
-    assign M0_AXI4LITE_ARVALID = s0_read_to_cordic && S0_AXI4_ARVALID;
+    assign M0_AXI4LITE_ARVALID = s0_read_req_cordic && S0_AXI4_ARVALID;
 
     // M1 (SA - AXI4LITE) Read Address Channel - PERBAIKAN  
     assign M1_AXI4LITE_ARADDR = S0_AXI4_ARADDR;
     assign M1_AXI4LITE_ARPROT = 3'b000;
-    assign M1_AXI4LITE_ARVALID = s0_read_to_sa && S0_AXI4_ARVALID;
+    assign M1_AXI4LITE_ARVALID = s0_read_req_sa && S0_AXI4_ARVALID;
     
     // PERBAIKAN UTAMA - ARREADY routing
-    assign S0_AXI4_ARREADY = (s0_read_to_cordic) ? M0_AXI4LITE_ARREADY :
-                            (s0_read_to_sa) ? M1_AXI4LITE_ARREADY :
-                            (s0_read_to_dram) ? (s0_dram_read_grant ? M2_AXI4_ARREADY : 1'b0) : 1'b0;
+    assign S0_AXI4_ARREADY = (s0_read_req_cordic) ? M0_AXI4LITE_ARREADY :
+                            (s0_read_req_sa) ? M1_AXI4LITE_ARREADY :
+                            (s0_read_req_dram) ? (s0_dram_read_grant ? M2_AXI4_ARREADY : 1'b0) : 1'b0;
     
     
     // M2 (DRAM - AXI4) Read Address Channel - PERBAIKAN
@@ -413,24 +445,24 @@ module axi_interconnect#(
                        (s1_dram_read_grant) ? S1_AXI4_ARSIZE : 'b0;
     assign M2_AXI4_ARBURST = (s0_dram_read_grant) ? S0_AXI4_ARBURST :
                         (s1_dram_read_grant) ? S1_AXI4_ARBURST : 'b0;
-    assign M2_AXI4_ARVALID = (s0_dram_read_grant && s0_read_to_dram && S0_AXI4_ARVALID) ||
-                        (s1_dram_read_grant && s1_read_to_dram && S1_AXI4_ARVALID);
-    assign S1_AXI4_ARREADY = (s1_dram_read_grant && s1_read_to_dram) ? M2_AXI4_ARREADY : 1'b0;
+    assign M2_AXI4_ARVALID = (s0_dram_read_grant && s0_read_req_dram && S0_AXI4_ARVALID) ||
+                        (s1_dram_read_grant && s1_read_req_dram);
+    assign S1_AXI4_ARREADY = (s1_dram_read_grant && s1_read_req_dram) ? M2_AXI4_ARREADY : 1'b0;
 
     // ----- READ DATA CHANNEL ROUTING -----
     
     // S0 (RISC-V) Read Data Channel
-    assign S0_AXI4_RID = (s0_read_to_dram && s0_dram_read_grant) ? M2_AXI4_RID : S0_AXI4_ARID;
-    assign S0_AXI4_RDATA = (s0_read_to_cordic) ? M0_AXI4LITE_RDATA :
-                          (s0_read_to_sa) ? M1_AXI4LITE_RDATA :
-                          (s0_read_to_dram && s0_dram_read_grant) ? M2_AXI4_RDATA : 'b0;
-    assign S0_AXI4_RRESP = (s0_read_to_cordic) ? {1'b0, M0_AXI4LITE_RRESP[0]} :
-                          (s0_read_to_sa) ? {1'b0, M1_AXI4LITE_RRESP[0]} :
-                          (s0_read_to_dram && s0_dram_read_grant) ? M2_AXI4_RRESP : 2'b00;
-    assign S0_AXI4_RLAST = (s0_read_to_dram && s0_dram_read_grant) ? M2_AXI4_RLAST : 1'b1;
-    assign S0_AXI4_RVALID = (s0_read_to_cordic && M0_AXI4LITE_RVALID) ||
-                           (s0_read_to_sa && M1_AXI4LITE_RVALID) ||
-                           (s0_read_to_dram && s0_dram_read_grant && M2_AXI4_RVALID);
+    assign S0_AXI4_RID = (s0_read_transaction_active) ? M2_AXI4_RID : S0_AXI4_ARID;
+    assign S0_AXI4_RDATA = (s0_cordic_read_active) ? M0_AXI4LITE_RDATA :
+                          (s0_sa_read_active) ? M1_AXI4LITE_RDATA :
+                          (s0_read_transaction_active) ? M2_AXI4_RDATA : 'b0;
+    assign S0_AXI4_RRESP = (s0_cordic_read_active) ? M0_AXI4LITE_RRESP :
+                          (s0_sa_read_active) ? M1_AXI4LITE_RRESP :
+                          (s0_read_transaction_active) ? M2_AXI4_RRESP : 2'b00;
+    assign S0_AXI4_RLAST = (s0_read_transaction_active) ? M2_AXI4_RLAST : 1'b1; // AXI-Lite is always 1 transaction
+    assign S0_AXI4_RVALID = (s0_cordic_read_active && M0_AXI4LITE_RVALID) ||
+                           (s0_sa_read_active && M1_AXI4LITE_RVALID) ||
+                           (s0_read_transaction_active && M2_AXI4_RVALID);
     
     // (s0_read_to_dram && s0_dram_read_grant && M2_AXI4_RVALID);
     
@@ -442,10 +474,10 @@ module axi_interconnect#(
     assign S1_AXI4_RVALID = (s1_dram_read_grant && M2_AXI4_RVALID);
     
     // M0 (CORDIC - AXI4LITE) Read Data Channel
-    assign M0_AXI4LITE_RREADY = (s0_read_to_cordic) ? S0_AXI4_RREADY : 1'b0;
+    assign M0_AXI4LITE_RREADY = s0_cordic_read_active && S0_AXI4_RREADY;
     
     // M1 (SA - AXI4LITE) Read Data Channel  
-    assign M1_AXI4LITE_RREADY = (s0_read_to_sa) ? S0_AXI4_RREADY : 1'b0;
+    assign M1_AXI4LITE_RREADY = s0_sa_read_active && S0_AXI4_RREADY;
     
     // M2 (DRAM - AXI4) Read Data Channel
     assign M2_AXI4_RREADY = (s0_dram_read_grant) ? S0_AXI4_RREADY :

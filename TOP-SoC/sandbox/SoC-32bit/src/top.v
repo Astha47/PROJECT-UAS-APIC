@@ -2,6 +2,7 @@
 `include "axi4_master_riscv.v"
 `include "axi4_interconnect.v"
 `include "dram_controller.v"
+`include "cordic_system.v"
 
 module top (
     input wire clk,
@@ -505,6 +506,30 @@ module top (
         .dram_dm(dram_dm),
         .dram_dqs(dram_dqs)
     );
+
+    // ========== Instantiate CORDIX ==========
+
+    cordic_system cordic_inst (
+        .aclk(clk_sys),
+        .aresetn(reset_sys_n),
+        .awaddr(cordic_axil_awaddr),
+        .awvalid(cordic_axil_awvalid),
+        .awready(cordic_axil_awready),
+        .wdata(cordic_axil_wdata),
+        .wstrb(cordic_axil_wstrb),
+        .wvalid(cordic_axil_wvalid),
+        .wready(cordic_axil_wready),
+        .bresp(cordic_axil_bresp),
+        .bvalid(cordic_axil_bvalid),
+        .bready(cordic_axil_bready),
+        .araddr(cordic_axil_araddr),
+        .arvalid(cordic_axil_arvalid),
+        .arready(cordic_axil_arready),
+        .rdata(cordic_axil_rdata),
+        .rresp(cordic_axil_rresp),
+        .rvalid(cordic_axil_rvalid),
+        .rready(cordic_axil_rready)
+    );
     
     // ========== Placeholder connections for SA module ==========
     // Will be replaced with actual module instantiation later
@@ -514,15 +539,6 @@ module top (
     assign sa_m_axi_arvalid = 1'b0;
     assign sa_m_axi_rready = 1'b0;
     
-    // Tie off AXI-Lite signals for Cordic
-    assign cordic_axil_awready = 1'b0;
-    assign cordic_axil_wready = 1'b0;
-    assign cordic_axil_bresp = 2'b00;
-    assign cordic_axil_bvalid = 1'b0;
-    assign cordic_axil_arready = 1'b0;
-    assign cordic_axil_rdata = 32'h0;
-    assign cordic_axil_rresp = 2'b00;
-    assign cordic_axil_rvalid = 1'b0;
     
     // Tie off AXI-Lite signals for SA control
     assign sa_axil_awready = 1'b0;

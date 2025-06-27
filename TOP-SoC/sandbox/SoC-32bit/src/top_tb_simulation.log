@@ -1,0 +1,52 @@
+Log file opened successfully
+Counter test program will be loaded by LPDDR4 dummy memory from test_program_ez.hex
+Starting SoC with PicoRV32 CPU counter test
+VCD file generation enabled: top_tb_soc_simulation.vcd
+
+Memory Contents (First 10 Addresses):
+Mem[0x00000000] = 0x3fc00093
+Mem[0x00000004] = 0x91300193
+Mem[0x00000008] = 0x0030a023
+Mem[0x0000000c] = 0x0000a103
+Mem[0x00000010] = 0x00110113
+Mem[0x00000014] = 0x0020a023
+Mem[0x00000018] = 0xff5ff06f
+Mem[0x0000001c] = 0x00000013
+Mem[0x00000020] = 0x00000013
+Mem[0x00000024] = 0x00000013
+
+Starting detailed VCD dump after reset completion
+[TESTBENCH               615000] *** STORE DETECTED *** addr=0x000003fc, data=0xfffff913
+[TESTBENCH               615000] *** LOAD DETECTED *** addr=0x000003fc, data=0x0000a103
+[TESTBENCH               825000] *** LOAD DETECTED *** addr=0x000003fc, data=0xfffff913
+[TESTBENCH              1135000] *** STORE DETECTED *** addr=0x000003fc, data=0xfffff914
+[TESTBENCH              1135000] *** LOAD DETECTED *** addr=0x000003fc, data=0xff5ff06f
+[TESTBENCH              1165000] *** PROGRAM LOOP DETECTED - Counter test in progress! ***
+[TESTBENCH              1445000] *** LOAD DETECTED *** addr=0x000003fc, data=0xfffff914
+[TESTBENCH              1755000] *** STORE DETECTED *** addr=0x000003fc, data=0xfffff915
+[TESTBENCH              1755000] *** LOAD DETECTED *** addr=0x000003fc, data=0xff5ff06f
+[TESTBENCH              2065000] *** LOAD DETECTED *** addr=0x000003fc, data=0xfffff915
+[TESTBENCH              2375000] *** STORE DETECTED *** addr=0x000003fc, data=0xfffff916
+[TESTBENCH              2375000] *** LOAD DETECTED *** addr=0x000003fc, data=0xff5ff06f
+[TESTBENCH              2685000] *** LOAD DETECTED *** addr=0x000003fc, data=0xfffff916
+[TESTBENCH              2995000] *** STORE DETECTED *** addr=0x000003fc, data=0xfffff917
+[TESTBENCH              2995000] *** LOAD DETECTED *** addr=0x000003fc, data=0xff5ff06f
+[TESTBENCH              3305000] *** LOAD DETECTED *** addr=0x000003fc, data=0xfffff917
+[TESTBENCH              3615000] *** STORE DETECTED *** addr=0x000003fc, data=0xfffff918
+[TESTBENCH              3615000] *** LOAD DETECTED *** addr=0x000003fc, data=0xff5ff06f
+[TESTBENCH              3925000] *** LOAD DETECTED *** addr=0x000003fc, data=0xfffff918
+[TESTBENCH              4235000] *** STORE DETECTED *** addr=0x000003fc, data=0xfffff919
+[TESTBENCH              4235000] *** LOAD DETECTED *** addr=0x000003fc, data=0xff5ff06f
+[TESTBENCH              4545000] *** LOAD DETECTED *** addr=0x000003fc, data=0xfffff919
+[TESTBENCH              4855000] *** STORE DETECTED *** addr=0x000003fc, data=0xfffff91a
+[TESTBENCH              4855000] *** LOAD DETECTED *** addr=0x000003fc, data=0xff5ff06f
+Simulation complete at time              5000000
+
+Final Counter Program Verification:
+  - Program completed: PASS
+  - PC at end: 0x0000000c
+  - x1 (memory addr, expected 1020):       1020
+  - x2 (counter value): 4294965530
+  - Loop iterations:          7
+  - Memory[1020]: 0xfffff91a
+
