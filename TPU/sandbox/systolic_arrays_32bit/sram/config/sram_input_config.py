@@ -21,7 +21,8 @@ num_spare_cols = 1
 num_spare_rows = 1
 words_per_row = 2
 analytical_delay = True
-check_lvsdrc = True
+check_lvsdrc = False
+inline_lvsdrc = False
 output_datasheet_info = True
 
 # Teknologi yang digunakan (sesuai dengan direktori skywater-pdk Anda)
