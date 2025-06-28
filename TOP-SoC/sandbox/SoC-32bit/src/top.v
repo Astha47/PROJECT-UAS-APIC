@@ -207,7 +207,7 @@ module top (
     wire                       dram_s_axi_rready;
     
     // ========== Instantiate PicoRV32 CPU ==========
-    picorv32 cpu (
+    picorv32 picorv32 (
         .clk(clk_sys),
         .resetn(reset_sys_n),
         .trap(trap),
@@ -498,7 +498,7 @@ module top (
 
     // ========== Instantiate CORDIX ==========
 
-    cordic_system cordic_inst (
+    cordic_system cordic_system (
         .aclk(clk_sys),
         .aresetn(reset_sys_n),
         .awaddr(cordic_axil_awaddr),
@@ -522,12 +522,29 @@ module top (
     
     // ========== Placeholder connections for SA module ==========
     // Will be replaced with actual module instantiation later
+    // SA AXI4 Master signals tie-off
+    assign sa_m_axi_awid = {AXI4_ID_WIDTH{1'b0}};
+    assign sa_m_axi_awaddr = {ADDR_WIDTH{1'b0}};
+    assign sa_m_axi_awlen = 8'h0;
+    assign sa_m_axi_awsize = 3'b000;
+    assign sa_m_axi_awburst = 2'b00;
     assign sa_m_axi_awvalid = 1'b0;
-    assign sa_m_axi_wvalid = 1'b0;
-    assign sa_m_axi_bready = 1'b0;
-    assign sa_m_axi_arvalid = 1'b0;
-    assign sa_m_axi_rready = 1'b0;
     
+    assign sa_m_axi_wdata = {DATA_WIDTH{1'b0}};
+    assign sa_m_axi_wstrb = {(DATA_WIDTH/8){1'b0}};
+    assign sa_m_axi_wlast = 1'b0;
+    assign sa_m_axi_wvalid = 1'b0;
+    
+    assign sa_m_axi_bready = 1'b0;
+    
+    assign sa_m_axi_arid = {AXI4_ID_WIDTH{1'b0}};
+    assign sa_m_axi_araddr = {ADDR_WIDTH{1'b0}};
+    assign sa_m_axi_arlen = 8'h0;
+    assign sa_m_axi_arsize = 3'b000;
+    assign sa_m_axi_arburst = 2'b00;
+    assign sa_m_axi_arvalid = 1'b0;
+    
+    assign sa_m_axi_rready = 1'b0;
     
     // Tie off AXI-Lite signals for SA control
     assign sa_axil_awready = 1'b0;
@@ -535,8 +552,10 @@ module top (
     assign sa_axil_bresp = 2'b00;
     assign sa_axil_bvalid = 1'b0;
     assign sa_axil_arready = 1'b0;
-    assign sa_axil_rdata = 32'h0;
+    assign sa_axil_rdata = {DATA_WIDTH{1'b0}};
     assign sa_axil_rresp = 2'b00;
     assign sa_axil_rvalid = 1'b0;
+
+    
     
 endmodule

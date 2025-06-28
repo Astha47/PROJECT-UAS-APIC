@@ -141,8 +141,8 @@ module top_tb;
         $display("\nFinal CORDIC Program Verification:");
         $fdisplay(log_file, "\nFinal CORDIC Program Verification:");
 
-        final_pc = dut.cpu.reg_pc;
-        cordic_result = dut.cpu.cpuregs[9]; // Result is in x9
+        final_pc = dut.picorv32.reg_pc;
+        cordic_result = dut.picorv32.cpuregs[9]; // Result is in x9
 
         // Check PC to see if program has finished (or is past the main part)
         // The program has 17 instructions, so PC should be around 17*4 = 68 (0x44)
@@ -157,13 +157,13 @@ module top_tb;
         end
 
         // Check register values
-        $display("  - x1 (REG_INPUT_DATA addr): 0x%08x (expected 0xf0000018)", dut.cpu.cpuregs[1]);
-        $fdisplay(log_file, "  - x1 (REG_INPUT_DATA addr): 0x%08x (expected 0xf0000018)", dut.cpu.cpuregs[1]);
-        if (dut.cpu.cpuregs[1] != 32'hf0000018) test_passed = 1'b0;
+        $display("  - x1 (REG_INPUT_DATA addr): 0x%08x (expected 0xf0000018)", dut.picorv32.cpuregs[1]);
+        $fdisplay(log_file, "  - x1 (REG_INPUT_DATA addr): 0x%08x (expected 0xf0000018)", dut.picorv32.cpuregs[1]);
+        if (dut.picorv32.cpuregs[1] != 32'hf0000018) test_passed = 1'b0;
 
-        $display("  - x5 (Input Angle): 0x%08x (expected 0x002d0000)", dut.cpu.cpuregs[5]);
-        $fdisplay(log_file, "  - x5 (Input Angle): 0x%08x (expected 0x002d0000)", dut.cpu.cpuregs[5]);
-        if (dut.cpu.cpuregs[5] != 32'h002d0000) test_passed = 1'b0;
+        $display("  - x5 (Input Angle): 0x%08x (expected 0x002d0000)", dut.picorv32.cpuregs[5]);
+        $fdisplay(log_file, "  - x5 (Input Angle): 0x%08x (expected 0x002d0000)", dut.picorv32.cpuregs[5]);
+        if (dut.picorv32.cpuregs[5] != 32'h002d0000) test_passed = 1'b0;
 
         $display("  - x9 (CORDIC Result): 0x%08x", cordic_result);
         $fdisplay(log_file, "  - x9 (CORDIC Result): 0x%08x", cordic_result);

@@ -5,6 +5,17 @@
     "VERILOG_FILES": [
         "./src/picorv32.v"
     ],
-    "CLOCK_PERIOD": 25,
-    "CLOCK_PORT": "clk"
+    "CLOCK_PERIOD": 30,
+    "CLOCK_PORT": "clk",
+    "SYNTH_MAX_FANOUT": 10,
+    "DIODE_INSERTION_STRATEGY": 4,
+    "GRT_REPAIR_ANTENNAS": true,
+    "PL_RESIZER_DESIGN_OPTIMIZATIONS": true,
+    "GLB_RESIZER_DESIGN_OPTIMIZATIONS": true,
+    "GRT_ANT_ITERS": 3,
+    "GRT_ANT_MARGIN": 10,
+    "RUN_SPEF_EXTRACTION": true,
+    "QUIT_ON_TIMING_VIOLATIONS": false,
+    "QUIT_ON_SLEW_VIOLATIONS": false,
+    "QUIT_ON_CAP_VIOLATIONS": false
 }

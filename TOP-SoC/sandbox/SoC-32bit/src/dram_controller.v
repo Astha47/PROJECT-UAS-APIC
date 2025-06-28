@@ -59,26 +59,31 @@ module dram_controller #(
     // Internal registers
     reg [AXI4_ID_WIDTH-1:0] write_id;
     reg [AXI4_ID_WIDTH-1:0] read_id;
-    reg [ADDR_WIDTH-1:0] write_addr;
-    reg [ADDR_WIDTH-1:0] read_addr;
+    reg [ADDR_WIDTH-1:0] current_addr;  // Gunakan satu register alamat
     reg [7:0] write_len;
     reg [7:0] read_len;
     reg [7:0] write_count;
     reg [7:0] read_count;
     
     // State machine parameters
-    localparam IDLE = 3'b000;
-    localparam ADDR_PHASE = 3'b001;
-    localparam DATA_PHASE = 3'b010;
-    localparam WAIT       = 3'b011;
-    localparam RESP_PHASE = 3'b100;
+    // localparam IDLE = 3'b000;
+    // localparam ADDR_PHASE = 3'b001;
+    // localparam DATA_PHASE = 3'b010;
+    // localparam WAIT       = 3'b011;
+    // localparam RESP_PHASE = 3'b100;
+
+    // new state machine parameters
+    localparam IDLE         = 3'b000;
+    localparam WDATA_PHASE  = 3'b001;
+    localparam WWAIT        = 3'b010;
+    localparam WRESP_PHASE  = 3'b011;
+    localparam RADDR_PHASE  = 3'b100;
+    localparam RDATA_PHASE  = 3'b101;
     
-    
-    reg [2:0] write_state;
-    reg [2:0] read_state;
+    reg [2:0] state;
 
     // FIX: Combinatorially assign ARREADY based on state. It's only ready in IDLE.
-    assign M2_AXI4_ARREADY = (read_state == IDLE);
+    assign M2_AXI4_ARREADY = (state == IDLE);
     
     reg executed_status = 1'b0; // Status to indicate if a write has been executed
     
@@ -88,11 +93,16 @@ module dram_controller #(
     reg read_data_valid;
     
     assign dram_dq = dram_data_oe ? dram_data_out : 32'hZ;
-    
-    // Write channel state machine
-    always @(posedge clk or negedge rst_n) begin
+
+    // Read Write state machine
+    always @(posedge clk or negedge rst_n) begin    
         if (!rst_n) begin
-            write_state <= IDLE;
+
+            // CLC DRAM
+            dram_ck <= 1'b0;
+
+            state <= IDLE;
+
             M2_AXI4_AWREADY <= 1'b0;
             M2_AXI4_WREADY <= 1'b0;
             M2_AXI4_BVALID <= 1'b0;
@@ -103,63 +113,78 @@ module dram_controller #(
             dram_we <= 1'b1;
             dram_ras <= 1'b1;
             dram_cas <= 1'b1;
-            dram_addr <= 14'h0; // Initialize dram_addr
-            dram_ba <= 3'h0;   // Initialize dram_ba
+            dram_addr <= 14'h0; 
+            dram_ba <= 3'h0;
+            dram_dqs <= 1'b0;
+            
+            
+            M2_AXI4_RVALID <= 1'b0;
+            M2_AXI4_RRESP <= 2'b00;
+            M2_AXI4_RLAST <= 1'b0;
+            read_count <= 8'h0;
+            read_data_valid <= 1'b0;
+            current_addr <= 32'h0;
         end else begin
-            case (write_state)
+            if (dram_ck == 1'b1) begin
+                executed_status <= 1'b0;
+            end
+            dram_ck <= ~dram_ck;
+
+            case (state)
                 IDLE: begin
                     M2_AXI4_AWREADY <= 1'b1;
                     dram_cs <= 1'b0;
                     dram_data_oe <= 1'b0;
+                    M2_AXI4_RVALID <= 1'b0;
                     if (M2_AXI4_AWVALID && M2_AXI4_AWREADY) begin
                         write_id <= M2_AXI4_AWID;
-                        write_addr <= M2_AXI4_AWADDR;
+                        current_addr <= M2_AXI4_AWADDR;  // Set alamat untuk write
                         write_len <= M2_AXI4_AWLEN;
                         write_count <= 8'h0;
-                        write_state <= DATA_PHASE;
+                        state <= WDATA_PHASE;
                         M2_AXI4_AWREADY <= 1'b0;
                         M2_AXI4_WREADY <= 1'b1;
+                    end else if (M2_AXI4_ARVALID) begin
+                        read_id <= M2_AXI4_ARID;
+                        current_addr <= M2_AXI4_ARADDR;  // Set alamat untuk read
+                        read_len <= M2_AXI4_ARLEN;
+                        read_count <= 8'h0;
+                        state <= RADDR_PHASE;
                     end
                 end
                 
-                DATA_PHASE: begin
-                    // if (M2_AXI4_WVALID && M2_AXI4_WREADY) begin
+                WDATA_PHASE: begin
                     if (M2_AXI4_WREADY) begin
-                        // Convert to DRAM signals - ensure write happens
                         dram_cs <= 1'b0;
                         dram_we <= 1'b0;
                         dram_ras <= 1'b0;
                         dram_cas <= 1'b0;
-                        executed_status <= 1'b1; // Indicate write has been executed
-                        // Fix address mapping: handle 0x1000 properly
-                        dram_addr <= write_addr[15:2];  // Use bits [15:2] for word address
-                        dram_ba <= 3'b000;     // Use bank 0 for simplicity
+                        executed_status <= 1'b1;
+                        dram_addr <= current_addr[15:2];  // Gunakan current_addr  
+                        dram_ba <= 3'b000;    
                         dram_data_out <= M2_AXI4_WDATA;
                         dram_data_oe <= 1'b1;
                         dram_dm <= ~M2_AXI4_WSTRB;
                         
                         write_count <= write_count + 1;
-                        write_addr <= write_addr + 4;
+                        current_addr <= current_addr + 4; // Update alamat
                         
                         if (M2_AXI4_WLAST) begin
-                            write_state <= WAIT;
+                            state <= WWAIT;
                         end
                     end
                 end
 
-                WAIT: begin
-                    // Wait for DRAM write to complete
+                WWAIT: begin
                     if (!executed_status) begin
-                        write_state <= RESP_PHASE;
+                        state <= WRESP_PHASE;
                         M2_AXI4_WREADY <= 1'b0;
                     end else begin
-                        // Keep waiting
-                        dram_cs <= 1'b0; // Keep chip select active
+                        dram_cs <= 1'b0;
                     end
                 end 
                 
-                RESP_PHASE: begin
-                    // Keep write signals active for one more cycle to ensure write completes
+                WRESP_PHASE: begin
                     dram_cs <= 1'b1;
                     dram_data_oe <= 1'b0;
                     dram_we <= 1'b1;
@@ -169,73 +194,42 @@ module dram_controller #(
                     
                     if (M2_AXI4_BREADY && M2_AXI4_BVALID) begin
                         M2_AXI4_BVALID <= 1'b0;
-                        write_state <= IDLE;
+                        state <= IDLE;
                     end
                 end
-            endcase
-        end
-    end
-    
-    // Read channel state machine
-    always @(posedge clk or negedge rst_n) begin
-        if (!rst_n) begin
-            read_state <= IDLE;
-            // M2_AXI4_ARREADY <= 1'b0; // REMOVED: Now driven by assign
-            M2_AXI4_RVALID <= 1'b0;
-            M2_AXI4_RRESP <= 2'b00;
-            M2_AXI4_RLAST <= 1'b0;
-            read_count <= 8'h0;
-            read_data_valid <= 1'b0;
-        end else begin
-            case (read_state)
-                IDLE: begin
-                    // M2_AXI4_ARREADY <= 1'b1; // REMOVED: Now driven by assign
-                    M2_AXI4_RVALID <= 1'b0;
-                    if (M2_AXI4_ARVALID) begin
-                        read_id <= M2_AXI4_ARID;
-                        read_addr <= M2_AXI4_ARADDR;
-                        read_len <= M2_AXI4_ARLEN;
-                        read_count <= 8'h0;
-                        read_state <= ADDR_PHASE;
-                        // M2_AXI4_ARREADY <= 1'b0; // REMOVED: Now driven by assign
-                    end
-                end
-                
-                ADDR_PHASE: begin
-                    // Issue read command to DRAM
+
+                RADDR_PHASE: begin
                     dram_cs <= 1'b0;
                     dram_we <= 1'b1;
                     dram_ras <= 1'b0;
                     dram_cas <= 1'b0;
-                    // Fix address mapping: handle 0x1000 properly
-                    dram_addr <= read_addr[15:2];   // Use bits [15:2] for word address
-                    dram_ba <= 3'b000;     // Use bank 0 for simplicity
+                    dram_addr <= current_addr[15:2];   // Gunakan current_addr
+                    dram_ba <= 3'b000;  
                     
-                    dram_data_oe <= 1'b0;  // Ensure we're not driving the bus
+                    dram_data_oe <= 1'b0; 
                     executed_status <= 1'b1;
-                    read_state <= DATA_PHASE;
+                    state <= RDATA_PHASE;
                 end
                 
-                DATA_PHASE: begin
-                    // Wait for DRAM data to be available
+                RDATA_PHASE: begin
                     if (!executed_status) begin
                         M2_AXI4_RID <= read_id;
-                        M2_AXI4_RDATA <= dram_dq; // Read data from DRAM
-                        M2_AXI4_RRESP <= 2'b00; // OKAY
+                        M2_AXI4_RDATA <= dram_dq; 
+                        M2_AXI4_RRESP <= 2'b00; 
                         M2_AXI4_RVALID <= 1'b1;
                         M2_AXI4_RLAST <= (read_count == read_len);
                         
                         if (M2_AXI4_RREADY && M2_AXI4_RVALID) begin
                             read_count <= read_count + 1;
-                            read_addr <= read_addr + 4;
+                            current_addr <= current_addr + 4;  // Update alamat
                             read_data_valid <= 1'b0;
                             
                             if (M2_AXI4_RLAST) begin
-                                read_state <= IDLE;
+                                state <= IDLE;
                                 M2_AXI4_RVALID <= 1'b0;
                                 M2_AXI4_RLAST <= 1'b0;
                             end else begin
-                                read_state <= ADDR_PHASE;
+                                state <= RADDR_PHASE;
                             end
                         end  
                     end
@@ -243,20 +237,5 @@ module dram_controller #(
             endcase
         end
     end
-    
-    // Clock generation for DRAM
-    always @(posedge clk or negedge rst_n) begin
-        if (!rst_n) begin
-            dram_ck <= 1'b0;
-        end else begin
-            if (dram_ck == 1'b1) begin
-                executed_status <= 1'b0;
-            end
-            dram_ck <= ~dram_ck;
-        end
-    end
-
-    // assign dram_ck = clk; // Use the same clock for DRAM
-
 
 endmodule

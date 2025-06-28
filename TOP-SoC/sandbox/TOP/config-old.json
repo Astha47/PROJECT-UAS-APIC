@@ -1,0 +1,67 @@
+{
+    "DESIGN_NAME": "top",
+    "PDK": "sky130A",
+    "STD_CELL_LIBRARY": "sky130_fd_sc_hd",
+    "VERILOG_FILES": [
+        "./src/top.v",
+        "./src/axi4_master_riscv.v",
+        "./src/axi4_interconnect.v",
+        "./src/dram_controller.v"
+    ],
+    "CLOCK_PERIOD": 25,
+    "CLOCK_PORT": "clk",
+    "MACROS": {
+        "picorv32": {
+            "gds": [
+                "./macros/picorv32/gds/picorv32.gds"
+            ],
+            "lef": [
+                "./macros/picorv32/lef/picorv32.lef"
+            ],
+            "nl": [
+                "./macros/picorv32/nl/picorv32.nl.v"
+            ],
+            "spef": {
+                "min_*": [
+                    "dir::./macros/picorv32/spef/min/picorv32.min.spef"
+                ],
+                "nom_*": [
+                    "dir::./macros/picorv32/spef/nom/picorv32.nom.spef"
+                ],
+                "max_*": [
+                    "dir::./macros/picorv32/spef/max/picorv32.max.spef"
+                ]
+            }
+        },
+        "cordic_system": {
+            "gds": [
+                "./macros/cordic_system/gds/cordic_system.gds"
+            ],
+            "lef": [
+                "./macros/cordic_system/lef/cordic_system.lef"
+            ],
+            "nl": [
+                "./macros/cordic_system/nl/cordic_system.nl.v"
+            ],
+            "spef": {
+                "min_*": [
+                    "dir::./macros/cordic_system/spef/min/cordic_system.min.spef"
+                ],
+                "nom_*": [
+                    "dir::./macros/cordic_system/spef/nom/cordic_system.nom.spef"
+                ],
+                "max_*": [
+                    "dir::./macros/cordic_system/spef/max/cordic_system.max.spef"
+                ]
+            }
+        }
+    },
+    "MACRO_PLACEMENT_CFG": "./macro_placement.cfg",
+    "PDN_MACRO_CONNECTIONS": [
+        "picorv32 vccd1 vssd1 vccd1 vssd1",
+        "cordic_system vccd1 vssd1 vccd1 vssd1"
+    ],
+    "FP_CORE_UTIL": 40,
+    "PL_TARGET_DENSITY_PCT": 35,
+    "RUN_ANTENNA_REPAIR": true
+}
