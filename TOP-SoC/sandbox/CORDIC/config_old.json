@@ -1,0 +1,10 @@
+{
+    "DESIGN_NAME": "cordic_system",
+    "PDK": "sky130A",
+    "STD_CELL_LIBRARY": "sky130_fd_sc_hd",
+    "VERILOG_FILES": [
+        "./src/cordic_system.v"
+    ],
+    "CLOCK_PERIOD": 25,
+    "CLOCK_PORT": "clk"
+}

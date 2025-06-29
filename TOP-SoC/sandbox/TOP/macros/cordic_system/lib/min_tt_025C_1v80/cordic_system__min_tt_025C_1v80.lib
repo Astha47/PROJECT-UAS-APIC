@@ -76,55 +76,55 @@ library (cordic_system) {
   }
 
   cell ("cordic_system") {
-    area : 39823.270 
+    area : 37788.777 
     is_macro_cell : true;
     pin("aclk") {
       direction : input;
-      capacitance : 0.0074;
+      capacitance : 0.0043;
     }
     pin("aresetn") {
       direction : input;
-      capacitance : 0.0081;
+      capacitance : 0.0043;
     }
     pin("arready") {
       direction : output;
-      capacitance : 0.0033;
+      capacitance : 0.0008;
     }
     pin("arvalid") {
       direction : input;
-      capacitance : 0.0028;
+      capacitance : 0.0037;
     }
     pin("awready") {
       direction : output;
-      capacitance : 0.0007;
+      capacitance : 0.0009;
     }
     pin("awvalid") {
       direction : input;
-      capacitance : 0.0032;
+      capacitance : 0.0030;
     }
     pin("bready") {
       direction : input;
-      capacitance : 0.0028;
+      capacitance : 0.0036;
     }
     pin("bvalid") {
       direction : output;
-      capacitance : 0.0006;
+      capacitance : 0.0009;
     }
     pin("rready") {
       direction : input;
-      capacitance : 0.0036;
+      capacitance : 0.0040;
     }
     pin("rvalid") {
       direction : output;
-      capacitance : 0.0006;
+      capacitance : 0.0018;
     }
     pin("wready") {
       direction : output;
-      capacitance : 0.0009;
+      capacitance : 0.0010;
     }
     pin("wvalid") {
       direction : input;
-      capacitance : 0.0029;
+      capacitance : 0.0032;
     }
     bus("araddr") {
       bus_type : araddr;
@@ -132,71 +132,71 @@ library (cordic_system) {
       capacitance : 0.0000;
     pin("araddr[31]") {
       direction : input;
-      capacitance : 0.0032;
+      capacitance : 0.0033;
     }
     pin("araddr[30]") {
       direction : input;
-      capacitance : 0.0029;
+      capacitance : 0.0028;
     }
     pin("araddr[29]") {
       direction : input;
-      capacitance : 0.0028;
+      capacitance : 0.0030;
     }
     pin("araddr[28]") {
       direction : input;
-      capacitance : 0.0036;
+      capacitance : 0.0042;
     }
     pin("araddr[27]") {
       direction : input;
-      capacitance : 0.0031;
+      capacitance : 0.0040;
     }
     pin("araddr[26]") {
       direction : input;
-      capacitance : 0.0031;
+      capacitance : 0.0030;
     }
     pin("araddr[25]") {
       direction : input;
-      capacitance : 0.0045;
+      capacitance : 0.0034;
     }
     pin("araddr[24]") {
       direction : input;
-      capacitance : 0.0033;
+      capacitance : 0.0036;
     }
     pin("araddr[23]") {
       direction : input;
-      capacitance : 0.0031;
+      capacitance : 0.0032;
     }
     pin("araddr[22]") {
       direction : input;
-      capacitance : 0.0030;
+      capacitance : 0.0031;
     }
     pin("araddr[21]") {
       direction : input;
-      capacitance : 0.0037;
+      capacitance : 0.0027;
     }
     pin("araddr[20]") {
       direction : input;
-      capacitance : 0.0031;
+      capacitance : 0.0038;
     }
     pin("araddr[19]") {
       direction : input;
-      capacitance : 0.0040;
+      capacitance : 0.0032;
     }
     pin("araddr[18]") {
       direction : input;
-      capacitance : 0.0028;
+      capacitance : 0.0027;
     }
     pin("araddr[17]") {
       direction : input;
-      capacitance : 0.0027;
+      capacitance : 0.0029;
     }
     pin("araddr[16]") {
       direction : input;
-      capacitance : 0.0030;
+      capacitance : 0.0035;
     }
     pin("araddr[15]") {
       direction : input;
-      capacitance : 0.0041;
+      capacitance : 0.0027;
     }
     pin("araddr[14]") {
       direction : input;
@@ -204,15 +204,15 @@ library (cordic_system) {
     }
     pin("araddr[13]") {
       direction : input;
-      capacitance : 0.0038;
+      capacitance : 0.0042;
     }
     pin("araddr[12]") {
       direction : input;
-      capacitance : 0.0041;
+      capacitance : 0.0034;
     }
     pin("araddr[11]") {
       direction : input;
-      capacitance : 0.0030;
+      capacitance : 0.0040;
     }
     pin("araddr[10]") {
       direction : input;
@@ -220,43 +220,43 @@ library (cordic_system) {
     }
     pin("araddr[9]") {
       direction : input;
-      capacitance : 0.0028;
+      capacitance : 0.0033;
     }
     pin("araddr[8]") {
       direction : input;
-      capacitance : 0.0027;
+      capacitance : 0.0035;
     }
     pin("araddr[7]") {
       direction : input;
-      capacitance : 0.0029;
+      capacitance : 0.0031;
     }
     pin("araddr[6]") {
       direction : input;
-      capacitance : 0.0041;
+      capacitance : 0.0036;
     }
     pin("araddr[5]") {
       direction : input;
-      capacitance : 0.0028;
+      capacitance : 0.0038;
     }
     pin("araddr[4]") {
       direction : input;
-      capacitance : 0.0028;
+      capacitance : 0.0030;
     }
     pin("araddr[3]") {
       direction : input;
-      capacitance : 0.0030;
+      capacitance : 0.0032;
     }
     pin("araddr[2]") {
       direction : input;
-      capacitance : 0.0031;
+      capacitance : 0.0043;
     }
     pin("araddr[1]") {
       direction : input;
-      capacitance : 0.0042;
+      capacitance : 0.0040;
     }
     pin("araddr[0]") {
       direction : input;
-      capacitance : 0.0043;
+      capacitance : 0.0027;
     }
     }
     bus("awaddr") {
@@ -265,43 +265,43 @@ library (cordic_system) {
       capacitance : 0.0000;
     pin("awaddr[31]") {
       direction : input;
-      capacitance : 0.0028;
+      capacitance : 0.0031;
     }
     pin("awaddr[30]") {
       direction : input;
-      capacitance : 0.0030;
+      capacitance : 0.0033;
     }
     pin("awaddr[29]") {
       direction : input;
-      capacitance : 0.0030;
+      capacitance : 0.0035;
     }
     pin("awaddr[28]") {
       direction : input;
-      capacitance : 0.0023;
+      capacitance : 0.0034;
     }
     pin("awaddr[27]") {
       direction : input;
-      capacitance : 0.0028;
+      capacitance : 0.0033;
     }
     pin("awaddr[26]") {
       direction : input;
-      capacitance : 0.0041;
+      capacitance : 0.0037;
     }
     pin("awaddr[25]") {
       direction : input;
-      capacitance : 0.0038;
+      capacitance : 0.0035;
     }
     pin("awaddr[24]") {
       direction : input;
-      capacitance : 0.0027;
+      capacitance : 0.0031;
     }
     pin("awaddr[23]") {
       direction : input;
-      capacitance : 0.0030;
+      capacitance : 0.0031;
     }
     pin("awaddr[22]") {
       direction : input;
-      capacitance : 0.0036;
+      capacitance : 0.0041;
     }
     pin("awaddr[21]") {
       direction : input;
@@ -309,35 +309,35 @@ library (cordic_system) {
     }
     pin("awaddr[20]") {
       direction : input;
-      capacitance : 0.0024;
+      capacitance : 0.0038;
     }
     pin("awaddr[19]") {
       direction : input;
-      capacitance : 0.0035;
+      capacitance : 0.0032;
     }
     pin("awaddr[18]") {
       direction : input;
-      capacitance : 0.0028;
+      capacitance : 0.0030;
     }
     pin("awaddr[17]") {
       direction : input;
-      capacitance : 0.0028;
+      capacitance : 0.0031;
     }
     pin("awaddr[16]") {
       direction : input;
-      capacitance : 0.0028;
+      capacitance : 0.0030;
     }
     pin("awaddr[15]") {
       direction : input;
-      capacitance : 0.0031;
+      capacitance : 0.0039;
     }
     pin("awaddr[14]") {
       direction : input;
-      capacitance : 0.0030;
+      capacitance : 0.0033;
     }
     pin("awaddr[13]") {
       direction : input;
-      capacitance : 0.0028;
+      capacitance : 0.0041;
     }
     pin("awaddr[12]") {
       direction : input;
@@ -345,15 +345,15 @@ library (cordic_system) {
     }
     pin("awaddr[11]") {
       direction : input;
-      capacitance : 0.0027;
+      capacitance : 0.0045;
     }
     pin("awaddr[10]") {
       direction : input;
-      capacitance : 0.0033;
+      capacitance : 0.0037;
     }
     pin("awaddr[9]") {
       direction : input;
-      capacitance : 0.0040;
+      capacitance : 0.0029;
     }
     pin("awaddr[8]") {
       direction : input;
@@ -361,27 +361,27 @@ library (cordic_system) {
     }
     pin("awaddr[7]") {
       direction : input;
-      capacitance : 0.0032;
+      capacitance : 0.0029;
     }
     pin("awaddr[6]") {
       direction : input;
-      capacitance : 0.0034;
+      capacitance : 0.0031;
     }
     pin("awaddr[5]") {
       direction : input;
-      capacitance : 0.0032;
+      capacitance : 0.0031;
     }
     pin("awaddr[4]") {
       direction : input;
-      capacitance : 0.0029;
+      capacitance : 0.0031;
     }
     pin("awaddr[3]") {
       direction : input;
-      capacitance : 0.0029;
+      capacitance : 0.0032;
     }
     pin("awaddr[2]") {
       direction : input;
-      capacitance : 0.0029;
+      capacitance : 0.0048;
     }
     pin("awaddr[1]") {
       direction : input;
@@ -389,7 +389,7 @@ library (cordic_system) {
     }
     pin("awaddr[0]") {
       direction : input;
-      capacitance : 0.0030;
+      capacitance : 0.0037;
     }
     }
     bus("bresp") {
@@ -398,11 +398,11 @@ library (cordic_system) {
       capacitance : 0.0000;
     pin("bresp[1]") {
       direction : output;
-      capacitance : 0.0007;
+      capacitance : 0.0009;
     }
     pin("bresp[0]") {
       direction : output;
-      capacitance : 0.0008;
+      capacitance : 0.0007;
     }
     }
     bus("rdata") {
@@ -415,7 +415,7 @@ library (cordic_system) {
     }
     pin("rdata[30]") {
       direction : output;
-      capacitance : 0.0009;
+      capacitance : 0.0010;
     }
     pin("rdata[29]") {
       direction : output;
@@ -423,15 +423,15 @@ library (cordic_system) {
     }
     pin("rdata[28]") {
       direction : output;
-      capacitance : 0.0009;
+      capacitance : 0.0012;
     }
     pin("rdata[27]") {
       direction : output;
-      capacitance : 0.0009;
+      capacitance : 0.0008;
     }
     pin("rdata[26]") {
       direction : output;
-      capacitance : 0.0008;
+      capacitance : 0.0010;
     }
     pin("rdata[25]") {
       direction : output;
@@ -443,19 +443,19 @@ library (cordic_system) {
     }
     pin("rdata[23]") {
       direction : output;
-      capacitance : 0.0009;
+      capacitance : 0.0011;
     }
     pin("rdata[22]") {
       direction : output;
-      capacitance : 0.0008;
+      capacitance : 0.0009;
     }
     pin("rdata[21]") {
       direction : output;
-      capacitance : 0.0009;
+      capacitance : 0.0008;
     }
     pin("rdata[20]") {
       direction : output;
-      capacitance : 0.0008;
+      capacitance : 0.0012;
     }
     pin("rdata[19]") {
       direction : output;
@@ -463,47 +463,47 @@ library (cordic_system) {
     }
     pin("rdata[18]") {
       direction : output;
-      capacitance : 0.0008;
+      capacitance : 0.0006;
     }
     pin("rdata[17]") {
       direction : output;
-      capacitance : 0.0005;
+      capacitance : 0.0006;
     }
     pin("rdata[16]") {
       direction : output;
-      capacitance : 0.0004;
+      capacitance : 0.0008;
     }
     pin("rdata[15]") {
       direction : output;
-      capacitance : 0.0009;
+      capacitance : 0.0005;
     }
     pin("rdata[14]") {
       direction : output;
-      capacitance : 0.0006;
+      capacitance : 0.0010;
     }
     pin("rdata[13]") {
       direction : output;
-      capacitance : 0.0008;
+      capacitance : 0.0006;
     }
     pin("rdata[12]") {
       direction : output;
-      capacitance : 0.0006;
+      capacitance : 0.0008;
     }
     pin("rdata[11]") {
       direction : output;
-      capacitance : 0.0004;
+      capacitance : 0.0021;
     }
     pin("rdata[10]") {
       direction : output;
-      capacitance : 0.0006;
+      capacitance : 0.0012;
     }
     pin("rdata[9]") {
       direction : output;
-      capacitance : 0.0004;
+      capacitance : 0.0014;
     }
     pin("rdata[8]") {
       direction : output;
-      capacitance : 0.0009;
+      capacitance : 0.0005;
     }
     pin("rdata[7]") {
       direction : output;
@@ -511,31 +511,31 @@ library (cordic_system) {
     }
     pin("rdata[6]") {
       direction : output;
-      capacitance : 0.0006;
+      capacitance : 0.0024;
     }
     pin("rdata[5]") {
       direction : output;
-      capacitance : 0.0009;
+      capacitance : 0.0019;
     }
     pin("rdata[4]") {
       direction : output;
-      capacitance : 0.0004;
+      capacitance : 0.0006;
     }
     pin("rdata[3]") {
       direction : output;
-      capacitance : 0.0007;
+      capacitance : 0.0008;
     }
     pin("rdata[2]") {
       direction : output;
-      capacitance : 0.0009;
+      capacitance : 0.0007;
     }
     pin("rdata[1]") {
       direction : output;
-      capacitance : 0.0008;
+      capacitance : 0.0020;
     }
     pin("rdata[0]") {
       direction : output;
-      capacitance : 0.0044;
+      capacitance : 0.0009;
     }
     }
     bus("rresp") {
@@ -544,11 +544,11 @@ library (cordic_system) {
       capacitance : 0.0000;
     pin("rresp[1]") {
       direction : output;
-      capacitance : 0.0009;
+      capacitance : 0.0008;
     }
     pin("rresp[0]") {
       direction : output;
-      capacitance : 0.0040;
+      capacitance : 0.0009;
     }
     }
     bus("wdata") {
@@ -557,67 +557,67 @@ library (cordic_system) {
       capacitance : 0.0000;
     pin("wdata[31]") {
       direction : input;
-      capacitance : 0.0043;
+      capacitance : 0.0030;
     }
     pin("wdata[30]") {
       direction : input;
-      capacitance : 0.0033;
+      capacitance : 0.0030;
     }
     pin("wdata[29]") {
       direction : input;
-      capacitance : 0.0034;
+      capacitance : 0.0033;
     }
     pin("wdata[28]") {
       direction : input;
-      capacitance : 0.0048;
+      capacitance : 0.0032;
     }
     pin("wdata[27]") {
       direction : input;
-      capacitance : 0.0068;
+      capacitance : 0.0036;
     }
     pin("wdata[26]") {
       direction : input;
-      capacitance : 0.0073;
+      capacitance : 0.0031;
     }
     pin("wdata[25]") {
       direction : input;
-      capacitance : 0.0041;
+      capacitance : 0.0031;
     }
     pin("wdata[24]") {
       direction : input;
-      capacitance : 0.0074;
+      capacitance : 0.0034;
     }
     pin("wdata[23]") {
       direction : input;
-      capacitance : 0.0030;
+      capacitance : 0.0032;
     }
     pin("wdata[22]") {
       direction : input;
-      capacitance : 0.0031;
+      capacitance : 0.0032;
     }
     pin("wdata[21]") {
       direction : input;
-      capacitance : 0.0038;
+      capacitance : 0.0031;
     }
     pin("wdata[20]") {
       direction : input;
-      capacitance : 0.0028;
+      capacitance : 0.0039;
     }
     pin("wdata[19]") {
       direction : input;
-      capacitance : 0.0030;
+      capacitance : 0.0031;
     }
     pin("wdata[18]") {
       direction : input;
-      capacitance : 0.0029;
+      capacitance : 0.0033;
     }
     pin("wdata[17]") {
       direction : input;
-      capacitance : 0.0033;
+      capacitance : 0.0038;
     }
     pin("wdata[16]") {
       direction : input;
-      capacitance : 0.0028;
+      capacitance : 0.0031;
     }
     pin("wdata[15]") {
       direction : input;
@@ -625,11 +625,11 @@ library (cordic_system) {
     }
     pin("wdata[14]") {
       direction : input;
-      capacitance : 0.0032;
+      capacitance : 0.0034;
     }
     pin("wdata[13]") {
       direction : input;
-      capacitance : 0.0032;
+      capacitance : 0.0031;
     }
     pin("wdata[12]") {
       direction : input;
@@ -637,19 +637,19 @@ library (cordic_system) {
     }
     pin("wdata[11]") {
       direction : input;
-      capacitance : 0.0033;
+      capacitance : 0.0032;
     }
     pin("wdata[10]") {
       direction : input;
-      capacitance : 0.0031;
+      capacitance : 0.0048;
     }
     pin("wdata[9]") {
       direction : input;
-      capacitance : 0.0031;
+      capacitance : 0.0030;
     }
     pin("wdata[8]") {
       direction : input;
-      capacitance : 0.0032;
+      capacitance : 0.0042;
     }
     pin("wdata[7]") {
       direction : input;
@@ -657,19 +657,19 @@ library (cordic_system) {
     }
     pin("wdata[6]") {
       direction : input;
-      capacitance : 0.0034;
+      capacitance : 0.0031;
     }
     pin("wdata[5]") {
       direction : input;
-      capacitance : 0.0032;
+      capacitance : 0.0031;
     }
     pin("wdata[4]") {
       direction : input;
-      capacitance : 0.0033;
+      capacitance : 0.0030;
     }
     pin("wdata[3]") {
       direction : input;
-      capacitance : 0.0032;
+      capacitance : 0.0031;
     }
     pin("wdata[2]") {
       direction : input;
@@ -677,11 +677,11 @@ library (cordic_system) {
     }
     pin("wdata[1]") {
       direction : input;
-      capacitance : 0.0034;
+      capacitance : 0.0031;
     }
     pin("wdata[0]") {
       direction : input;
-      capacitance : 0.0032;
+      capacitance : 0.0041;
     }
     }
     bus("wstrb") {
@@ -690,19 +690,19 @@ library (cordic_system) {
       capacitance : 0.0000;
     pin("wstrb[3]") {
       direction : input;
-      capacitance : 0.0076;
+      capacitance : 0.0033;
     }
     pin("wstrb[2]") {
       direction : input;
-      capacitance : 0.0059;
+      capacitance : 0.0029;
     }
     pin("wstrb[1]") {
       direction : input;
-      capacitance : 0.0031;
+      capacitance : 0.0039;
     }
     pin("wstrb[0]") {
       direction : input;
-      capacitance : 0.0034;
+      capacitance : 0.0031;
     }
     }
   }

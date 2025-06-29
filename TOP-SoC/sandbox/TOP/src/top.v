@@ -207,7 +207,7 @@ module top (
     wire                       dram_s_axi_rready;
     
     // ========== Instantiate PicoRV32 CPU ==========
-    picorv32 picorv32_inst (
+    picorv32 picorv32 (
         .clk(clk_sys),
         .resetn(reset_sys_n),
         .trap(trap),
@@ -518,7 +518,7 @@ module top (
 
     // ========== Instantiate CORDIX ==========
 
-    cordic_system cordic_system_inst (
+    cordic_system cordic_system (
         .aclk(clk_sys),
         .aresetn(reset_sys_n),
         .awaddr(cordic_axil_awaddr),

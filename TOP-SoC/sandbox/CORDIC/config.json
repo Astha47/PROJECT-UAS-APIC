@@ -6,5 +6,8 @@
         "./src/cordic_system.v"
     ],
     "CLOCK_PERIOD": 25,
-    "CLOCK_PORT": "clk"
+    "CLOCK_PORT": "clk",
+    "FP_SIZING": "absolute",
+    "DIE_AREA": [0, 0, 400, 150],
+    "FP_CORE_UTIL": 40
 }

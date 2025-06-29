@@ -10,34 +10,14 @@
     ],
     "CLOCK_PERIOD": 25,
     "CLOCK_PORT": "clk",
-    "GRT_ANTENNA_ITERS": 5,
     "MACROS": {
         "picorv32": {
-            "instances": {
-                "picorv32_inst": {
-                    "location": [50, 50],
-                    "orientation": "N"
-                }
-            },
             "gds": [
                 "./macros/picorv32/gds/picorv32.gds"
             ],
             "lef": [
                 "./macros/picorv32/lef/picorv32.lef"
             ],
-            "lib": {
-                "min_tt_025C_1v80": ["dir::./macros/picorv32/lib/min_tt_025C_1v80/picorv32__min_tt_025C_1v80.lib"],
-                "nom_tt_025C_1v80": ["dir::./macros/picorv32/lib/nom_tt_025C_1v80/picorv32__nom_tt_025C_1v80.lib"],
-                "max_tt_025C_1v80": ["dir::./macros/picorv32/lib/max_tt_025C_1v80/picorv32__max_tt_025C_1v80.lib"],
-
-                "min_ff_n40C_1v95": ["dir::./macros/picorv32/lib/min_ff_n40C_1v95/picorv32__min_ff_n40C_1v95.lib"],
-                "nom_ff_n40C_1v95": ["dir::./macros/picorv32/lib/nom_ff_n40C_1v95/picorv32__nom_ff_n40C_1v95.lib"],
-                "max_ff_n40C_1v95": ["dir::./macros/picorv32/lib/max_ff_n40C_1v95/picorv32__max_ff_n40C_1v95.lib"],
-
-                "min_ss_100C_1v60": ["dir::./macros/picorv32/lib/min_ss_100C_1v60/picorv32__min_ss_100C_1v60.lib"],
-                "nom_ss_100C_1v60": ["dir::./macros/picorv32/lib/nom_ss_100C_1v60/picorv32__nom_ss_100C_1v60.lib"],
-                "max_ss_100C_1v60": ["dir::./macros/picorv32/lib/max_ss_100C_1v60/picorv32__max_ss_100C_1v60.lib"]
-            },
             "nl": [
                 "./macros/picorv32/nl/picorv32.nl.v"
             ],
@@ -52,47 +32,47 @@
                     "dir::./macros/picorv32/spef/max/picorv32.max.spef"
                 ]
             },
+            "lib": {
+                "nom_tt_025C_1v80": ["dir::./macros/picorv32/lib/nom_tt_025C_1v80/picorv32__nom_tt_025C_1v80.lib"],
+                "min_tt_025C_1v80": ["dir::./macros/picorv32/lib/min_tt_025C_1v80/picorv32__min_tt_025C_1v80.lib"],
+                "max_tt_025C_1v80": ["dir::./macros/picorv32/lib/max_tt_025C_1v80/picorv32__max_tt_025C_1v80.lib"],
+
+                "nom_ff_n40C_1v95": ["dir::./macros/picorv32/lib/nom_ff_n40C_1v95/picorv32__nom_ff_n40C_1v95.lib"],
+                "min_ff_n40C_1v95": ["dir::./macros/picorv32/lib/min_ff_n40C_1v95/picorv32__min_ff_n40C_1v95.lib"],
+                "max_ff_n40C_1v95": ["dir::./macros/picorv32/lib/max_ff_n40C_1v95/picorv32__max_ff_n40C_1v95.lib"],
+
+                "nom_ss_100C_1v60": ["dir::./macros/picorv32/lib/nom_ss_100C_1v60/picorv32__nom_ss_100C_1v60.lib"],
+                "min_ss_100C_1v60": ["dir::./macros/picorv32/lib/min_ss_100C_1v60/picorv32__min_ss_100C_1v60.lib"],
+                "max_ss_100C_1v60": ["dir::./macros/picorv32/lib/max_ss_100C_1v60/picorv32__max_ss_100C_1v60.lib"]
+            },
             "sdf": {
-                "min_tt_025C_1v80": ["dir::./macros/picorv32/sdf/min_tt_025C_1v80/picorv32__min_tt_025C_1v80.sdf"],
                 "nom_tt_025C_1v80": ["dir::./macros/picorv32/sdf/nom_tt_025C_1v80/picorv32__nom_tt_025C_1v80.sdf"],
+                "min_tt_025C_1v80": ["dir::./macros/picorv32/sdf/min_tt_025C_1v80/picorv32__min_tt_025C_1v80.sdf"],
                 "max_tt_025C_1v80": ["dir::./macros/picorv32/sdf/max_tt_025C_1v80/picorv32__max_tt_025C_1v80.sdf"],
 
-                "min_ff_n40C_1v95": ["dir::./macros/picorv32/sdf/min_ff_n40C_1v95/picorv32__min_ff_n40C_1v95.sdf"],
                 "nom_ff_n40C_1v95": ["dir::./macros/picorv32/sdf/nom_ff_n40C_1v95/picorv32__nom_ff_n40C_1v95.sdf"],
+                "min_ff_n40C_1v95": ["dir::./macros/picorv32/sdf/min_ff_n40C_1v95/picorv32__min_ff_n40C_1v95.sdf"],
                 "max_ff_n40C_1v95": ["dir::./macros/picorv32/sdf/max_ff_n40C_1v95/picorv32__max_ff_n40C_1v95.sdf"],
 
-                "min_ss_100C_1v60": ["dir::./macros/picorv32/sdf/min_ss_100C_1v60/picorv32__min_ss_100C_1v60.sdf"],
                 "nom_ss_100C_1v60": ["dir::./macros/picorv32/sdf/nom_ss_100C_1v60/picorv32__nom_ss_100C_1v60.sdf"],
+                "min_ss_100C_1v60": ["dir::./macros/picorv32/sdf/min_ss_100C_1v60/picorv32__min_ss_100C_1v60.sdf"],
                 "max_ss_100C_1v60": ["dir::./macros/picorv32/sdf/max_ss_100C_1v60/picorv32__max_ss_100C_1v60.sdf"]
-            }
-            
-        },
-        "cordic_system": {
+            },
+
             "instances": {
-                "cordic_system_inst": {
-                    "location": [50, 600],
+                "picorv32":{
+                    "location": [150,30],
                     "orientation": "N"
                 }
-            },
+            }
+        },
+        "cordic_system": {
             "gds": [
                 "./macros/cordic_system/gds/cordic_system.gds"
             ],
             "lef": [
                 "./macros/cordic_system/lef/cordic_system.lef"
             ],
-            "lib": {
-                "min_tt_025C_1v80": ["dir::./macros/cordic_system/lib/min_tt_025C_1v80/cordic_system__min_tt_025C_1v80.lib"],
-                "nom_tt_025C_1v80": ["dir::./macros/cordic_system/lib/nom_tt_025C_1v80/cordic_system__nom_tt_025C_1v80.lib"],
-                "max_tt_025C_1v80": ["dir::./macros/cordic_system/lib/max_tt_025C_1v80/cordic_system__max_tt_025C_1v80.lib"],
-
-                "min_ff_n40C_1v95": ["dir::./macros/cordic_system/lib/min_ff_n40C_1v95/cordic_system__min_ff_n40C_1v95.lib"],
-                "nom_ff_n40C_1v95": ["dir::./macros/cordic_system/lib/nom_ff_n40C_1v95/cordic_system__nom_ff_n40C_1v95.lib"],
-                "max_ff_n40C_1v95": ["dir::./macros/cordic_system/lib/max_ff_n40C_1v95/cordic_system__max_ff_n40C_1v95.lib"],
-
-                "min_ss_100C_1v60": ["dir::./macros/cordic_system/lib/min_ss_100C_1v60/cordic_system__min_ss_100C_1v60.lib"],
-                "nom_ss_100C_1v60": ["dir::./macros/cordic_system/lib/nom_ss_100C_1v60/cordic_system__nom_ss_100C_1v60.lib"],
-                "max_ss_100C_1v60": ["dir::./macros/cordic_system/lib/max_ss_100C_1v60/cordic_system__max_ss_100C_1v60.lib"]
-            },
             "nl": [
                 "./macros/cordic_system/nl/cordic_system.nl.v"
             ],
@@ -107,53 +87,49 @@
                     "dir::./macros/cordic_system/spef/max/cordic_system.max.spef"
                 ]
             },
+            "lib": {
+                "nom_tt_025C_1v80": ["dir::./macros/cordic_system/lib/nom_tt_025C_1v80/cordic_system__nom_tt_025C_1v80.lib"],
+                "min_tt_025C_1v80": ["dir::./macros/cordic_system/lib/min_tt_025C_1v80/cordic_system__min_tt_025C_1v80.lib"],
+                "max_tt_025C_1v80": ["dir::./macros/cordic_system/lib/max_tt_025C_1v80/cordic_system__max_tt_025C_1v80.lib"],
+
+                "nom_ff_n40C_1v95": ["dir::./macros/cordic_system/lib/nom_ff_n40C_1v95/cordic_system__nom_ff_n40C_1v95.lib"],
+                "min_ff_n40C_1v95": ["dir::./macros/cordic_system/lib/min_ff_n40C_1v95/cordic_system__min_ff_n40C_1v95.lib"],
+                "max_ff_n40C_1v95": ["dir::./macros/cordic_system/lib/max_ff_n40C_1v95/cordic_system__max_ff_n40C_1v95.lib"],
+
+                "nom_ss_100C_1v60": ["dir::./macros/cordic_system/lib/nom_ss_100C_1v60/cordic_system__nom_ss_100C_1v60.lib"],
+                "min_ss_100C_1v60": ["dir::./macros/cordic_system/lib/min_ss_100C_1v60/cordic_system__min_ss_100C_1v60.lib"],
+                "max_ss_100C_1v60": ["dir::./macros/cordic_system/lib/max_ss_100C_1v60/cordic_system__max_ss_100C_1v60.lib"]
+            },
             "sdf": {
-                "min_tt_025C_1v80": ["dir::./macros/cordic_system/sdf/min_tt_025C_1v80/cordic_system__min_tt_025C_1v80.sdf"],
                 "nom_tt_025C_1v80": ["dir::./macros/cordic_system/sdf/nom_tt_025C_1v80/cordic_system__nom_tt_025C_1v80.sdf"],
+                "min_tt_025C_1v80": ["dir::./macros/cordic_system/sdf/min_tt_025C_1v80/cordic_system__min_tt_025C_1v80.sdf"],
                 "max_tt_025C_1v80": ["dir::./macros/cordic_system/sdf/max_tt_025C_1v80/cordic_system__max_tt_025C_1v80.sdf"],
 
-                "min_ff_n40C_1v95": ["dir::./macros/cordic_system/sdf/min_ff_n40C_1v95/cordic_system__min_ff_n40C_1v95.sdf"],
                 "nom_ff_n40C_1v95": ["dir::./macros/cordic_system/sdf/nom_ff_n40C_1v95/cordic_system__nom_ff_n40C_1v95.sdf"],
+                "min_ff_n40C_1v95": ["dir::./macros/cordic_system/sdf/min_ff_n40C_1v95/cordic_system__min_ff_n40C_1v95.sdf"],
                 "max_ff_n40C_1v95": ["dir::./macros/cordic_system/sdf/max_ff_n40C_1v95/cordic_system__max_ff_n40C_1v95.sdf"],
 
-                "min_ss_100C_1v60": ["dir::./macros/cordic_system/sdf/min_ss_100C_1v60/cordic_system__min_ss_100C_1v60.sdf"],
                 "nom_ss_100C_1v60": ["dir::./macros/cordic_system/sdf/nom_ss_100C_1v60/cordic_system__nom_ss_100C_1v60.sdf"],
+                "min_ss_100C_1v60": ["dir::./macros/cordic_system/sdf/min_ss_100C_1v60/cordic_system__min_ss_100C_1v60.sdf"],
                 "max_ss_100C_1v60": ["dir::./macros/cordic_system/sdf/max_ss_100C_1v60/cordic_system__max_ss_100C_1v60.sdf"]
+            },
+            "instances": {
+                "cordic_system":{
+                    "location": [200,570],
+                    "orientation": "N"
+                }
             }
         }
     },
-    "IGNORE_DISCONNECTED_MODULES": ["picorv32"],
-    
-    "//": "PDN configuration",
-    "VERILOG_POWER_DEFINE": "USE_POWER_PINS",
-    "VDD_NETS": [
-        "VPWR"
+    "PDN_MACRO_CONNECTIONS": [
+        "picorv32 vccd1 vssd1 vccd1 vssd1",
+        "cordic_system vccd1 vssd1 vccd1 vssd1"
     ],
-    "GND_NETS": [
-        "VGND"
-    ],
-    "FP_PDN_VPOWER_NETS": [
-        "VPWR"
-    ],
-    "FP_PDN_VGROUND_NETS": [
-        "VGND"
-    ],
-
-
-    "//": "Macros configurations",
-    "FP_MACRO_CONNECTIONS": [
-        "picorv32_inst VPWR VGND VPWR VGND",
-        "cordic_system_inst VPWR VGND VPWR VGND"
-    ],
-    "DIODE_CELL": "sky130_fd_sc_hd__diode_2",
-    "FP_CORE_UTIL": 40,
-    "PL_TARGET_DENSITY": 0.4,
-    "PL_RESIZER_HOLD_SLACK_MARGIN": 0.15,
-    "GLB_RESIZER_HOLD_SLACK_MARGIN": 0.15,
     "SYNTH_MAX_FANOUT": 10,
     "DIODE_INSERTION_STRATEGY": 4,
     "GRT_REPAIR_ANTENNAS": true,
     "PL_RESIZER_DESIGN_OPTIMIZATIONS": true,
-    "GLB_RESIZER_DESIGN_OPTIMIZATIONS": true
-}
+    "GLB_RESIZER_DESIGN_OPTIMIZATIONS": true,
+    "IGNORE_DISCONNECTED_MODULES": ["picorv32"]
+
 }
