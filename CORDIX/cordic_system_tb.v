@@ -3,17 +3,6 @@ module cordic_system_tb;
     // Parameters
     parameter CLK_PERIOD = 10; // 100 MHz
     parameter WIDTH = 32;
-    
-    // Test angles in Q16.16 degrees
-    localparam signed [WIDTH-1:0] ANG_0     = 32'sd0;
-    localparam signed [WIDTH-1:0] ANG_30    = 32'sd1966080;  // 30°
-    localparam signed [WIDTH-1:0] ANG_45    = 32'sd2949120;  // 45°
-    localparam signed [WIDTH-1:0] ANG_60    = 32'sd3932160;  // 60°
-    localparam signed [WIDTH-1:0] ANG_90    = 32'sd5898240;  // 90°
-    localparam signed [WIDTH-1:0] ANG_N30   = -32'sd1966080;
-    localparam signed [WIDTH-1:0] ANG_N45   = -32'sd2949120;
-    localparam signed [WIDTH-1:0] ANG_N60   = -32'sd3932160;
-    localparam signed [WIDTH-1:0] ANG_N90   = -32'sd5898240;
 
     // System signals
     reg aclk = 0;
@@ -40,6 +29,7 @@ module cordic_system_tb;
     reg rready;
 
     integer test_id = 0;
+    integer fd;
     
     // Instantiate DUT
     cordic_system dut (
@@ -169,8 +159,17 @@ module cordic_system_tb;
         rready = 0;
 
         // Dump waveforms
-        $dumpfile("cordic_system_tb.vcd");
-        $dumpvars(0, cordic_system_tb);
+        // $dumpfile("cordic_system_tb.vcd");
+        // $dumpvars(0, cordic_system_tb);
+
+        // Output file
+        $display("Will open file...");
+        fd = $fopen("out.txt", "w");
+        $display("Opening file...");
+        if (fd == 0) begin
+            $display("Failed to open output file!");
+            $finish;
+        end
 
         // Reset sequence
         #100;
@@ -179,29 +178,29 @@ module cordic_system_tb;
 
         $display("Starting full angle sweep test...");
 
-        for (deg = -360; deg <= 360; deg += 30) begin
+        for (deg = -360; deg <= 360; deg += 1) begin
             angle_q16_16 = deg2q16_16(deg);
 
             // COSINE test
-            $display("Testing cosine(%0d°)", deg);
+            $fdisplay(fd, "Testing cosine(%0d°)", deg);
             axi_write(32'h0, angle_q16_16, 4'b1111); // Write angle
             axi_write(32'h8, 32'h0, 4'b0001);        // mode = 0
             axi_write(32'h8, 32'h2, 4'b0001);        // start = 1
+            axi_write(32'h8, 32'h0, 4'b0001);        // clear start
             wait_cordic_done();
             axi_read(32'h4, result);
             test_id = test_id + 1;
-            $display("cos(%0d°) = %h", deg, result);
-            axi_write(32'h8, 32'h0, 4'b0001);        // clear start
+            $fdisplay(fd, "cos(%0d°) = %h", deg, result);
 
             // SINE test
-            $display("Testing sine(%0d°)", deg);
+            $fdisplay(fd, "Testing sine(%0d°)", deg);
             axi_write(32'h8, 32'h4, 4'b0001);        // mode = 1
-            axi_write(32'h8, 32'h2, 4'b0001);        // start = 1
+            axi_write(32'h8, 32'h6, 4'b0001);        // start = 1
+            axi_write(32'h8, 32'h4, 4'b0001);        // clear start
             wait_cordic_done();
             axi_read(32'h4, result);
             test_id = test_id + 1;
-            $display("sin(%0d°) = %h", deg, result);
-            axi_write(32'h8, 32'h0, 4'b0001);        // clear start
+            $fdisplay(fd, "sin(%0d°) = %h", deg, result);
         end
 
         #1000;
